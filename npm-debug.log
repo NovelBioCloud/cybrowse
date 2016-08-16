@@ -1,0 +1,689 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/novelbio/software/node-v4.4.3-linux-x64/bin/node',
+1 verbose cli   '/home/novelbio/software/node/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'cytoscape-navigator',
+1 verbose cli   '--save' ]
+2 info using npm@2.15.1
+3 info using node@v4.4.3
+4 verbose install initial load of /home/novelbio/node-workspace/cybrowse/package.json
+5 warn package.json cybrowse@1.0.0 No repository field.
+6 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/abbrev/package.json
+7 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/asap/package.json
+8 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/assert/package.json
+9 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/babel-preset-es2015/package.json
+10 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/babel-preset-react/package.json
+11 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/babelify/package.json
+12 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/browser-sync/package.json
+13 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/browserify/package.json
+14 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/browserify-shim/package.json
+15 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/classnames/package.json
+16 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/connect-livereload/package.json
+17 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/core-js/package.json
+18 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape/package.json
+19 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-context-menus/package.json
+20 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-cxtmenu/package.json
+21 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-view-utilities/package.json
+22 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape.js-undo-redo/package.json
+23 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/del/package.json
+24 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/dijit/package.json
+25 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/dojo/package.json
+26 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/dojo-util/package.json
+27 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/dojox/package.json
+28 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/echarts/package.json
+29 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/encoding/package.json
+30 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/eslint/package.json
+31 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/eslint-plugin-react/package.json
+32 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/eventemitter3/package.json
+33 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/express/package.json
+34 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/fbemitter/package.json
+35 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/fbjs/package.json
+36 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/fbjs-scripts/package.json
+37 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/grunt-contrib-watch/package.json
+38 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp/package.json
+39 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-babel/package.json
+40 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-browserify/package.json
+41 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-clean/package.json
+42 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-clean-css/package.json
+43 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-concat/package.json
+44 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-connect/package.json
+45 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-copy/package.json
+46 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-eslint/package.json
+47 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-express/package.json
+48 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-file-copy/package.json
+49 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-jshint/package.json
+50 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-less/package.json
+51 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-livereload/package.json
+52 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-minify-css/package.json
+53 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-minify-html/package.json
+54 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-plumber/package.json
+55 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-rename/package.json
+56 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-sourcemaps/package.json
+57 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-streamify/package.json
+58 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-uglify/package.json
+59 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/install/package.json
+60 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/jest-cli/package.json
+61 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/jquery/package.json
+62 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/jshint/package.json
+63 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/jsplumb/package.json
+64 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/lodash/package.json
+65 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/loose-envify/package.json
+66 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/material-ui/package.json
+67 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/npm/package.json
+68 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/react/package.json
+69 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/react-color/package.json
+70 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/react-dom/package.json
+71 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/react-input-color/package.json
+72 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/react-tap-event-plugin/package.json
+73 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/reactcss/package.json
+74 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/vinyl-buffer/package.json
+75 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/vinyl-source-stream/package.json
+76 verbose installManyTop reading scoped package data from /home/novelbio/node-workspace/cybrowse/node_modules/watchify/package.json
+77 info package.json assert@1.3.0 assert is also the name of a node core module.
+78 info package.json eslint-plugin-react@6.0.0 No README data
+79 info package.json gulp-copy@0.0.2 No license field.
+80 info package.json gulp-minify-css@1.2.4 No repository field.
+81 info package.json gulp-minify-html@1.0.6 No repository field.
+82 info package.json gulp-rename@1.2.2 No license field.
+83 info package.json gulp-streamify@1.0.2 No license field.
+84 info package.json jest-cli@14.1.0 No README data
+85 info package.json dojo-util@1.11.1 No license field.
+86 info package.json echarts@3.1.10 No license field.
+87 info package.json npm@3.10.6 Non-dependency in bundleDependencies: ansi-regex
+88 info package.json npm@3.10.6 Non-dependency in bundleDependencies: debuglog
+89 info package.json npm@3.10.6 Non-dependency in bundleDependencies: imurmurhash
+90 info package.json npm@3.10.6 Non-dependency in bundleDependencies: lodash._baseindexof
+91 info package.json npm@3.10.6 Non-dependency in bundleDependencies: lodash._bindcallback
+92 info package.json npm@3.10.6 Non-dependency in bundleDependencies: lodash._cacheindexof
+93 info package.json npm@3.10.6 Non-dependency in bundleDependencies: lodash._createcache
+94 info package.json npm@3.10.6 Non-dependency in bundleDependencies: lodash._getnative
+95 info package.json npm@3.10.6 Non-dependency in bundleDependencies: lodash.restparam
+96 info package.json npm@3.10.6 Non-dependency in bundleDependencies: readdir-scoped-modules
+97 info package.json npm@3.10.6 Non-dependency in bundleDependencies: validate-npm-package-license
+98 info package.json react-tap-event-plugin@1.0.0 No license field.
+99 verbose readDependencies loading dependencies from /home/novelbio/node-workspace/cybrowse/package.json
+100 silly cache add args [ 'cytoscape-navigator', null ]
+101 verbose cache add spec cytoscape-navigator
+102 silly cache add parsed spec Result {
+102 silly cache add   raw: 'cytoscape-navigator',
+102 silly cache add   scope: null,
+102 silly cache add   name: 'cytoscape-navigator',
+102 silly cache add   rawSpec: '',
+102 silly cache add   spec: 'latest',
+102 silly cache add   type: 'tag' }
+103 silly addNamed cytoscape-navigator@latest
+104 verbose addNamed "latest" is being treated as a dist-tag for cytoscape-navigator
+105 info addNameTag [ 'cytoscape-navigator', 'latest' ]
+106 silly mapToRegistry name cytoscape-navigator
+107 silly mapToRegistry using default registry
+108 silly mapToRegistry registry https://registry.npmjs.org/
+109 silly mapToRegistry data Result {
+109 silly mapToRegistry   raw: 'cytoscape-navigator',
+109 silly mapToRegistry   scope: null,
+109 silly mapToRegistry   name: 'cytoscape-navigator',
+109 silly mapToRegistry   rawSpec: '',
+109 silly mapToRegistry   spec: 'latest',
+109 silly mapToRegistry   type: 'tag' }
+110 silly mapToRegistry uri https://registry.npmjs.org/cytoscape-navigator
+111 verbose addNameTag registry:https://registry.npmjs.org/cytoscape-navigator not in flight; fetching
+112 verbose request uri https://registry.npmjs.org/cytoscape-navigator
+113 verbose request no auth needed
+114 info attempt registry request try #1 at 13:29:59
+115 verbose request id 308361a50abdd6f2
+116 http request GET https://registry.npmjs.org/cytoscape-navigator
+117 http 200 https://registry.npmjs.org/cytoscape-navigator
+118 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+118 verbose headers   etag: '"B9ZEWM84AICP41GNBUXFMADTV"',
+118 verbose headers   'content-type': 'application/json',
+118 verbose headers   'content-encoding': 'gzip',
+118 verbose headers   'cache-control': 'max-age=300',
+118 verbose headers   'content-length': '2328',
+118 verbose headers   'accept-ranges': 'bytes',
+118 verbose headers   date: 'Tue, 16 Aug 2016 05:30:01 GMT',
+118 verbose headers   via: '1.1 varnish',
+118 verbose headers   age: '0',
+118 verbose headers   connection: 'keep-alive',
+118 verbose headers   'x-served-by': 'cache-ams4131-AMS',
+118 verbose headers   'x-cache': 'MISS',
+118 verbose headers   'x-cache-hits': '0',
+118 verbose headers   'x-timer': 'S1471325401.233688,VS0,VE406',
+118 verbose headers   vary: 'Accept-Encoding' }
+119 silly get cb [ 200,
+119 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+119 silly get     etag: '"B9ZEWM84AICP41GNBUXFMADTV"',
+119 silly get     'content-type': 'application/json',
+119 silly get     'content-encoding': 'gzip',
+119 silly get     'cache-control': 'max-age=300',
+119 silly get     'content-length': '2328',
+119 silly get     'accept-ranges': 'bytes',
+119 silly get     date: 'Tue, 16 Aug 2016 05:30:01 GMT',
+119 silly get     via: '1.1 varnish',
+119 silly get     age: '0',
+119 silly get     connection: 'keep-alive',
+119 silly get     'x-served-by': 'cache-ams4131-AMS',
+119 silly get     'x-cache': 'MISS',
+119 silly get     'x-cache-hits': '0',
+119 silly get     'x-timer': 'S1471325401.233688,VS0,VE406',
+119 silly get     vary: 'Accept-Encoding' } ]
+120 verbose get saving cytoscape-navigator to /home/novelbio/.npm/registry.npmjs.org/cytoscape-navigator/.cache.json
+121 verbose correctMkdir /home/novelbio/.npm correctMkdir not in flight; initializing
+122 silly addNameTag next cb for cytoscape-navigator with tag latest
+123 silly addNamed cytoscape-navigator@1.1.3
+124 verbose addNamed "1.1.3" is a plain semver version for cytoscape-navigator
+125 silly mapToRegistry name cytoscape-navigator
+126 silly mapToRegistry using default registry
+127 silly mapToRegistry registry https://registry.npmjs.org/
+128 silly mapToRegistry data Result {
+128 silly mapToRegistry   raw: 'cytoscape-navigator',
+128 silly mapToRegistry   scope: null,
+128 silly mapToRegistry   name: 'cytoscape-navigator',
+128 silly mapToRegistry   rawSpec: '',
+128 silly mapToRegistry   spec: 'latest',
+128 silly mapToRegistry   type: 'tag' }
+129 silly mapToRegistry uri https://registry.npmjs.org/cytoscape-navigator
+130 verbose addRemoteTarball https://registry.npmjs.org/cytoscape-navigator/-/cytoscape-navigator-1.1.3.tgz not in flight; adding
+131 verbose addRemoteTarball [ 'https://registry.npmjs.org/cytoscape-navigator/-/cytoscape-navigator-1.1.3.tgz',
+131 verbose addRemoteTarball   'dd36a1f23f9265f0339f1bf13b8860da5c55775c' ]
+132 info retry fetch attempt 1 at 13:30:01
+133 info attempt registry request try #1 at 13:30:01
+134 http fetch GET https://registry.npmjs.org/cytoscape-navigator/-/cytoscape-navigator-1.1.3.tgz
+135 http fetch 200 https://registry.npmjs.org/cytoscape-navigator/-/cytoscape-navigator-1.1.3.tgz
+136 silly fetchAndShaCheck shasum dd36a1f23f9265f0339f1bf13b8860da5c55775c
+137 verbose addTmpTarball /tmp/npm-14494-3b4aad41/registry.npmjs.org/cytoscape-navigator/-/cytoscape-navigator-1.1.3.tgz not in flight; adding
+138 verbose addTmpTarball already have metadata; skipping unpack for cytoscape-navigator@1.1.3
+139 verbose correctMkdir /home/novelbio/.npm correctMkdir not in flight; initializing
+140 silly cache afterAdd cytoscape-navigator@1.1.3
+141 verbose afterAdd /home/novelbio/.npm/cytoscape-navigator/1.1.3/package/package.json not in flight; writing
+142 verbose correctMkdir /home/novelbio/.npm correctMkdir not in flight; initializing
+143 verbose afterAdd /home/novelbio/.npm/cytoscape-navigator/1.1.3/package/package.json written
+144 silly install resolved [ { name: 'cytoscape-navigator',
+144 silly install resolved     version: '1.1.3',
+144 silly install resolved     description: 'Bird&#39;s eye view pan and zoom control for Cytoscape.js',
+144 silly install resolved     main: 'cytoscape-navigator.js',
+144 silly install resolved     spm: { main: 'cytoscape-navigator.js' },
+144 silly install resolved     scripts: { test: 'echo "Error: no test specified" && exit 1' },
+144 silly install resolved     repository:
+144 silly install resolved      { type: 'git',
+144 silly install resolved        url: 'git+https://github.com/cytoscape/cytoscape.js-navigator.git' },
+144 silly install resolved     keywords: [ 'cytoscape', 'cyext' ],
+144 silly install resolved     license: 'MIT',
+144 silly install resolved     bugs: { url: 'https://github.com/cytoscape/cytoscape.js-navigator/issues' },
+144 silly install resolved     homepage: 'https://github.com/cytoscape/cytoscape.js-navigator',
+144 silly install resolved     devDependencies:
+144 silly install resolved      { gulp: '^3.8.8',
+144 silly install resolved        'gulp-jshint': '^1.8.5',
+144 silly install resolved        'gulp-prompt': '^0.1.1',
+144 silly install resolved        'gulp-replace': '^0.4.0',
+144 silly install resolved        'gulp-shell': '^0.2.9',
+144 silly install resolved        'jshint-stylish': '^1.0.0',
+144 silly install resolved        'run-sequence': '^1.0.0' },
+144 silly install resolved     peerDependencies: { cytoscape: '^2.6.0', jquery: '^1.4.0 || ^2.0.0' },
+144 silly install resolved     gitHead: '01143804ba49e8e88c5d605e72e72e2afcb9f67f',
+144 silly install resolved     _id: 'cytoscape-navigator@1.1.3',
+144 silly install resolved     _shasum: 'dd36a1f23f9265f0339f1bf13b8860da5c55775c',
+144 silly install resolved     _from: 'cytoscape-navigator@latest',
+144 silly install resolved     _npmVersion: '3.9.5',
+144 silly install resolved     _nodeVersion: '6.2.2',
+144 silly install resolved     _npmUser: { name: 'maxkfranz', email: 'maxkfranz@gmail.com' },
+144 silly install resolved     dist:
+144 silly install resolved      { shasum: 'dd36a1f23f9265f0339f1bf13b8860da5c55775c',
+144 silly install resolved        tarball: 'https://registry.npmjs.org/cytoscape-navigator/-/cytoscape-navigator-1.1.3.tgz' },
+144 silly install resolved     maintainers: [ [Object] ],
+144 silly install resolved     _npmOperationalInternal:
+144 silly install resolved      { host: 'packages-16-east.internal.npmjs.com',
+144 silly install resolved        tmp: 'tmp/cytoscape-navigator-1.1.3.tgz_1467918718461_0.5708061791956425' },
+144 silly install resolved     directories: {},
+144 silly install resolved     _resolved: 'https://registry.npmjs.org/cytoscape-navigator/-/cytoscape-navigator-1.1.3.tgz' } ]
+145 info install cytoscape-navigator@1.1.3 into /home/novelbio/node-workspace/cybrowse
+146 info installOne cytoscape-navigator@1.1.3
+147 verbose installOne of cytoscape-navigator to /home/novelbio/node-workspace/cybrowse not in flight; installing
+148 verbose correctMkdir /home/novelbio/.npm/_locks correctMkdir not in flight; initializing
+149 verbose lock using /home/novelbio/.npm/_locks/cytoscape-navigator-60fa295a6e18c252.lock for /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator
+150 silly install write writing cytoscape-navigator 1.1.3 to /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator
+151 verbose unbuild node_modules/cytoscape-navigator
+152 silly gentlyRm /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator is being purged from base /home/novelbio/node-workspace/cybrowse
+153 verbose gentlyRm don't care about contents; nuking /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator
+154 verbose tar unpack /home/novelbio/.npm/cytoscape-navigator/1.1.3/package.tgz
+155 verbose tar unpacking to /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator
+156 silly gentlyRm /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator is being purged
+157 verbose gentlyRm don't care about contents; nuking /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator
+158 silly gunzTarPerm modes [ '775', '664' ]
+159 silly gunzTarPerm extractEntry package.json
+160 silly gunzTarPerm modified mode [ 'package.json', 420, 436 ]
+161 silly gunzTarPerm extractEntry .npmignore
+162 silly gunzTarPerm modified mode [ '.npmignore', 420, 436 ]
+163 silly gunzTarPerm extractEntry README.md
+164 silly gunzTarPerm modified mode [ 'README.md', 420, 436 ]
+165 silly gunzTarPerm extractEntry cytoscape-navigator.js
+166 silly gunzTarPerm modified mode [ 'cytoscape-navigator.js', 420, 436 ]
+167 silly gunzTarPerm extractEntry gulpfile.js
+168 silly gunzTarPerm modified mode [ 'gulpfile.js', 420, 436 ]
+169 silly gunzTarPerm extractEntry bower.json
+170 silly gunzTarPerm modified mode [ 'bower.json', 420, 436 ]
+171 silly gunzTarPerm extractEntry cytoscape.js-navigator.css
+172 silly gunzTarPerm modified mode [ 'cytoscape.js-navigator.css', 420, 436 ]
+173 silly gunzTarPerm extractEntry demo.html
+174 silly gunzTarPerm modified mode [ 'demo.html', 420, 436 ]
+175 verbose write writing to /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator/package.json
+176 info preinstall cytoscape-navigator@1.1.3
+177 verbose readDependencies loading dependencies from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator/package.json
+178 silly prepareForInstallMany adding jquery@^1.4.0 || ^2.0.0 from cytoscape-navigator peerDependencies
+179 warn peerDependencies The peer dependency jquery@^1.4.0 || ^2.0.0 included from cytoscape-navigator will no
+180 warn peerDependencies longer be automatically installed to fulfill the peerDependency
+181 warn peerDependencies in npm 3+. Your application will need to depend on it explicitly.
+182 verbose readDependencies loading dependencies from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator/package.json
+183 silly install resolved []
+184 verbose about to build /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator
+185 info build /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator
+186 info linkStuff cytoscape-navigator@1.1.3
+187 silly linkStuff cytoscape-navigator@1.1.3 has /home/novelbio/node-workspace/cybrowse/node_modules as its parent node_modules
+188 verbose linkBins cytoscape-navigator@1.1.3
+189 verbose linkMans cytoscape-navigator@1.1.3
+190 verbose rebuildBundles cytoscape-navigator@1.1.3
+191 info install cytoscape-navigator@1.1.3
+192 info postinstall cytoscape-navigator@1.1.3
+193 verbose readDependencies loading dependencies from /home/novelbio/node-workspace/cybrowse/package.json
+194 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/abbrev/package.json
+195 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/asap/package.json
+196 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/assert/package.json
+197 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/babel-preset-es2015/package.json
+198 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/babel-preset-react/package.json
+199 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/babelify/package.json
+200 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/browser-sync/package.json
+201 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/browserify/package.json
+202 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/browserify-shim/package.json
+203 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/classnames/package.json
+204 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/connect-livereload/package.json
+205 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/core-js/package.json
+206 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape/package.json
+207 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-context-menus/package.json
+208 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-cxtmenu/package.json
+209 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator/package.json
+210 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-view-utilities/package.json
+211 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape.js-undo-redo/package.json
+212 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/del/package.json
+213 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/dijit/package.json
+214 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/dojo/package.json
+215 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/dojo-util/package.json
+216 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/dojox/package.json
+217 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/echarts/package.json
+218 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/encoding/package.json
+219 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/eslint/package.json
+220 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/eslint-plugin-react/package.json
+221 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/eventemitter3/package.json
+222 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/express/package.json
+223 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/fbemitter/package.json
+224 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/fbjs/package.json
+225 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/fbjs-scripts/package.json
+226 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/grunt-contrib-watch/package.json
+227 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp/package.json
+228 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-babel/package.json
+229 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-browserify/package.json
+230 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-clean/package.json
+231 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-clean-css/package.json
+232 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-concat/package.json
+233 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-connect/package.json
+234 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-copy/package.json
+235 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-eslint/package.json
+236 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-express/package.json
+237 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-file-copy/package.json
+238 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-jshint/package.json
+239 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-less/package.json
+240 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-livereload/package.json
+241 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-minify-css/package.json
+242 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-minify-html/package.json
+243 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-plumber/package.json
+244 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-rename/package.json
+245 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-sourcemaps/package.json
+246 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-streamify/package.json
+247 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/gulp-uglify/package.json
+248 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/install/package.json
+249 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/jest-cli/package.json
+250 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/jquery/package.json
+251 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/jshint/package.json
+252 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/jsplumb/package.json
+253 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/lodash/package.json
+254 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/loose-envify/package.json
+255 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/material-ui/package.json
+256 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/npm/package.json
+257 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/react/package.json
+258 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/react-color/package.json
+259 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/react-dom/package.json
+260 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/react-input-color/package.json
+261 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/react-tap-event-plugin/package.json
+262 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/reactcss/package.json
+263 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/vinyl-buffer/package.json
+264 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/vinyl-source-stream/package.json
+265 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/watchify/package.json
+266 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.bin/browser-sync/package.json
+267 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.bin/browserify/package.json
+268 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.bin/eslint/package.json
+269 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.bin/gulp/package.json
+270 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.bin/jest/package.json
+271 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.bin/jshint/package.json
+272 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.bin/loose-envify/package.json
+273 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.bin/nopt/package.json
+274 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.bin/npm/package.json
+275 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.bin/watchify/package.json
+276 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/abbrev/package.json
+277 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/accepts/package.json
+278 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/acorn/package.json
+279 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/after/package.json
+280 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/amdefine/package.json
+281 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/ansi-regex/package.json
+282 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/ansi-styles/package.json
+283 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/anymatch/package.json
+284 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/arr-diff/package.json
+285 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/arr-flatten/package.json
+286 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/array-unique/package.json
+287 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/arraybuffer.slice/package.json
+288 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/arrify/package.json
+289 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/asap/package.json
+290 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/asn1/package.json
+291 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/assert-plus/package.json
+292 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/ast-types/package.json
+293 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/async/package.json
+294 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/async-each/package.json
+295 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/async-each-series/package.json
+296 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/aws-sign2/package.json
+297 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/backo2/package.json
+298 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/balanced-match/package.json
+299 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/base62/package.json
+300 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/base64-arraybuffer/package.json
+301 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/base64id/package.json
+302 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/batch/package.json
+303 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/benchmark/package.json
+304 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/better-assert/package.json
+305 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/binary-extensions/package.json
+306 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/bl/package.json
+307 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/blacklist/package.json
+308 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/blob/package.json
+309 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/boom/package.json
+310 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/brace-expansion/package.json
+311 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/braces/package.json
+312 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/browser-sync/package.json
+313 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/browser-sync-client/package.json
+314 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/browser-sync-ui/package.json
+315 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/bs-recipes/package.json
+316 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/buffer-shims/package.json
+317 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/builtin-modules/package.json
+318 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/callsite/package.json
+319 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/camelcase/package.json
+320 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/caseless/package.json
+321 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/chalk/package.json
+322 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/chokidar/package.json
+323 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/classnames/package.json
+324 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/cliui/package.json
+325 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/code-point-at/package.json
+326 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/color-functions/package.json
+327 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/combined-stream/package.json
+328 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/commander/package.json
+329 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/commoner/package.json
+330 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/component-bind/package.json
+331 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/component-emitter/package.json
+332 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/component-inherit/package.json
+333 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/concat-map/package.json
+334 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/connect/package.json
+335 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/connect-history-api-fallback/package.json
+336 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/core-js/package.json
+337 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/core-util-is/package.json
+338 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/cryptiles/package.json
+339 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/ctype/package.json
+340 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/cytoscape-context-menus/package.json
+341 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/cytoscape-view-utilities/package.json
+342 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/cytoscape.js-undo-redo/package.json
+343 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/debug/package.json
+344 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/decamelize/package.json
+345 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/defined/package.json
+346 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/delayed-stream/package.json
+347 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/depd/package.json
+348 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/destroy/package.json
+349 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/detective/package.json
+350 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/dev-ip/package.json
+351 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/easy-extender/package.json
+352 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/eazy-logger/package.json
+353 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/ee-first/package.json
+354 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/emitter-steward/package.json
+355 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/engine.io/package.json
+356 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/engine.io-client/package.json
+357 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/engine.io-parser/package.json
+358 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/envify/package.json
+359 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/error-ex/package.json
+360 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/escape-html/package.json
+361 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/escape-string-regexp/package.json
+362 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/esprima-fb/package.json
+363 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/etag/package.json
+364 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/eventemitter3/package.json
+365 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/expand-brackets/package.json
+366 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/expand-range/package.json
+367 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/express/package.json
+368 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/extend/package.json
+369 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/extglob/package.json
+370 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/fbjs/package.json
+371 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/filename-regex/package.json
+372 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/fill-range/package.json
+373 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/finalhandler/package.json
+374 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/find-up/package.json
+375 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/for-in/package.json
+376 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/for-own/package.json
+377 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/forever-agent/package.json
+378 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/form-data/package.json
+379 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/formidable/package.json
+380 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/fresh/package.json
+381 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/fs-extra/package.json
+382 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/fs.realpath/package.json
+383 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/fsevents/package.json
+384 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/generate-function/package.json
+385 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/generate-object-property/package.json
+386 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/glob/package.json
+387 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/glob-base/package.json
+388 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/glob-parent/package.json
+389 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/graceful-fs/package.json
+390 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/graceful-readlink/package.json
+391 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/har-validator/package.json
+392 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/has-ansi/package.json
+393 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/has-binary/package.json
+394 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/has-cors/package.json
+395 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/hawk/package.json
+396 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/hoek/package.json
+397 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/hosted-git-info/package.json
+398 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/http-errors/package.json
+399 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/http-proxy/package.json
+400 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/http-signature/package.json
+401 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/iconv-lite/package.json
+402 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/immutable/package.json
+403 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/indexof/package.json
+404 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/inflight/package.json
+405 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/inherits/package.json
+406 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/install/package.json
+407 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/invert-kv/package.json
+408 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-arrayish/package.json
+409 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-binary-path/package.json
+410 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-buffer/package.json
+411 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-builtin-module/package.json
+412 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-dotfile/package.json
+413 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-equal-shallow/package.json
+414 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-extendable/package.json
+415 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-extglob/package.json
+416 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-fullwidth-code-point/package.json
+417 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-glob/package.json
+418 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-my-json-valid/package.json
+419 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-number/package.json
+420 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-posix-bracket/package.json
+421 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-primitive/package.json
+422 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-property/package.json
+423 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/is-utf8/package.json
+424 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/isarray/package.json
+425 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/isobject/package.json
+426 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/isstream/package.json
+427 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/js-tokens/package.json
+428 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/json-stringify-safe/package.json
+429 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/json3/package.json
+430 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/jsonfile/package.json
+431 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/jsonpointer/package.json
+432 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/jstransform/package.json
+433 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/kind-of/package.json
+434 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/klaw/package.json
+435 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/lcid/package.json
+436 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/limiter/package.json
+437 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/load-json-file/package.json
+438 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/localtunnel/package.json
+439 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/lodash/package.json
+440 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/lodash.assign/package.json
+441 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/lodash.debounce/package.json
+442 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/lodash.isplainobject/package.json
+443 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/lodash.throttle/package.json
+444 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/loose-envify/package.json
+445 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/material-colors/package.json
+446 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/merge/package.json
+447 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/micromatch/package.json
+448 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/mime/package.json
+449 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/mime-db/package.json
+450 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/mime-types/package.json
+451 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/minimatch/package.json
+452 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/minimist/package.json
+453 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/mkdirp/package.json
+454 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/ms/package.json
+455 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/nan/package.json
+456 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/negotiator/package.json
+457 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/node-uuid/package.json
+458 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/node_modules/package.json
+459 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/nopt/package.json
+460 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/normalize-package-data/package.json
+461 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/normalize-path/package.json
+462 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/npm/package.json
+463 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/number-is-nan/package.json
+464 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/oauth-sign/package.json
+465 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/object-assign/package.json
+466 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/object-component/package.json
+467 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/object-path/package.json
+468 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/object.omit/package.json
+469 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/on-finished/package.json
+470 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/once/package.json
+471 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/openurl/package.json
+472 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/opn/package.json
+473 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/options/package.json
+474 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/os-locale/package.json
+475 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/parse-glob/package.json
+476 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/parse-json/package.json
+477 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/parsejson/package.json
+478 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/parseqs/package.json
+479 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/parseuri/package.json
+480 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/parseurl/package.json
+481 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/path-exists/package.json
+482 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/path-is-absolute/package.json
+483 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/path-type/package.json
+484 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/pify/package.json
+485 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/pinkie/package.json
+486 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/pinkie-promise/package.json
+487 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/pkg-conf/package.json
+488 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/portscanner/package.json
+489 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/preserve/package.json
+490 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/private/package.json
+491 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/process-nextick-args/package.json
+492 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/promise/package.json
+493 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/q/package.json
+494 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/qs/package.json
+495 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/randomatic/package.json
+496 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/range-parser/package.json
+497 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/react/package.json
+498 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/react-addons-shallow-compare/package.json
+499 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/react-color/package.json
+500 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/react-input-color/package.json
+501 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/react-input-number/package.json
+502 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/react-input-slider/package.json
+503 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/reactcss/package.json
+504 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/read-pkg/package.json
+505 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/read-pkg-up/package.json
+506 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/readable-stream/package.json
+507 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/readdirp/package.json
+508 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/recast/package.json
+509 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/regex-cache/package.json
+510 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/repeat-element/package.json
+511 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/repeat-string/package.json
+512 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/request/package.json
+513 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/require-main-filename/package.json
+514 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/requires-port/package.json
+515 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/resp-modifier/package.json
+516 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/rimraf/package.json
+517 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/rx/package.json
+518 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/semver/package.json
+519 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/send/package.json
+520 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/serve-index/package.json
+521 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/serve-static/package.json
+522 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/server-destroy/package.json
+523 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/set-blocking/package.json
+524 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/set-immediate-shim/package.json
+525 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/sntp/package.json
+526 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/socket.io/package.json
+527 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/socket.io-adapter/package.json
+528 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/socket.io-client/package.json
+529 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/socket.io-parser/package.json
+530 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/source-map/package.json
+531 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/spdx-correct/package.json
+532 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/spdx-exceptions/package.json
+533 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/spdx-expression-parse/package.json
+534 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/spdx-license-ids/package.json
+535 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/statuses/package.json
+536 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/stream-throttle/package.json
+537 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/string-width/package.json
+538 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/string_decoder/package.json
+539 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/stringstream/package.json
+540 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/strip-ansi/package.json
+541 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/strip-bom/package.json
+542 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/supports-color/package.json
+543 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/symbol/package.json
+544 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/tfunk/package.json
+545 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/through/package.json
+546 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/tinycolor2/package.json
+547 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/to-array/package.json
+548 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/tough-cookie/package.json
+549 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/tunnel-agent/package.json
+550 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/ua-parser-js/package.json
+551 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/ultron/package.json
+552 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/underscore/package.json
+553 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/unpipe/package.json
+554 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/utf8/package.json
+555 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/util-deprecate/package.json
+556 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/utils-merge/package.json
+557 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/validate-npm-package-license/package.json
+558 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/weinre/package.json
+559 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/whatwg-fetch/package.json
+560 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/window-size/package.json
+561 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/wrap-ansi/package.json
+562 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/wrappy/package.json
+563 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/ws/package.json
+564 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/xmlhttprequest-ssl/package.json
+565 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/xtend/package.json
+566 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/y18n/package.json
+567 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/yargs/package.json
+568 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/yargs-parser/package.json
+569 verbose targetResolver reading package data from /home/novelbio/node-workspace/cybrowse/node_modules/.npminstall/yeast/package.json
+570 verbose already installed skipping jquery@^1.4.0 || ^2.0.0 /home/novelbio/node-workspace/cybrowse
+571 silly install resolved []
+572 verbose unlock done using /home/novelbio/.npm/_locks/cytoscape-navigator-60fa295a6e18c252.lock for /home/novelbio/node-workspace/cybrowse/node_modules/cytoscape-navigator
+573 verbose validateInstall loading /home/novelbio/node-workspace/cybrowse/package.json for validation
+574 warn unmet dependency /home/novelbio/node-workspace/cybrowse/node_modules/fbjs-scripts/node_modules/gulp-util requires object-assign@'^3.0.0' but will load
+574 warn unmet dependency /home/novelbio/node-workspace/cybrowse/node_modules/fbjs-scripts/node_modules/object-assign,
+574 warn unmet dependency which is version 4.1.0
+575 verbose stack Error: The package jquery@3.1.0 does not satisfy its siblings' peerDependencies requirements!
+575 verbose stack     at /home/novelbio/software/node-v4.4.3-linux-x64/lib/node_modules/npm/lib/install.js:125:32
+575 verbose stack     at /home/novelbio/software/node-v4.4.3-linux-x64/lib/node_modules/npm/lib/install.js:268:7
+575 verbose stack     at /home/novelbio/software/node-v4.4.3-linux-x64/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+575 verbose stack     at /home/novelbio/software/node-v4.4.3-linux-x64/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+575 verbose stack     at cb (/home/novelbio/software/node-v4.4.3-linux-x64/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+575 verbose stack     at /home/novelbio/software/node-v4.4.3-linux-x64/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+575 verbose stack     at cb (/home/novelbio/software/node-v4.4.3-linux-x64/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+575 verbose stack     at /home/novelbio/software/node-v4.4.3-linux-x64/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+575 verbose stack     at cb (/home/novelbio/software/node-v4.4.3-linux-x64/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+575 verbose stack     at /home/novelbio/software/node-v4.4.3-linux-x64/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+576 verbose cwd /home/novelbio/node-workspace/cybrowse
+577 error Linux 3.19.8-100.fc20.x86_64
+578 error argv "/home/novelbio/software/node-v4.4.3-linux-x64/bin/node" "/home/novelbio/software/node/bin/npm" "install" "cytoscape-navigator" "--save"
+579 error node v4.4.3
+580 error npm  v2.15.1
+581 error code EPEERINVALID
+582 error peerinvalid The package jquery@3.1.0 does not satisfy its siblings' peerDependencies requirements!
+582 error peerinvalid Peer cytoscape-cxtmenu@2.8.0 wants jquery@^1.4.0 || ^2.0.0
+582 error peerinvalid Peer cytoscape-navigator@1.1.3 wants jquery@^1.4.0 || ^2.0.0
+583 verbose exit [ 1, true ]
