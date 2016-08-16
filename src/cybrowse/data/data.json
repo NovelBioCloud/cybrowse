@@ -1,6 +1,7 @@
 [{
     "data": {
-        "id": "n1"
+        "id": "n1",
+        "name": "name"
     }
 }, {
     "data": {
