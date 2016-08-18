@@ -5,10 +5,15 @@ import {
 	render
 } from 'react-dom';
 import $ from 'jquery';
-import Browse from './Browse';
-const App = () => ( < Browse / > );
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+import Browse from './core';
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
+
 $(() => {
-	render( < App / > ,
-		document.getElementById('browse')
+	render( < Browse / > ,
+		document.getElementById('app')
 	);
 });
