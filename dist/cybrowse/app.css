@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
 }
-#browse {
+#app {
   cursor: move;
   position: fixed;
   height: 100%;
@@ -24,15 +24,12 @@ body {
   display: flex;
 }
 .class-browse .content .left-panel {
-  min-width: 300px;
+  width: 300px;
   background-color: #f2f2f2;
 }
 .class-browse .content .main-panel {
   flex: auto;
   background-color: #ffffff;
-}
-.class-edit-panel {
-  padding: 20px;
 }
 .class-edit-panel .script-editor {
   margin: auto;
