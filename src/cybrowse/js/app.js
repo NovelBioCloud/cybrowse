@@ -4,16 +4,12 @@ import React, {
 import {
 	render
 } from 'react-dom';
+
 import $ from 'jquery';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import Browse from './core';
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
+import App from './App/';
 injectTapEventPlugin();
-
-$(() => {
-	render( < Browse / > ,
-		document.getElementById('app')
-	);
+$(()=>{
+	new App(document.querySelector("#app"));
 });

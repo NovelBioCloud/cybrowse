@@ -1,0 +1,11 @@
+#hierarchy{
+	display:none;
+}
+#companylogo{
+	display:none;
+}
+#menuview .container-fluid {
+    background: url(/xwiki/bin/download/XWiki/novelbio/logo-white.png) no-repeat;
+    background-size: 150px 44px;
+    background-position: 20px 3px;
+}

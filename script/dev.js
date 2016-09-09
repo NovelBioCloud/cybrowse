@@ -9,7 +9,8 @@ gulp.task('server', function () {
 		}
 	});
 	// Restart the server when file changes
-	gulp.watch(['dist/cybrowse/app.js'], [browserSync.reload]);
-//	gulp.watch(['dist/cybrowse/**/*.json', 'dist/cybrowse/**/*.html', 'dist/cybrowse/**/*.css'], browserSync.reload);
+	gulp.watch(['dist/cybrowse/app.js', 'dist/redux/app.js'], [browserSync.reload]);
+	// Restart the server when file changes
+	//	gulp.watch(['dist/cybrowse/**/*.json', 'dist/cybrowse/**/*.html', 'dist/cybrowse/**/*.css'], browserSync.reload);
 });
 gulp.start('server');
