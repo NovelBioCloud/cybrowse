@@ -43,24 +43,6 @@ export default class EdgeConfigModuleFactory {
 	getDefaultInstance() {
 		return connect(this._mapStateToProps(), this._mapDispatchToProps())(this._getDefaultCommponent())
 	}
-	getAnotherInstance() {
-		return connect(this._mapStateToProps(), this._mapDispatchToProps())(this._getAnotherCommponent())
-	}
-	_getAnotherCommponent() {
-		class View extends Component {
-			render() {
-				return (
-					<div>
-						<div>{this.props.edgeConfig.time}</div>
-						<button onClick={()=>{
-							this.props.reset()
-						}}>reset</button>
-					</div>
-				)
-			}
-		}
-		return View;
-	}
 	_getDefaultCommponent() {
 		class View extends Component {
 			render() {

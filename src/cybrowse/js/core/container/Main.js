@@ -6,26 +6,17 @@ import $ from 'jquery'
 import _ from 'lodash'
 import immutable from 'immutable'
 import postal from 'postal'
+import toastr from 'toastr'
 import async from 'async'
 import assert from 'assert'
 import {
   eventDispatcher,
-} from './service'
+} from '../service'
 import {
   defaultConfigStore,
-} from './store'
-import Loading from './Loading'
-import Main from './Main'
-import toastr from 'toastr'
-export default class App {
-	constructor(element, callback) {
-		assert(element, 'element can not be null!')
-		assert(!callback || _.isFunction(callback), 'callback must be a function!')
-		ReactDom.render( < AppView />, element, () => { callback && callback() } )
-	}
-}
+} from '../store'
 
-class AppView extends Component {
+export default class Main extends Component {
 	constructor(props, context) {
 		super(props, context)
 		this.initState()
