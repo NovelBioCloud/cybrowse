@@ -14,21 +14,19 @@ import {
 	connect,
 	Provider
 } from 'react-redux'
-import TempModuleFactory from './TempModuleFactory'
+import {
+	RootModuleFactory
+} from './modules'
 
 export default class Main extends Component {
 	constructor(props, context) {
 		super(props, context)
-		this.defaultConfig = this.props.defaultConfig
 	}
 	render() {
-		const tempModuleFactory = new TempModuleFactory(this.defaultConfig)
-		let TempModule = tempModuleFactory.getInstance()
+		const rootModuleFactory = new RootModuleFactory(this.props.defaultConfig)
+		const TempModule = rootModuleFactory.getInstance()
 		return (
-			<div>
-				<TempModule/>
-				<TempModule/>
-			</div>
+			<TempModule/>
 		)
 	}
 }

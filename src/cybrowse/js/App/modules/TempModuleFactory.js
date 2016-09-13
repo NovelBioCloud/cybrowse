@@ -66,10 +66,12 @@ class TimerModuleFactory {
 			switch (action.type) {
 			case "timer.refresh":
 				return {
+					...state,
 					time: Date.now()
 				}
 			case "timer.reset":
 				return {
+					...state,
 					time: action.time
 				}
 			default:

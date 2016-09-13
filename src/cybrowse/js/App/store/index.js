@@ -1,0 +1,2 @@
+
+export defaultConfigStore from './defaultConfigStore'

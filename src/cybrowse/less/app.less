@@ -13,3 +13,41 @@ body {
     margin: 0;
     overflow: auto;
 }
+.class-root-content {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+    flex-direction: column;
+    .root-content-toolbar {}
+    .root-content-content {
+        flex: auto;
+        &.root-content-layout {
+            display: flex;
+            .root-content-layout-aside {
+                flex-basis: 300px;
+                background: #f3f3f3;
+                border-right: #ddd;
+                overflow: auto;
+            }
+            .root-content-layout-article {
+                flex: auto;
+                overflow: auto;
+                position: relative;
+                .cytoscape-view-wrap {
+                    height: 100%;
+                }
+            }
+        }
+    }
+}
+.class-cytoscape-view {
+    height: 100%;
+    .cytoscape-view-container {
+        height: 100%;
+    }
+}
+.class-tool-bar {
+    padding: 10px;
+    background: #f2f2f2;
+    border-bottom: 1px solid #ddd;
+}

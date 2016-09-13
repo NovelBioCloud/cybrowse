@@ -3,56 +3,85 @@ import React, {
 } from 'react'
 import ReactDom from 'react-dom'
 import $ from 'jquery'
+import _ from 'lodash'
+import immutable from 'immutable'
+import postal from 'postal'
 import async from 'async'
 import assert from 'assert'
 import {
-	newError
-} from '../util'
+  eventDispatcher,
+} from './service'
+import {
+  defaultConfigStore,
+} from './store'
 import Loading from './Loading'
 import Main from './Main'
 import toastr from 'toastr'
 export default class App {
-	constructor(appElement) {
-		assert(appElement, "appElement can not be null!")
-		this.appElement = appElement
-		this._init()
+	constructor(element, callback) {
+		assert(element, 'element can not be null!')
+		assert(!callback || _.isFunction(callback), 'callback must be a function!')
+		ReactDom.render( < AppView />, element, () => { callback && callback() } )
 	}
-	_init() {
-		async.series([(callback) => {
-			this._renderLoading(callback)
+}
+
+class AppView extends Component {
+	constructor(props, context) {
+		super(props, context)
+		this.initState()
+	}
+	initState() {
+		this.state = {
+			view: 'loading'
+		}
+	}
+	render() {
+    switch (this.state.view) {
+      case 'loading':
+        return this.renderLoading()
+      default:
+        return this.renderInitial()
+    }
+	}
+	renderLoading() {
+		return <div>正在加载数据。。。</div>
+	}
+	renderInitial() {
+		return <div>
+      <div>toolbar</div>
+      <div>aside</div>
+      <div>article</div>
+    </div>
+	}
+	componentDidMount() {
+    let data;
+    async.waterfall([(callback) => {
+      defaultConfigStore.loadConfig().then((_data)=>{
+        data = _data
+  			callback()
+  		})
     }, (callback) => {
-			this._loadDefaultConfig(callback)
-    }, (callback) => {
-			this._render(callback)
+      this.setState({
+        view: 'initial'
+      }, this.bindEvent())
+      callback()
     }], (err, results) => {
-			if (err) {
-				alert(err)
-			} else {
-				toastr.success("加载成功")
-			}
-		})
+      if (err) {
+        console.error(err)
+      } else {
+        toastr.success('加载成功')
+      }
+    })
 	}
-	_renderLoading(callback) {
-		ReactDom.render( < Loading / > , this.appElement, () => {
-			callback()
-		})
-	}
-	_render(callback) {
-		ReactDom.render( < Main defaultConfig = {
-				this.defaultConfig
-			} />,this.appElement, ()=>{
-			callback()
-		})
+  componentWillUnmount() {
+    this.unbindEvent()
   }
-  _loadDefaultConfig(callback) {
-  	$.getJSON("data/config.json").then((data) => {
-  		this.defaultConfig = data
-  		callback()
-  	}, () => {
-  		callback(newError())
-  	})
+
+  bindEvent() {
+    this.subscription = eventDispatcher.channel().subscribe('appview.finish', () => {
+    })
   }
-  rerender() {
-  	this._init()
+  unbindEvent() {
+    this.subscription.unsubcribe()
   }
 }
