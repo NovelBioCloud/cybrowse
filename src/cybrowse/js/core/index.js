@@ -1,6 +1,6 @@
 import {
 	App
-} from "./container"
+} from "./view"
 
 export {
 	App

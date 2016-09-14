@@ -11,15 +11,14 @@ import async from 'async'
 import assert from 'assert'
 import {
   eventDispatcher,
-} from '../service'
-import {
-  defaultConfigStore,
-} from '../store'
-import Main from './Main'
+} from '../../service'
+import AppComponent from './AppComponent'
+
+/** 试图入口函数 **/
 export default class App {
 	constructor(element, callback) {
 		assert(element, 'element can not be null!')
 		assert(!callback || _.isFunction(callback), 'callback must be a function!')
-		ReactDom.render( < Main />, element, () => { callback && callback() } )
+		ReactDom.render( < AppComponent />, element, () => { callback && callback() } )
 	}
 }

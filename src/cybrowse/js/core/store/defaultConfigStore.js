@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 import postal from 'postal'
 import async from 'async'
 import assert from 'assert'
-import keyMirror from 'keyMirror'
 import {
 	eventDispatcher,
 	defaultConfigService
