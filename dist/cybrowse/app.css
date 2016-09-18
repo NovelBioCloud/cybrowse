@@ -581,3 +581,40 @@ body {
   margin: 0;
   overflow: auto;
 }
+.class-root-content {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  flex-direction: column;
+}
+.class-root-content .root-content-content {
+  flex: auto;
+}
+.class-root-content .root-content-content.root-content-layout {
+  display: flex;
+}
+.class-root-content .root-content-content.root-content-layout .root-content-layout-aside {
+  flex-basis: 300px;
+  background: #f3f3f3;
+  border-right: #ddd;
+  overflow: auto;
+}
+.class-root-content .root-content-content.root-content-layout .root-content-layout-article {
+  flex: auto;
+  overflow: auto;
+  position: relative;
+}
+.class-root-content .root-content-content.root-content-layout .root-content-layout-article .cytoscape-view-wrap {
+  height: 100%;
+}
+.class-cytoscape-view {
+  height: 100%;
+}
+.class-cytoscape-view .cytoscape-view-container {
+  height: 100%;
+}
+.class-tool-bar {
+  padding: 10px;
+  background: #f2f2f2;
+  border-bottom: 1px solid #ddd;
+}

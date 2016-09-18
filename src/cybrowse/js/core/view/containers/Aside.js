@@ -62,9 +62,6 @@ class Aside extends Component {
 	renderInitialized() {
 		return (
 			<div style = {{}} >
-
-
-				
 			< /div>
 		)
 	}
