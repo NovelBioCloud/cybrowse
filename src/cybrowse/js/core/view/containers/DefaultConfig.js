@@ -39,9 +39,7 @@ class DefaultConfig extends Component {
     this.loadDefaultConfig();
   }
   loadDefaultConfig() {
-    $.getJSON('data/data.json').then((data)=>{
-      this.props.loadDefaultConfig(data)
-    })
+    this.props.loadDefaultConfig()
   }
   renderLoading() {
     return (

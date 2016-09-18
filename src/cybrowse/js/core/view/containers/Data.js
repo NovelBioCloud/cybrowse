@@ -32,12 +32,18 @@ import MainView from './MainView'
 
 class Data extends Component {
   componentDidMount() {
-    this.loadDefaultConfig();
+    this.loadData();
   }
-  loadDefaultConfig() {
-    $.getJSON('data/data.json').then((data)=>{
-      this.props.loadData(data)
-    })
+  loadData() {
+		let dataString = localStorage.getItem("cytoscape-data") ;
+		let data = {}
+		if (dataString) {
+			try {
+				data = JSON.parse(dataString)
+			} catch (e) { }
+		}
+		localStorage.setItem("cytoscape-data", JSON.stringify(data)) ;
+		this.props.loadData(data)
   }
   renderLoading() {
     return (

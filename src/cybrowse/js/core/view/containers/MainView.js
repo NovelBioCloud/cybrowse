@@ -29,25 +29,23 @@ import {
   DataActions
 } from '../actions'
 import Toolbar from './Toolbar'
+import Aside from './Aside'
+import Cytoscape from './Cytoscape'
 
 class MainView extends Component {
-  componentDidMount() {
-    this.loadDefaultConfig();
-  }
-  loadDefaultConfig() {
-    $.getJSON('data/data.json').then((data)=>{
-      this.props.loadData(data)
-    })
-  }
   renderInitialized() {
     return (
       <div className='class-main-view'>
 				<div className='main-view-top'>
-					<Toolbar/>
+					<Toolbar ref='toolbar'/>
 				</div>
 				<div className='main-view-content'>
-					<div className='main-view-left'>1</div>
-					<div className='main-view-right'>2</div>
+					<div className='main-view-left'>
+						<Aside ref='aside'/>
+					</div>
+					<div className='main-view-right'>
+						<Cytoscape/>
+					</div>
 				</div>
 			</div>
     )

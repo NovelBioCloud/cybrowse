@@ -28,7 +28,7 @@ function loadDefaultConfig(state, action) {
 		defaultConfig: action.data,
 		defaultNetworkConfig: defaultNetworkConfigProcessor(action.data),
 		defaultNodeConfig: defaultNodeConfigProcessor(action.data),
-		defaultEdgeConfig: defaultEdgeConfigProcessor(action.data)
+		defaultEdgeConfig: defaultEdgeConfigProcessor(action.data),
 	}
 }
 export default function defaultConfigReducer(state = initialState, action) {

@@ -30,7 +30,7 @@ import {
 	DataActions
 } from '../actions'
 
-class Toolbar extends Component {
+class Aside extends Component {
 	constructor(props, context) {
 		super(props, context)
 		this.state = {
@@ -62,11 +62,9 @@ class Toolbar extends Component {
 	renderInitialized() {
 		return (
 			<div style = {{}} >
-				<button type='button' onClick={
-					() => {
-						console.log(this.cytoscapeInstance.json())
-					}
-				}>打印</button>
+
+
+				
 			< /div>
 		)
 	}
@@ -78,7 +76,7 @@ class Toolbar extends Component {
 		}
 	}
 }
-Toolbar.propTypes = {
+Aside.propTypes = {
 	dispatch: React.PropTypes.func.isRequired
 }
 
@@ -104,4 +102,4 @@ export default connect(
 	{
 		withRef: true
 	}
-)(Toolbar)
+)(Aside)
