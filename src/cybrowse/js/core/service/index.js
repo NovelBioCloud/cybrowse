@@ -1,2 +1,0 @@
-
-export eventDispatcher from './eventDispatcher'

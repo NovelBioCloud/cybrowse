@@ -1,3 +1,14 @@
 {
-    "id": "1"
+    "node": {
+        "background": "#ddd",
+        "width": "40px",
+        "height": "40px"
+    },
+    "edge": {
+        "color": "red",
+        "border-size": "3px"
+    },
+    "global": {
+        "background": "blue"
+    }
 }

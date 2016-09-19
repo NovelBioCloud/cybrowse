@@ -1,15 +1,11 @@
-import React, {
-	Component
-} from 'react'
-import {
-	render
-} from 'react-dom'
 import $ from 'jquery'
-import injectTapEventPlugin from 'react-tap-event-plugin'
-import {
-	App
-} from './core'
-injectTapEventPlugin()
+import _ from 'lodash'
+import immutable from 'immutable'
+
+import App from './core/App'
 $(() => {
-	new App(document.querySelector("#app"))
+	let app = new App()
+	app.init({
+		container: document.querySelector("#app")
+	})
 })

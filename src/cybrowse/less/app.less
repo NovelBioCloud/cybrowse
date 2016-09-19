@@ -13,41 +13,39 @@ body {
     margin: 0;
     overflow: auto;
 }
-.class-root-content {
-    display: flex;
-    align-items: stretch;
+.class-app {
+    min-width: 980px;
+    min-height: 300px;
+    background: darken(#f2f2f2, 10%);
     height: 100%;
+    display: flex;
     flex-direction: column;
-    .root-content-toolbar {}
-    .root-content-content {
+    .app-title {
+        flex: none;
+        .app-toolbar-wrap {
+            flex: none;
+        }
+    }
+    .app-content {
         flex: auto;
-        &.root-content-layout {
-            display: flex;
-            .root-content-layout-aside {
-                flex-basis: 300px;
-                background: #f3f3f3;
-                border-right: #ddd;
-                overflow: auto;
-            }
-            .root-content-layout-article {
-                flex: auto;
-                overflow: auto;
-                position: relative;
-                .cytoscape-view-wrap {
-                    height: 100%;
-                }
-            }
+        display: flex;
+        .app-editor-wrap {
+            flex: none;
+            flex-basis: 300px;
+            background: darken(#f2f2f2, 5%);
+        }
+        .app-cytoscape-wrap {
+            flex: auto;
+            background: #f2f2f2;
         }
     }
 }
-.class-cytoscape-view {
+.class-cytoscape {
     height: 100%;
-    .cytoscape-view-container {
+    display: flex;
+    .cytoscape-view {
+        flex: auto;
+        min-height: 300px;
         height: 100%;
     }
-}
-.class-tool-bar {
-    padding: 10px;
-    background: #f2f2f2;
-    border-bottom: 1px solid #ddd;
 }
