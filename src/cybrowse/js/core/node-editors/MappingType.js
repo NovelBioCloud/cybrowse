@@ -10,13 +10,18 @@ export default function MappingType() {
 		props, $container, $view, base = getBase(),
 		dataService = getDataService(),
 		viewService = getViewService(),
-		eventService = getEventService()
+		eventService = getEventService(),
+		manager,
+		onChange
 
 	this.init = function (props) {
 		base.init(props)
 	}
 	this.getView = function () {
 		return $view
+	}
+	this.getValue = function () {
+		return base.getValue()
 	}
 
 	function getBase() {
@@ -26,7 +31,13 @@ export default function MappingType() {
 				viewService.init()
 				eventService.init()
 			},
-
+			onChange: function (data) {
+				typeValue = data
+				onChange && onChange(data)
+			},
+			getValue: function () {
+				return $view.find('.fn-mapping-type-select').val()
+			}
 		}
 	}
 
@@ -34,8 +45,13 @@ export default function MappingType() {
 		return {
 			init: function (_props) {
 				props = _props
-        $container = props.container
+				$container = props.container
+				manager = props.manager
+				onChange = props.onChange
 					//TODO
+			},
+			getTypes: function () {
+				return [['discrete', 'discrete mapping']]
 			}
 		}
 	}
@@ -43,12 +59,24 @@ export default function MappingType() {
 	function getViewService() {
 		return {
 			getTemplate: function () {
-				return `<div>template</div>`
+				return `<div>
+          <select class='fn-mapping-type-select form-control'>
+            <% _.each(types, function([key, label]){ %>
+            <option value='<%=key%>'><%=label%></option>
+            <% })%>
+          </select>
+        </div>`
 			},
 			init: function () {
-				$view = $(viewService.getTemplate())
+				let types = dataService.getTypes()
+				let template = _.template(viewService.getTemplate())({
+					types: types
+				})
+				$view = $(template)
 				$container.append($view)
-
+				$view.find('.fn-column-select').change(function (event) {
+					base.onChange($(this).val())
+				})
 			},
 
 		}

@@ -7,14 +7,15 @@ import postal from 'postal'
 
 export default function Toolbar() {
 	let _this = this
+	let props
 	let $container
 	let $view
-	let defaultConfig
 	let cytoscape
 	let dataService = getDataService()
 	let viewService = getViewService()
 	let eventService = getEventService()
 	let base = getBase()
+	let manager
 	this.init = (props) => {
 		base.init(props)
 	}
@@ -29,43 +30,38 @@ export default function Toolbar() {
 		return {
 			init: (props) => {
 				async.series([
-					(callback) => {
+					(cb) => {
 						dataService.init(props)
-						dataService.loadDefaultConfig(callback)
-          }, (callback) => {
+						cb()
+          }, (cb) => {
 						viewService.init()
 						eventService.init()
-						callback()
+						cb()
           }
         ])
 			},
 			setCytoscape: (_cytoscape) => {
 				cytoscape = _cytoscape
-				eventService.initialized()
+			},
+			loadData:()=>{
+				manager.getDataManager().load()
 			}
 		}
 	}
 
 	function getDataService() {
 		return {
-			init: (props) => {
+			init: (_props) => {
+				props = _props
 				$container = $(props.container)
+				manager = props.manager
 			},
-			loadDefaultConfig: (callback) => {
-				$.getJSON('data/defaultConfig.json', (data) => {
-					callback()
-				})
-			}
-
 		}
 	}
 
 	function getViewService() {
 		return {
 			getTemplate: () => {
-				return viewService.getInitializedTemplate()
-			},
-			getInitializedTemplate: () => {
 				return `<div>
 					<nav class="navbar navbar-default" role="navigation">
 					  <div class="container-fluid">
@@ -76,7 +72,7 @@ export default function Toolbar() {
 					    <!-- Collect the nav links, forms, and other content for toggling -->
 					    <div>
 					      <ul class="nav navbar-nav">
-					        <li class="active"><a href="#">Link</a></li>
+					        <li class="active"><a href="#" class='fn-toolbar-load-data'>loadData</a></li>
 					        <li><a href="#">Link</a></li>
 					        <li class="dropdown">
 					          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
@@ -111,26 +107,18 @@ export default function Toolbar() {
 			},
 			init: () => {
 				$view = $(viewService.getTemplate())
-				$container.empty()
 				$container.append($view)
 			},
-			initialized: () => {
-				$view = $(viewService.getInitializedTemplate())
-				$container.empty()
-				$container.append($view)
-			}
 		}
 	}
 
 	function getEventService() {
 		return {
 			init: () => {
-				postal.channel().subscribe('defaultConfig.reload', () => {
-					base.reloadDefaultConfig()
+				$view.find('.fn-toolbar-load-data').click(()=>{
+					base.loadData()
 				})
 			},
-			initialized: () => {
-			}
 		}
 	}
 

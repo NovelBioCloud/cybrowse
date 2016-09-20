@@ -15,7 +15,7 @@ export default function App() {
 	let $container
 	let $view
 		//** manager **//
-	let manager
+	let manager = new Manager()
 
 	let toolbar = new Toolbar()
 	let editor = new Editor()
@@ -55,7 +55,6 @@ export default function App() {
 				$container = $(props.container)
 			},
 			initManager: (cb) => {
-				manager = new Manager()
 				manager.init(cb)
 			}
 		}

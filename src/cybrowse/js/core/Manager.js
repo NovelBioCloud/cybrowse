@@ -62,7 +62,9 @@ export default function Manager() {
 			computed: computedNodeConfigManager
 		}
 	}
-
+	this.getDataManager = () => {
+		return dataManager
+	}
 	function getDataService() {
 		return {
 			initDefaultConfigManager: (cb) => {

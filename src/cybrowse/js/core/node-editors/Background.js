@@ -17,6 +17,7 @@ export default function Background() {
 	let dataService = getDataService()
 	let viewService = getViewService()
 	let eventService = getEventService()
+	let manager
 	this.init = function (props) {
 		base.init(props)
 	}
@@ -49,6 +50,9 @@ export default function Background() {
 			hide: function () {
 				$view.addClass("hidden")
 			},
+			repaint:function() {
+				viewService.repaint()
+			}
 		}
 	}
 
@@ -56,6 +60,8 @@ export default function Background() {
 		return {
 			init: function (_props) {
 				props = _props
+				$container = props.container
+				manager = props.manager
 			}
 		}
 	}
@@ -68,7 +74,38 @@ export default function Background() {
 					customValue: '',
 				})
 				$view = $(template)
-				$container = props.container
+				$container.append($view)
+				let column = new Column()
+				let mappingType = new MappingType()
+				let mappingContent = new MappingContent()
+				column.init({
+					container: $view.find('.fn-background-column-wrap'),
+					onChange: () => {
+						mappingContent.update()
+					},
+					manager: manager
+				})
+				mappingType.init({
+					container: $view.find('.fn-background-mapping-type-wrap'),
+					onChange: () => {
+						mappingContent.update()
+					},
+					manager: manager
+				})
+				mappingContent.init({
+					container: $view.find('.fn-background-mapping-content-wrap'),
+					column: column,
+					mappingType: mappingType,
+					manager: manager
+				})
+			},
+			repaint:()=>{
+				$view.remove()
+				let template = _.template(viewService.getTemplate())({
+					defaultValue: '123',
+					customValue: '',
+				})
+				$view = $(template)
 				$container.append($view)
 				let column = new Column()
 				let mappingType = new MappingType()
@@ -108,9 +145,9 @@ export default function Background() {
 					<div>
 						<div class=''>自定义</div>
 						<div>
-							<div class='fn-background-column-wrap'>column</div>
-							<div class='fn-background-mapping-type-wrap'>mapping-type</div>
-							<div class='fn-background-mapping-content-wrap'>mapping-content</div>
+							<div class='fn-background-column-wrap'></div>
+							<div class='fn-background-mapping-type-wrap'></div>
+							<div class='fn-background-mapping-content-wrap'></div>
 						</div>
 					</div>
         </div>`
@@ -120,7 +157,11 @@ export default function Background() {
 
 	function getEventService() {
 		return {
-			init: () => {}
+			init: () => {
+				postal.channel().subscribe('dataManager.load', () => {
+					base.repaint()
+				})
+			}
 		}
 	}
 }

@@ -10,13 +10,18 @@ export default function MappingContent() {
 		props, $container, $view, base = getBase(),
 		dataService = getDataService(),
 		viewService = getViewService(),
-		eventService = getEventService()
-
+		eventService = getEventService(),
+		manager,
+		column,
+		mappingType
 	this.init = function (props) {
 		base.init(props)
 	}
 	this.getView = function () {
 		return $view
+	}
+	this.update = function () {
+		base.update()
 	}
 
 	function getBase() {
@@ -26,7 +31,9 @@ export default function MappingContent() {
 				viewService.init()
 				eventService.init()
 			},
-
+			update: function () {
+				viewService.render()
+			}
 		}
 	}
 
@@ -34,8 +41,10 @@ export default function MappingContent() {
 		return {
 			init: function (_props) {
 				props = _props
-        $container = props.container
-					//TODO
+				$container = props.container
+				manager = props.manager
+				column = props.column
+				mappingType = props.mappingType
 			}
 		}
 	}
@@ -43,14 +52,30 @@ export default function MappingContent() {
 	function getViewService() {
 		return {
 			getTemplate: function () {
-				return `<div>template</div>`
+				return `<div>
+          <% values.forEach((value)=>{%>
+            <div>
+              <label><%=value%></label>
+              <input type='text'/>
+            </div>
+          <% }) %>
+        </div>`
 			},
 			init: function () {
-				$view = $(viewService.getTemplate())
-				$container.append($view)
-
+				viewService.render()
 			},
-
+			render: function () {
+				$container.empty()
+        let dataManager = manager.getDataManager()
+				let columnValue = column.getValue()
+				let typeValue = mappingType.getValue()
+        let values = dataManager.getValuesByProperty(columnValue)
+        let template = _.template(viewService.getTemplate())({
+          values: values
+        })
+				$view = $(template)
+				$container.append($view)
+			}
 		}
 	}
 
