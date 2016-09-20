@@ -4,16 +4,12 @@ import async from 'async'
 import assert from 'assert'
 import immutable from 'immutable'
 import postal from 'postal'
-import Background from './node-editors/Background'
-import PropertySelector from './node/PropertySelector'
-import PropertyEditor from './node/PropertyEditor'
 
-export default function NodeEditor() {
+export default function TextUnit() {
 	let _this = this
 	let props
 	let $container
 	let $view
-	let manager
 	let base = getBase()
 	let dataService = getDataService()
 	let viewService = getViewService()
@@ -28,8 +24,15 @@ export default function NodeEditor() {
 	function getBase() {
 		return {
 			init: (props) => {
-				dataService.init(props)
-				viewService.init()
+				async.series([(cb) => {
+					dataService.init(props)
+					cb()
+        }, (cb) => {
+					viewService.init()
+					cb()
+        }], (err) => {
+
+				})
 			},
 			getView: () => {
 				return $view
@@ -41,8 +44,6 @@ export default function NodeEditor() {
 		return {
 			init: function (_props) {
 				props = _props
-				$container = props.container
-				manager = props.manager
 			}
 		}
 	}
@@ -54,24 +55,12 @@ export default function NodeEditor() {
 			},
 			render: () => {
 				$view = $(viewService.getTemplate())
-				$container.append($view)
-				let propertySelector = new PropertySelector()
-				let propertyEditor = new PropertyEditor()
-				propertySelector.init({
-					container: $view.find('.fn-property-selector-wrap'),
-					onChange: (property, selected) => {
-						propertyEditor.rerenderEditor(property, selected)
-					}
-				})
-				propertyEditor.init({
-					container: $view.find('.fn-property-editor-wrap'),
-					manager: manager
-				})
+				$container = props.container
+				$container.empty().append($view)
 			},
 			getTemplate: () => {
 				return `<div>
-					<div class='fn-property-selector-wrap'></div>
-          <div class='fn-property-editor-wrap'></div>
+					<div><label><%=propertyValue%></label><input type='text' value='123'/></div>
         </div>`
 			}
 		}

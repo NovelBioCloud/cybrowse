@@ -4,6 +4,7 @@ import async from 'async'
 import assert from 'assert'
 import immutable from 'immutable'
 import postal from 'postal'
+import {} from '../lib/bootstrap'
 import Toolbar from './Toolbar'
 import Editor from './Editor'
 import Cytoscape from './Cytoscape'
@@ -65,11 +66,11 @@ export default function App() {
 			getTemplate: () => {
 				return `<div class='class-app'>
           <div class='app-title'>
-            <div class='app-toolbar-wrap' data-toolbar>toolbar</div>
+            <div class='app-toolbar-wrap' data-toolbar></div>
           </div>
           <div class='app-content'>
-            <div class='app-editor-wrap' data-editor>editor</div>
-            <div class='app-cytoscape-wrap' data-cytoscape>cytoscape</div>
+            <div class='app-editor-wrap container-fluid' data-editor></div>
+            <div class='app-cytoscape-wrap container-fluid' data-cytoscape></div>
           </div>
         </div>`
 			},

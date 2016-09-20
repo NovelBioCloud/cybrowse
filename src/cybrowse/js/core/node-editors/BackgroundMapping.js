@@ -60,8 +60,23 @@ export default function Background() {
 			},
 			getTemplate: () => {
 				return `<div>
-          <label>背景颜色</label>
-          <input type='text' value='123'/>
+          <div>
+						<label>背景颜色</label>
+					</div>
+          <div><label>默认</label>
+					<div>
+						<label>属性</label>
+						<select>
+							<option>---</option>
+							<option>temp</option>
+						</select>
+					</div>
+					<div>
+						<label>设置</label>
+					</div>
+					<div>
+						<div class='fn-mapping-editor'/>
+					</div>
         </div>`
 			}
 		}

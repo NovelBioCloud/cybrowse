@@ -54,8 +54,7 @@ export default function Cytoscape() {
 				$container = $(props.container)
 			},
 			loadDefaultConfig: (callback) => {
-				$.getJSON('data/data.json', (data) => {
-					console.log(data)
+				$.getJSON('data/defaultConfig.json', (data) => {
 					callback()
 				})
 			}

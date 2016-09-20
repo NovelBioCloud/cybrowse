@@ -2,7 +2,8 @@
     "node": {
         "background": "#ddd",
         "width": "40px",
-        "height": "40px"
+        "height": "40px",
+        "border-width": "0px"
     },
     "edge": {
         "color": "red",

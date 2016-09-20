@@ -40,9 +40,7 @@ export default function Toolbar() {
         ])
 			},
 			setCytoscape: (_cytoscape) => {
-				console.log(_cytoscape)
 				cytoscape = _cytoscape
-				viewService.initialized()
 				eventService.initialized()
 			}
 		}
@@ -54,8 +52,7 @@ export default function Toolbar() {
 				$container = $(props.container)
 			},
 			loadDefaultConfig: (callback) => {
-				$.getJSON('data/data.json', (data) => {
-					console.log(data)
+				$.getJSON('data/defaultConfig.json', (data) => {
 					callback()
 				})
 			}
@@ -66,10 +63,51 @@ export default function Toolbar() {
 	function getViewService() {
 		return {
 			getTemplate: () => {
-				return `<div><button>文件选择</button></div>`
+				return viewService.getInitializedTemplate()
 			},
 			getInitializedTemplate: () => {
-				return `<div><button type='button' class='fn-print'>文件选择</button></div>`
+				return `<div>
+					<nav class="navbar navbar-default" role="navigation">
+					  <div class="container-fluid">
+					    <!-- Brand and toggle get grouped for better mobile display -->
+					    <div class="navbar-header">
+					      <a class="navbar-brand" href="#">Cybrowse</a>
+					    </div>
+					    <!-- Collect the nav links, forms, and other content for toggling -->
+					    <div>
+					      <ul class="nav navbar-nav">
+					        <li class="active"><a href="#">Link</a></li>
+					        <li><a href="#">Link</a></li>
+					        <li class="dropdown">
+					          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+					          <ul class="dropdown-menu" role="menu">
+					            <li><a href="#">Action</a></li>
+					            <li><a href="#">Another action</a></li>
+					            <li><a href="#">Something else here</a></li>
+					            <li class="divider"></li>
+					            <li><a href="#">Separated link</a></li>
+					            <li class="divider"></li>
+					            <li><a href="#">One more separated link</a></li>
+					          </ul>
+					        </li>
+					      </ul>
+					      <ul class="nav navbar-nav navbar-right">
+					        <li><a href="#">Link</a></li>
+					        <li class="dropdown">
+					          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+					          <ul class="dropdown-menu" role="menu">
+					            <li><a href="#">Action</a></li>
+					            <li><a href="#">Another action</a></li>
+					            <li><a href="#">Something else here</a></li>
+					            <li class="divider"></li>
+					            <li><a href="#">Separated link</a></li>
+					          </ul>
+					        </li>
+					      </ul>
+					    </div><!-- /.navbar-collapse -->
+					  </div><!-- /.container-fluid -->
+					</nav>
+				</div>`
 			},
 			init: () => {
 				$view = $(viewService.getTemplate())
@@ -92,9 +130,6 @@ export default function Toolbar() {
 				})
 			},
 			initialized: () => {
-				$view.find('.fn-print').click(() => {
-					console.log(cytoscape.json())
-				})
 			}
 		}
 	}

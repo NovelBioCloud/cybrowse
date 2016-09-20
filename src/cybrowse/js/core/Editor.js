@@ -4,7 +4,6 @@ import async from 'async'
 import assert from 'assert'
 import immutable from 'immutable'
 import postal from 'postal'
-import {} from '../base/bootstrap'
 import NodeEditor from './NodeEditor'
 export default function Editor() {
 	let _this = this
@@ -49,7 +48,6 @@ export default function Editor() {
 
 			},
 			setCytoscape: (cy) => {
-				console.log(cy)
 			}
 		}
 	}
@@ -65,8 +63,7 @@ export default function Editor() {
         }
 			},
 			loadDefaultConfig: (cb) => {
-				$.getJSON('data/data.json', (data) => {
-					console.log(data)
+				$.getJSON('data/defaultConfig.json', (data) => {
 					cb()
 				})
 			}
@@ -78,16 +75,29 @@ export default function Editor() {
 		return {
 			getTemplate: () => {
 				return `<div>
-          <div>
-            <div class='fn-node-editor-title'>节点信息</div>
-            <div class='fn-edge-editor-title'>连线信息</div>
-            <div class='fn-network-editor-title'>全局信息</div>
-          </div>
-          <div>
-            <div class='fn-node-editor-container'></div>
-            <div class='fn-edge-editor-container'>edge</div>
-            <div class='fn-network-editor-container'>network</div>
-          </div>
+					<ul class="nav nav-tabs" role="tablist">
+					  <li role="presentation" class="active">
+							<a href="#home" role="tab" data-toggle="tab">节点信息</a>
+						</li>
+					  <li role="presentation">
+							<a href="#profile" role="tab" data-toggle="tab">连线信息</a>
+						</li>
+					  <li role="presentation">
+							<a href="#messages" role="tab" data-toggle="tab">全局信息</a>
+						</li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content">
+					  <div role="tabpanel" class="tab-pane fade in active" id="home">
+							<div class='fn-node-editor-container'></div>
+						</div>
+					  <div role="tabpanel" class="tab-pane fade" id="profile">
+							<div class='fn-edge-editor-container'>edge</div>
+						</div>
+					  <div role="tabpanel" class="tab-pane fade" id="messages">
+							<div class='fn-network-editor-container'>network</div>
+						</div>
+					</div>
         </div>`
 			},
 			init: () => {
