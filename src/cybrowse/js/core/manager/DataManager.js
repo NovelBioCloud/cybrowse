@@ -14,15 +14,21 @@ function DataService() {
 export default function DataManager() {
 	let data
 	let dataService = new DataService()
+	try {
+		let cybrowseData = JSON.parse(localStorage.getItem("cybrowse-data"))
+		data = cybrowseData.elements
+		data.styles = cybrowseData.style
+	} catch (e) {
+		data = {
+			nodes: [],
+			edges: [],
+			styles: []
+		}
+	}
+
 	this.load = (callback, emitEvent = true) => {
 		dataService.load().then((_data) => {
 			data = _data
-			if (callback) {
-				callback(null, data)
-			}
-			if (emitEvent) {
-				postal.channel().publish('dataManager.load', data)
-			}
 		}, () => {
 			callback(new Error("reload error"))
 		})
@@ -31,12 +37,13 @@ export default function DataManager() {
 		return data
 	}
 	this.getProperties = () => {
-		console.log(data)
 		if (!data) {
 			return []
 		} else {
 			let propertySet = new Set()
-			data.forEach((item) => {
+			data.nodes.filter((item) => {
+				return item.group === 'nodes'
+			}).forEach((item) => {
 				Object.keys(item.data).forEach((property) => {
 					propertySet.add(property)
 				})
@@ -45,11 +52,13 @@ export default function DataManager() {
 		}
 	}
 	this.getValuesByProperty = (property) => {
-		if (!data || data === '') {
+		if (!property || property === '') {
 			return []
 		} else {
 			let valueSet = new Set()
-			data.forEach((item) => {
+			data.nodes.filter((item) => {
+				return item.group === 'nodes'
+			}).forEach((item) => {
 				// 为了提高效率，此处假设外部传入的property属性一定是存在的
 				// if (_.includes(_.keys(item.data), property)) {
 				// 	valueSet.add(item[property] || "")

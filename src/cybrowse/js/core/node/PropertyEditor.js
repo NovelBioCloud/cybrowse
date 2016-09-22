@@ -4,7 +4,7 @@ import async from 'async'
 import assert from 'assert'
 import immutable from 'immutable'
 import postal from 'postal'
-import Background from '../node-editors/Background'
+import BackgroundColor from '../node-editors/BackgroundColor'
 
 export default function PropertyEditor() {
 	let _this = this,
@@ -13,10 +13,12 @@ export default function PropertyEditor() {
 		viewService = getViewService(),
 		eventService = getEventService(),
 		editors = new Map(),
-		manager
+		manager,
+		cytoscapeInstance,
+		context
 
-	this.init = function (props) {
-		base.init(props)
+	this.init = function (props, context) {
+		base.init(props, context)
 	}
 	this.getView = function () {
 		return $view
@@ -27,8 +29,8 @@ export default function PropertyEditor() {
 
 	function getBase() {
 		return {
-			init: function (props) {
-				dataService.init(props)
+			init: function (props, context) {
+				dataService.init(props, context)
 				viewService.init()
 				eventService.init()
 			},
@@ -48,10 +50,12 @@ export default function PropertyEditor() {
 
 	function getDataService() {
 		return {
-			init: function (_props) {
+			init: function (_props, _context) {
 				props = _props
+				context = _context
 				$container = props.container
 				manager = props.manager
+				cytoscapeInstance = props.cytoscapeInstance
 			}
 		}
 	}
@@ -59,7 +63,7 @@ export default function PropertyEditor() {
 	function getViewService() {
 		return {
 			getTemplate: function () {
-				return `<div></div>`
+				return `<div/>`
 			},
 			init: function () {
 				$view = $(viewService.getTemplate())
@@ -67,12 +71,13 @@ export default function PropertyEditor() {
 				viewService.initBackground()
 			},
 			initBackground: function () {
-				let background = new Background()
-				editors.set('background', background)
-				background.init({
+				let backgroundColor = new BackgroundColor()
+				editors.set('backgroundColor', backgroundColor)
+				backgroundColor.init({
 					container: $view,
-					manager: manager
-				})
+					manager: manager,
+					cytoscapeInstance: cytoscapeInstance
+				}, context)
 			}
 		}
 	}

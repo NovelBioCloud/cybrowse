@@ -13,7 +13,8 @@ export default function MappingContent() {
 		eventService = getEventService(),
 		manager,
 		column,
-		mappingType
+		mappingType,
+		onChange
 	this.init = function (props) {
 		base.init(props)
 	}
@@ -32,7 +33,10 @@ export default function MappingContent() {
 				eventService.init()
 			},
 			update: function () {
-				viewService.render()
+				viewService.init()
+			},
+			onChange: function (mappingValue, value) {
+				onChange && onChange(mappingValue, value)
 			}
 		}
 	}
@@ -45,6 +49,7 @@ export default function MappingContent() {
 				manager = props.manager
 				column = props.column
 				mappingType = props.mappingType
+				onChange = props.onChange
 			}
 		}
 	}
@@ -56,24 +61,28 @@ export default function MappingContent() {
           <% values.forEach((value)=>{%>
             <div>
               <label><%=value%></label>
-              <input type='text'/>
+              <input type='text' class='form-control fn-mapping-content-input' data-mapping-value='<%=value%>'/>
             </div>
           <% }) %>
+					<div>
+						<button class='btn btn-default fn-mapping-content-update'>修改</button>
+					</div>
         </div>`
 			},
 			init: function () {
-				viewService.render()
-			},
-			render: function () {
 				$container.empty()
-        let dataManager = manager.getDataManager()
+				let dataManager = manager.getDataManager()
 				let columnValue = column.getValue()
 				let typeValue = mappingType.getValue()
-        let values = dataManager.getValuesByProperty(columnValue)
-        let template = _.template(viewService.getTemplate())({
-          values: values
-        })
+				let values = dataManager.getValuesByProperty(columnValue)
+				let template = _.template(viewService.getTemplate())({
+					values: values
+				})
 				$view = $(template)
+				$view.on('.fn-mapping-content-input').change(function (event) {
+					let target = event.target
+					base.onChange($(target).data('mapping-value'), $(target).val())
+				})
 				$container.append($view)
 			}
 		}

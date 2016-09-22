@@ -13,9 +13,11 @@ export default function PropertySelector() {
 		eventService = getEventService(),
 		properties,
 		onChange,
-		propertyEditors = new Map()
-	this.init = function (props) {
-		base.init(props)
+		cytoscapeInstance,
+		propertyEditors = new Map(),
+		context
+	this.init = function (props, context) {
+		base.init(props, context)
 	}
 	this.getView = function () {
 		return viewService.getView()
@@ -23,8 +25,8 @@ export default function PropertySelector() {
 
 	function getBase() {
 		return {
-			init: function (props) {
-				dataService.init(props)
+			init: function (props, context) {
+				dataService.init(props, context)
 				viewService.init()
 				eventService.init()
 			},
@@ -46,11 +48,13 @@ export default function PropertySelector() {
 
 	function getDataService() {
 		return {
-			init: function (_props) {
+			init: function (_props, _context) {
 				props = _props
+				context = _context
 				onChange = props.onChange
 				$container = props.container
 				properties = props.properties || ['background', 'width', 'height']
+				cytoscapeInstance = props.cytoscapeInstance
 			}
 		}
 	}
@@ -59,10 +63,19 @@ export default function PropertySelector() {
 		return {
 			getTemplate: function () {
 				return `<div>
-					<div class='fn-property-selector-show-all'>全部显示</div>
-					<div class='fn-property-selector-hide-all'>全部隐藏</div>
-          <div class='fn-property-selector-content'></div>
-        </div>`
+					<div class="btn-group btn-group-sm">
+						<div class="btn-group btn-group-sm">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+								自定义
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu fn-property-selector-content" role="menu">
+							</ul>
+						</div>
+						<button type="button" class="btn btn-default fn-property-selector-show-all">全部显示</button>
+						<button type="button" class="btn btn-default fn-property-selector-hide-all">全部隐藏</button>
+					</div>
+        </div> `
 			},
 			init: () => {
 				$view = $(viewService.getTemplate())
@@ -72,6 +85,7 @@ export default function PropertySelector() {
 					propertyEditor.init({
 						container: $view.find('.fn-property-selector-content'),
 						property: item,
+						cytoscapeInstance: cytoscapeInstance,
 						onChange: (selected) => {
 							base.onChange(item, selected)
 						},
@@ -169,7 +183,11 @@ function Property() {
 	function getViewService() {
 		return {
 			getTemplate: function () {
-				return `<div class='fn-property'><i class='fn-flag'>flag</i>|${property}</div>`
+				return `<li class='fn-property'>
+					<a href="#">
+						${property}<i class='fa-pull-right fa fa-check fa-fw fn-flag'></i>
+					</a>
+				</li>`
 			},
 			init: function () {
 				$view = $(viewService.getTemplate())

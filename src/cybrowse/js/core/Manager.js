@@ -44,7 +44,8 @@ export default function Manager() {
 				(cb) => {
 					dataService.initDefaultConfigManager(cb)
         }, (cb) => {
-					dataService.initDataManager(cb)
+					dataService.initDataManager()
+					cb()
         }, (cb) => {
 					dataService.initManagers(cb)
         }, (cb) => {
@@ -65,6 +66,10 @@ export default function Manager() {
 	this.getDataManager = () => {
 		return dataManager
 	}
+	this.getDefaultConfigManager = () => {
+		return defaultConfigManager
+	}
+
 	function getDataService() {
 		return {
 			initDefaultConfigManager: (cb) => {

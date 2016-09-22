@@ -8,7 +8,7 @@ import Column from './Column'
 import MappingType from './MappingType'
 import MappingContent from './MappingContent'
 
-export default function Background() {
+export default function BackgroundColor() {
 	let _this = this
 	let props
 	let $container
@@ -18,14 +18,16 @@ export default function Background() {
 	let viewService = getViewService()
 	let eventService = getEventService()
 	let manager
-	this.init = function (props) {
-		base.init(props)
+	let cytoscapeInstance
+	let context
+	this.init = function (props, context) {
+		base.init(props, context)
 	}
 	this.getView = function () {
 		return base.getView()
 	}
 	this.getPropertyName = function () {
-		return 'background'
+		return 'background-color'
 	}
 	this.show = function () {
 		base.show()
@@ -36,8 +38,8 @@ export default function Background() {
 
 	function getBase() {
 		return {
-			init: function (props) {
-				dataService.init(props)
+			init: function (props, context) {
+				dataService.init(props, context)
 				viewService.init()
 				eventService.init()
 			},
@@ -50,18 +52,30 @@ export default function Background() {
 			hide: function () {
 				$view.addClass("hidden")
 			},
-			repaint:function() {
-				viewService.repaint()
+			render: function () {
+				viewService.render()
+			},
+			updateCytoscape: function (property, mappingValue, value) {
+				cytoscapeInstance = context.get('cytoscapeInstance')
+				console.log(cytoscapeInstance)
+				cytoscapeInstance.batch(function () {
+					cytoscapeInstance.style().selector(`node[${property}='${mappingValue}']`).style({
+						'background-color': value
+					}).update()
+				})
+
 			}
 		}
 	}
 
 	function getDataService() {
 		return {
-			init: function (_props) {
+			init: function (_props, _context) {
 				props = _props
+				context = _context
 				$container = props.container
 				manager = props.manager
+				cytoscapeInstance = props.cytoscapeInstance
 			}
 		}
 	}
@@ -69,40 +83,14 @@ export default function Background() {
 	function getViewService() {
 		return {
 			init: () => {
-				let template = _.template(viewService.getTemplate())({
-					defaultValue: '123',
-					customValue: '',
-				})
-				$view = $(template)
-				$container.append($view)
-				let column = new Column()
-				let mappingType = new MappingType()
-				let mappingContent = new MappingContent()
-				column.init({
-					container: $view.find('.fn-background-column-wrap'),
-					onChange: () => {
-						mappingContent.update()
-					},
-					manager: manager
-				})
-				mappingType.init({
-					container: $view.find('.fn-background-mapping-type-wrap'),
-					onChange: () => {
-						mappingContent.update()
-					},
-					manager: manager
-				})
-				mappingContent.init({
-					container: $view.find('.fn-background-mapping-content-wrap'),
-					column: column,
-					mappingType: mappingType,
-					manager: manager
-				})
+				viewService.render()
 			},
-			repaint:()=>{
-				$view.remove()
+			render: () => {
+				if ($view) {
+					$view.remove()
+				}
 				let template = _.template(viewService.getTemplate())({
-					defaultValue: '123',
+					defaultValue: '',
 					customValue: '',
 				})
 				$view = $(template)
@@ -128,7 +116,11 @@ export default function Background() {
 					container: $view.find('.fn-background-mapping-content-wrap'),
 					column: column,
 					mappingType: mappingType,
-					manager: manager
+					manager: manager,
+					onChange: (mappingValue, value) => {
+						let property = column.getValue()
+						base.updateCytoscape(property, mappingValue, value)
+					}
 				})
 			},
 			getTemplate: () => {
@@ -159,7 +151,7 @@ export default function Background() {
 		return {
 			init: () => {
 				postal.channel().subscribe('dataManager.load', () => {
-					base.repaint()
+					base.render()
 				})
 			}
 		}

@@ -1,25 +1,31 @@
-[{
-    "data": {
-        "id": "n1",
-        "p1": "n1-p1",
-        "p2": "n1-p2",
-        "p3": "n1-p3",
-        "p4": "n1-p4",
-        "name": "n1-name"
-    }
-}, {
-    "data": {
-        "id": "n2",
-        "p1": "n2-p1",
-        "p2": "n2-p2",
-        "p3": "n2-p3",
-        "p4": "n2-p4",
-        "name": "n2-name"
-    }
-}, {
-    "data": {
-        "id": "n1-n2",
-        "source": "n1",
-        "target": "n2"
-    }
-}]
+{
+    "nodes": [{
+        "group": "nodes",
+        "data": {
+            "id": "n1",
+            "p1": "n1-p1",
+            "p2": "n1-p2",
+            "p3": "n1-p3",
+            "p4": "n1-p4",
+            "name": "n1-name"
+        }
+    }, {
+        "group": "nodes",
+        "data": {
+            "id": "n2",
+            "p1": "n2-p1",
+            "p2": "n2-p2",
+            "p3": "n2-p3",
+            "p4": "n2-p4",
+            "name": "n2-name"
+        }
+    }],
+    "edges": [{
+        "group": "edges",
+        "data": {
+            "id": "n1-n2",
+            "source": "n1",
+            "target": "n2"
+        }
+    }]
+}

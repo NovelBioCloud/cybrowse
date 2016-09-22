@@ -11,15 +11,17 @@ export default function Editor() {
 	let manager
 	let $container
 	let $view
-  let tabState
+	let tabState
 	let defaultConfig
 	let nodeEditor
 	let base = getBase()
 	let dataService = getDataService()
 	let viewService = getViewService()
 	let eventService = getEventService()
-	this.init = function (props) {
-		base.init(props)
+	let cytoscapeInstance
+	let context
+	this.init = function (props, context) {
+		base.init(props, context)
 	}
 	this.setCytoscape = (cytoscape) => {
 		base.setCytoscape(cytoscape)
@@ -27,10 +29,10 @@ export default function Editor() {
 
 	function getBase() {
 		return {
-			init: (props) => {
+			init: (props, context) => {
 				async.series([
 						(cb) => {
-							dataService.init(props)
+							dataService.init(props, context)
 							cb()
             }, (cb) => {
 							dataService.loadDefaultConfig(cb)
@@ -47,35 +49,33 @@ export default function Editor() {
 			reloadDefaultConfig: () => {
 
 			},
-			setCytoscape: (cy) => {
-			}
+			setCytoscape: (cy) => {}
 		}
 	}
 
 	function getDataService() {
 		return {
-			init: (_props) => {
+			init: (_props, _context) => {
 				props = _props
+				context = _context
 				manager = props.manager
 				$container = $(props.container)
-        tabState = {
-          view: 'node'
-        }
+				tabState = {
+					view: 'node'
+				}
 			},
 			loadDefaultConfig: (cb) => {
-				$.getJSON('data/defaultConfig.json', (data) => {
-					cb()
-				})
+				// manager.getDefaultConfigManager.getData()
+				cb()
 			}
-
 		}
 	}
 
 	function getViewService() {
 		return {
 			getTemplate: () => {
-				return `<div>
-					<ul class="nav nav-tabs" role="tablist">
+				return `<div >
+					<ul class="nav nav-tabs nav-justified" role="tablist">
 					  <li role="presentation" class="active">
 							<a href="#home" role="tab" data-toggle="tab">节点信息</a>
 						</li>
@@ -89,32 +89,39 @@ export default function Editor() {
 					<!-- Tab panes -->
 					<div class="tab-content">
 					  <div role="tabpanel" class="tab-pane fade in active" id="home">
-							<div class='fn-node-editor-container'></div>
+							<div style='padding-top:15px'>
+								<div class='fn-node-editor-container'></div>
+							</div>
 						</div>
 					  <div role="tabpanel" class="tab-pane fade" id="profile">
-							<div class='fn-edge-editor-container'>edge</div>
+							<div style='padding-top:15px'>
+								<div class='fn-edge-editor-container'>edge</div>
+							</div>
 						</div>
 					  <div role="tabpanel" class="tab-pane fade" id="messages">
-							<div class='fn-network-editor-container'>network</div>
+							<div style='padding-top:15px'>
+								<div class='fn-network-editor-container'>network</div>
+							</div>
 						</div>
 					</div>
         </div>`
 			},
-			init: () => {
+			init: () => {	console.log(context)
 				$view = $(viewService.getTemplate())
 				$container.append($view)
 				nodeEditor = new NodeEditor()
 				nodeEditor.init({
+					cytoscapeInstance: cytoscapeInstance,
 					manager: manager,
 					container: $view.find(".fn-node-editor-container")
-				})
-        viewService.showTab(tabState)
+				}, context)
+				viewService.showTab(tabState)
 			},
-      showTab: (tabState) => {
-        if (tabState.view === 'node') {
+			showTab: (tabState) => {
+				if (tabState.view === 'node') {
 
-        }
-      }
+				}
+			}
 		}
 	}
 
@@ -127,7 +134,4 @@ export default function Editor() {
 			}
 		}
 	}
-
-
-
 }

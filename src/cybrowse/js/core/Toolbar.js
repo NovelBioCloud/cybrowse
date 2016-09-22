@@ -43,8 +43,9 @@ export default function Toolbar() {
 			setCytoscape: (_cytoscape) => {
 				cytoscape = _cytoscape
 			},
-			loadData:()=>{
+			loadData: () => {
 				manager.getDataManager().load()
+				postal.channel().publish('dataManager.load')
 			}
 		}
 	}
@@ -65,25 +66,21 @@ export default function Toolbar() {
 				return `<div>
 					<nav class="navbar navbar-default" role="navigation">
 					  <div class="container-fluid">
-					    <!-- Brand and toggle get grouped for better mobile display -->
 					    <div class="navbar-header">
 					      <a class="navbar-brand" href="#">Cybrowse</a>
 					    </div>
-					    <!-- Collect the nav links, forms, and other content for toggling -->
 					    <div>
 					      <ul class="nav navbar-nav">
-					        <li class="active"><a href="#" class='fn-toolbar-load-data'>loadData</a></li>
-					        <li><a href="#">Link</a></li>
 					        <li class="dropdown">
-					          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+					          <a href="#" class="dropdown-toggle" data-toggle="dropdown">文件<span class="caret"></span></a>
 					          <ul class="dropdown-menu" role="menu">
-					            <li><a href="#">Action</a></li>
-					            <li><a href="#">Another action</a></li>
-					            <li><a href="#">Something else here</a></li>
+											<li><a href="#" class='fn-toolbar-clear-data'>新建</a></li>
+											<li><a href="#" class='fn-toolbar-clear-local'>清楚缓存</a></li>
+					            <li><a href="#" class='fn-toolbar-load-data'>打开</a></li>
+					            <li><a href="#" class='fn-toolbar-save-data'>保存</a></li>
+											<li><a href="#" class='fn-toolbar-save-as'>保存为...</a></li>
 					            <li class="divider"></li>
-					            <li><a href="#">Separated link</a></li>
-					            <li class="divider"></li>
-					            <li><a href="#">One more separated link</a></li>
+					            <li><a href="#">退出</a></li>
 					          </ul>
 					        </li>
 					      </ul>
@@ -92,22 +89,23 @@ export default function Toolbar() {
 					        <li class="dropdown">
 					          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
 					          <ul class="dropdown-menu" role="menu">
-					            <li><a href="#">Action</a></li>
-					            <li><a href="#">Another action</a></li>
-					            <li><a href="#">Something else here</a></li>
-					            <li class="divider"></li>
-					            <li><a href="#">Separated link</a></li>
+					            <li><a href="#">登陆</a></li>
+					            <li><a href="#">退出</a></li>
 					          </ul>
 					        </li>
 					      </ul>
-					    </div><!-- /.navbar-collapse -->
-					  </div><!-- /.container-fluid -->
+					    </div>
+					  </div>
 					</nav>
 				</div>`
 			},
 			init: () => {
 				$view = $(viewService.getTemplate())
 				$container.append($view)
+				$view.find('.fn-toolbar-save-data').click(function () {
+					console.log(cytoscape.elements())
+					localStorage.setItem("cybrowse-data", JSON.stringify(cytoscape.json()))
+				})
 			},
 		}
 	}
@@ -115,7 +113,7 @@ export default function Toolbar() {
 	function getEventService() {
 		return {
 			init: () => {
-				$view.find('.fn-toolbar-load-data').click(()=>{
+				$view.find('.fn-toolbar-load-data').click(() => {
 					base.loadData()
 				})
 			},

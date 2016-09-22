@@ -12,6 +12,65 @@ import Manager from './Manager'
 
 export default function App() {
 	let _this = this
+	let props
+	let $container
+	let manager = new Manager()
+	let dataService = getDataService()
+	let viewService = getViewService()
+	let eventService = getEventService()
+	let base = getBase()
+	let context = new Map()
+	let parentContext
+	let cybrowseView = new CybrowseView()
+	this.init = (props, context) => {
+		base.init(props, context)
+	}
+	this.getView = () => {
+		return $view
+	}
+
+	function getBase() {
+		return {
+			init: (props, context) => {
+				dataService.init(props, context, () => {
+					viewService.init()
+				})
+			}
+		}
+	}
+
+	function getDataService() {
+		return {
+			init: (_props, _context, cb) => {
+				props = _props
+				parentContext = _context
+				$container = $(props.container)
+				manager.init(cb)
+			},
+		}
+	}
+
+	function getViewService() {
+		return {
+			init: () => {
+				cybrowseView.init({
+					container: $container
+				})
+			}
+		}
+	}
+
+	function getEventService() {
+		return {
+			init: () => {}
+		}
+	}
+
+
+}
+
+function CybrowseView() {
+	let _this = this
 	let $container
 	let $view
 		//** manager **//
@@ -24,7 +83,9 @@ export default function App() {
 	let viewService = getViewService()
 	let eventService = getEventService()
 	let base = getBase()
+	let context = new Map()
 	this.init = (props) => {
+		console.log('init')
 		base.init(props)
 	}
 	this.getView = () => {
@@ -74,25 +135,26 @@ export default function App() {
         </div>`
 			},
 			init: () => {
+				console.log(context)
 				$view = $(viewService.getTemplate())
-				$container.empty()
 				$container.append($view)
 				toolbar.init({
 					container: $container.find("[data-toolbar]"),
 					manager: manager
-				})
+				}, context)
 				editor.init({
 					container: $container.find("[data-editor]"),
 					manager: manager
-				})
+				}, context)
 				cytoscape.init({
 					container: $container.find("[data-cytoscape]"),
 					manager: manager,
 					initializedCallback: (cytoscape) => {
+						context.set('cytoscapeInstance', cytoscape)
 						toolbar.setCytoscape(cytoscape)
 						editor.setCytoscape(cytoscape)
 					}
-				})
+				}, context)
 			}
 		}
 	}
