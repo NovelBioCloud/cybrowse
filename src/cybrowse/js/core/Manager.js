@@ -7,18 +7,6 @@ import postal from 'postal'
 import {
 	DefaultConfigManager,
 	DataManager,
-	DefaultNodeConfigManager,
-	DefaultEdgeConfigManager,
-	DefaultNetworkConfigManager,
-	DefaultLayoutConfigManager,
-	CustomNodeConfigManager,
-	CustomEdgeConfigManager,
-	CustomNetworkConfigManager,
-	CustomLayoutConfigManager,
-	ComputedNodeConfigManager,
-	ComputedEdgeConfigManager,
-	ComputedNetworkConfigManager,
-	ComputedLayoutConfigManager
 } from './manager'
 
 export default function Manager() {
@@ -26,18 +14,6 @@ export default function Manager() {
 		//** manager **//
 	let defaultConfigManager
 	let dataManager
-	let defaultNodeConfigManager
-	let defaultEdgeConfigManager
-	let defaultNetworkConfigManager
-	let defaultLayoutConfigManager
-	let customNodeConfigManager
-	let customEdgeConfigManager
-	let customNetworkConfigManager
-	let customLayoutConfigManager
-	let computedNodeConfigManager
-	let computedEdgeConfigManager
-	let computedNetworkConfigManager
-	let computedLayoutConfigManager
 	let dataService = getDataService()
 	this.init = (cb) => {
 		async.series([
@@ -56,20 +32,27 @@ export default function Manager() {
 				cb(err, results)
 			})
 	}
-	this.getNodeConfigManager = () => {
-		return {
-			'default': defaultNodeConfigManager,
-			custom: customNodeConfigManager,
-			computed: computedNodeConfigManager
-		}
-	}
 	this.getDataManager = () => {
 		return dataManager
 	}
 	this.getDefaultConfigManager = () => {
 		return defaultConfigManager
 	}
+	this.getConfigs = () => {
+		return [{
+			name: 'test1',
+			styles: [{
+				selector: "",
+				style: {}
+				}],
+			layout: {
 
+			}
+		}]
+	}
+	this.updateDefaultConfig = () => {
+		console.log('todo')
+	}
 	function getDataService() {
 		return {
 			initDefaultConfigManager: (cb) => {
@@ -81,21 +64,6 @@ export default function Manager() {
 				dataManager.load(cb)
 			},
 			initManagers: (cb) => {
-				/** default **/
-				defaultNodeConfigManager = new DefaultNodeConfigManager(defaultConfigManager)
-				defaultEdgeConfigManager = new DefaultEdgeConfigManager(defaultConfigManager)
-				defaultNetworkConfigManager = new DefaultNetworkConfigManager(defaultConfigManager)
-				defaultLayoutConfigManager = new DefaultLayoutConfigManager(defaultConfigManager)
-					/** custom **/
-				customNodeConfigManager = new CustomNodeConfigManager(dataManager)
-				customEdgeConfigManager = new CustomEdgeConfigManager(dataManager)
-				customNetworkConfigManager = new CustomNetworkConfigManager(dataManager)
-				customLayoutConfigManager = new CustomLayoutConfigManager(dataManager)
-					/** computed **/
-				computedNodeConfigManager = new ComputedNodeConfigManager(defaultNodeConfigManager, customNodeConfigManager)
-				computedEdgeConfigManager = new ComputedEdgeConfigManager(defaultEdgeConfigManager, customEdgeConfigManager)
-				computedNetworkConfigManager = new ComputedNetworkConfigManager(defaultNetworkConfigManager, customNetworkConfigManager)
-				computedLayoutConfigManager = new ComputedLayoutConfigManager(defaultLayoutConfigManager, customLayoutConfigManager)
 				cb()
 			}
 		}

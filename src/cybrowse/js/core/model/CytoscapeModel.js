@@ -1,6 +1,9 @@
 export default class CytoscapeModel {
 	boxSelectionEnabled = true
-	elements = {}
+	elements = {
+		nodes: [],
+		edges: []
+	}
 	hideEdgesOnViewport
 	maxZoom = 1e+50
 	minZoom = 1e-50
@@ -20,11 +23,5 @@ export default class CytoscapeModel {
 	wheelSensitivity = undefined
 	zoom = 1
 	zoomingEnabled = true
-	init({
-		elements,
-		style
-	}) {
-		this.elements = elements
-		this.style = style
-	}
+
 }

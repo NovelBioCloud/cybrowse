@@ -31,7 +31,8 @@ export default function PropertySelector() {
 				eventService.init()
 			},
 			onChange: function (property, selected) {
-				onChange && onChange(property, selected)
+				console.log(property)
+				onChange && onChange(property.name, selected)
 			},
 			showAll: function () {
 				propertyEditors.forEach(item => {
@@ -53,7 +54,16 @@ export default function PropertySelector() {
 				context = _context
 				onChange = props.onChange
 				$container = props.container
-				properties = props.properties || ['background', 'width', 'height']
+				properties = props.properties || [{
+					name: 'background-color',
+					displayName: '背景',
+				}, {
+					name: 'width',
+					displayName: '宽',
+				}, {
+					name: 'height',
+					displayName: '高',
+				}]
 				cytoscapeInstance = props.cytoscapeInstance
 			}
 		}
@@ -72,26 +82,30 @@ export default function PropertySelector() {
 							<ul class="dropdown-menu fn-property-selector-content" role="menu">
 							</ul>
 						</div>
-						<button type="button" class="btn btn-default fn-property-selector-show-all">全部显示</button>
-						<button type="button" class="btn btn-default fn-property-selector-hide-all">全部隐藏</button>
+						<button type="button" class="btn btn-default fn-property-selector-show-all hidden">
+							<i class='fa fa-fw fa-angle-double-left'></i>
+						</button>
+						<button type="button" class="btn btn-default fn-property-selector-hide-all">
+							<i class='fa fa-fw fa-angle-double-down'></i>
+						</button>
 					</div>
         </div> `
 			},
 			init: () => {
 				$view = $(viewService.getTemplate())
 				$container.append($view)
-				properties.forEach((item) => {
-					let propertyEditor = new Property()
-					propertyEditor.init({
+				properties.forEach((property) => {
+					let propertySelectorUnit = new PropertySelectorUnit()
+					propertySelectorUnit.init({
 						container: $view.find('.fn-property-selector-content'),
-						property: item,
+						property: property,
 						cytoscapeInstance: cytoscapeInstance,
-						onChange: (selected) => {
-							base.onChange(item, selected)
+						onChange: (property, selected) => {
+							base.onChange(property, selected)
 						},
 						selected: true
 					})
-					propertyEditors.set(item, propertyEditor)
+					propertyEditors.set(property.name, propertySelectorUnit)
 				})
 			},
 			getView: function () {
@@ -105,9 +119,15 @@ export default function PropertySelector() {
 			init: function () {
 				$view.find('.fn-property-selector-show-all').click(() => {
 					base.showAll()
+					$view.find('.fn-property-selector-show-all').addClass('hidden')
+					$view.find('.fn-property-selector-hide-all').removeClass('hidden')
+					$view.find('.fn-property-selector-show-all').insertBefore($view.find('.fn-property-selector-hide-all'))
 				})
 				$view.find('.fn-property-selector-hide-all').click(() => {
 					base.hideAll()
+					$view.find('.fn-property-selector-hide-all').addClass('hidden')
+					$view.find('.fn-property-selector-show-all').removeClass('hidden')
+					$view.find('.fn-property-selector-hide-all').insertBefore($view.find('.fn-property-selector-show-all'))
 				})
 			}
 		}
@@ -116,7 +136,7 @@ export default function PropertySelector() {
 
 }
 
-function Property() {
+function PropertySelectorUnit() {
 	let _this = this,
 		props, $container, $view, base = getBase(),
 		dataService = getDataService(),
@@ -153,7 +173,7 @@ function Property() {
 			toggle: function () {
 				selected = !selected
 				viewService.repaintFlag()
-				onChange && onChange(selected)
+				onChange && onChange(property, selected)
 			},
 			show: function () {
 				if (!selected) {
@@ -185,20 +205,22 @@ function Property() {
 			getTemplate: function () {
 				return `<li class='fn-property'>
 					<a href="#">
-						${property}<i class='fa-pull-right fa fa-check fa-fw fn-flag'></i>
+						<span><i class='fa fa-check fa-fw fn-flag'></i>&nbsp;&nbsp;<%=property.displayName%><span>
 					</a>
 				</li>`
 			},
 			init: function () {
-				$view = $(viewService.getTemplate())
+				$view = $(_.template(viewService.getTemplate())({
+					property: property
+				}))
 				$container.append($view)
 				viewService.repaintFlag()
 			},
 			repaintFlag: function () {
 				if (selected) {
-					$view.find('.fn-flag').removeClass('hidden')
+					$view.find('.fn-flag').css('visibility', 'visible')
 				} else {
-					$view.find('.fn-flag').addClass('hidden')
+					$view.find('.fn-flag').css('visibility', 'hidden')
 				}
 			}
 		}

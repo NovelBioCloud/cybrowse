@@ -84,9 +84,6 @@ export default function Cytoscape() {
 	function getEventService() {
 		return {
 			init: () => {
-				postal.channel().subscribe('dataManager.load', () => {
-					base.reload()
-				})
 			}
 		}
 	}

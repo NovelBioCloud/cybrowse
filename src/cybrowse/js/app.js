@@ -7,6 +7,6 @@ import App from './core/App'
 $(() => {
 	let app = new App()
 	app.init({
-		container: document.querySelector("#app")
+		container: $(document.querySelector("#app"))
 	})
 })

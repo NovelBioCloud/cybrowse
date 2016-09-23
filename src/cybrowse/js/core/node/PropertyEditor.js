@@ -4,7 +4,9 @@ import async from 'async'
 import assert from 'assert'
 import immutable from 'immutable'
 import postal from 'postal'
-import BackgroundColor from '../node-editors/BackgroundColor'
+import {
+	BackgroundColor
+} from '../node-editors'
 
 export default function PropertyEditor() {
 	let _this = this,
@@ -34,8 +36,8 @@ export default function PropertyEditor() {
 				viewService.init()
 				eventService.init()
 			},
-			rerenderEditor: function (type, selected) {
-				let editor = editors.get(type)
+			rerenderEditor: function (propertyName, selected) {
+				let editor = editors.get(propertyName)
 				if (!editor) {
 					return
 				}
@@ -72,7 +74,7 @@ export default function PropertyEditor() {
 			},
 			initBackground: function () {
 				let backgroundColor = new BackgroundColor()
-				editors.set('backgroundColor', backgroundColor)
+				editors.set(backgroundColor.getPropertyName(), backgroundColor)
 				backgroundColor.init({
 					container: $view,
 					manager: manager,

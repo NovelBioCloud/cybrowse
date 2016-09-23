@@ -11,62 +11,16 @@ import Cytoscape from './Cytoscape'
 import Manager from './Manager'
 
 export default function App() {
-	let _this = this
-	let props
-	let $container
-	let manager = new Manager()
-	let dataService = getDataService()
-	let viewService = getViewService()
-	let eventService = getEventService()
-	let base = getBase()
-	let context = new Map()
-	let parentContext
-	let cybrowseView = new CybrowseView()
-	this.init = (props, context) => {
-		base.init(props, context)
+	this.init = (props) => {
+		let cybrowseView = new CybrowseView()
+		let manager = new Manager()
+		manager.init(() => {
+			cybrowseView.init({
+				container: props.container,
+				manager: manager
+			})
+		})
 	}
-	this.getView = () => {
-		return $view
-	}
-
-	function getBase() {
-		return {
-			init: (props, context) => {
-				dataService.init(props, context, () => {
-					viewService.init()
-				})
-			}
-		}
-	}
-
-	function getDataService() {
-		return {
-			init: (_props, _context, cb) => {
-				props = _props
-				parentContext = _context
-				$container = $(props.container)
-				manager.init(cb)
-			},
-		}
-	}
-
-	function getViewService() {
-		return {
-			init: () => {
-				cybrowseView.init({
-					container: $container
-				})
-			}
-		}
-	}
-
-	function getEventService() {
-		return {
-			init: () => {}
-		}
-	}
-
-
 }
 
 function CybrowseView() {
@@ -74,18 +28,12 @@ function CybrowseView() {
 	let $container
 	let $view
 		//** manager **//
-	let manager = new Manager()
-
-	let toolbar = new Toolbar()
-	let editor = new Editor()
-	let cytoscape = new Cytoscape()
-	let dataService = getDataService()
+	let manager
 	let viewService = getViewService()
-	let eventService = getEventService()
 	let base = getBase()
 	let context = new Map()
+	context.set('cybrowseView-base', base)
 	this.init = (props) => {
-		console.log('init')
 		base.init(props)
 	}
 	this.getView = () => {
@@ -95,28 +43,13 @@ function CybrowseView() {
 	function getBase() {
 		return {
 			init: (props) => {
-				async.series([
-						(cb) => {
-							dataService.init(props)
-							dataService.initManager(cb)
-            }, (cb) => {
-							viewService.init()
-							eventService.init()
-							cb()
-            }
-          ],
-					(err, results) => {})
-			}
-		}
-	}
-
-	function getDataService() {
-		return {
-			init: (props) => {
-				$container = $(props.container)
+				$container = props.container
+				manager = props.manager
+				viewService.init()
 			},
-			initManager: (cb) => {
-				manager.init(cb)
+			reload: (data) => {
+				manager.getDataManager().load()
+				viewService.repaint()
 			}
 		}
 	}
@@ -135,35 +68,49 @@ function CybrowseView() {
         </div>`
 			},
 			init: () => {
-				console.log(context)
 				$view = $(viewService.getTemplate())
 				$container.append($view)
-				toolbar.init({
-					container: $container.find("[data-toolbar]"),
-					manager: manager
-				}, context)
-				editor.init({
-					container: $container.find("[data-editor]"),
-					manager: manager
-				}, context)
-				cytoscape.init({
-					container: $container.find("[data-cytoscape]"),
+				let cybrowseView2 = new CybrowseView2()
+				cybrowseView2.init({
+					toolbarContainer: $container.find("[data-toolbar]"),
+					editorContainer: $container.find("[data-editor]"),
+					cytoscapeContainer: $container.find("[data-cytoscape]"),
 					manager: manager,
-					initializedCallback: (cytoscape) => {
-						context.set('cytoscapeInstance', cytoscape)
-						toolbar.setCytoscape(cytoscape)
-						editor.setCytoscape(cytoscape)
+					onReload: (data) => {
+						base.reload(data)
 					}
 				}, context)
+			},
+			repaint: () => {
+				$container.empty()
+				viewService.init()
 			}
 		}
 	}
+}
 
-	function getEventService() {
-		return {
-			init: () => {}
-		}
+function CybrowseView2() {
+	this.init = function (props, context) {
+		let toolbar = new Toolbar()
+		let editor = new Editor()
+		let cytoscape = new Cytoscape()
+		toolbar.init({
+			container: props.toolbarContainer,
+			manager: props.manager,
+			onReload: props.onReload
+		}, context)
+		editor.init({
+			container: props.editorContainer,
+			manager: props.manager
+		}, context)
+		cytoscape.init({
+			container: props.cytoscapeContainer,
+			manager: props.manager,
+			initializedCallback: (cytoscape) => {
+				context.set('cytoscapeInstance', cytoscape)
+				toolbar.setCytoscape(cytoscape)
+				editor.setCytoscape(cytoscape)
+			}
+		}, context)
 	}
-
-
 }

@@ -4,44 +4,69 @@ import Immutable from 'immutable'
 import postal from 'postal'
 import async from 'async'
 import assert from 'assert'
+import CybrowseModel from '../model/CybrowseModel'
 
-function DataService() {
-	this.load = (url = 'data/data.json') => {
-		return $.getJSON(url)
-	}
-}
 
 export default function DataManager() {
 	let data
-	let dataService = new DataService()
-	try {
-		let cybrowseData = JSON.parse(localStorage.getItem("cybrowse-data"))
-		data = cybrowseData.elements
-		data.styles = cybrowseData.style
-	} catch (e) {
-		data = {
-			nodes: [],
-			edges: [],
-			styles: []
+	let props, context
+	let cytoscapeManagerThunk, editorManagerThunk
+	let globalConfig, trunkConfig, mappingConfig, specificConfig
+	let base = {
+		init,
+		load,
+		save,
+		getData,
+		getProperties,
+		getValuesByProperty,
+		onCytoscapeManagerThunkCall,
+		onEditorManagerThunkCall
+	}
+	this.init = init
+	this.load = load
+	this.save = save
+	this.getData = getData
+	this.getProperties = getProperties
+	this.getValuesByProperty = getValuesByProperty
+	this.onCytoscapeManagerThunkCall = onCytoscapeManagerThunkCall
+	this.onEditorManagerThunkCall = onEditorManagerThunkCall
+		/**base*/
+	function init(_props, _context) {
+		props = _props
+		context = _context
+		try {
+			let cybrowseData = JSON.parse(localStorage.getItem("cybrowse-data"))
+			data = cybrowseData
+		} catch (e) {
+			data = null
+		}
+		if (data == null) {
+			data = new CybrowseModel()
 		}
 	}
 
-	this.load = (callback, emitEvent = true) => {
-		dataService.load().then((_data) => {
-			data = _data
-		}, () => {
-			callback(new Error("reload error"))
-		})
+	function load(_data) {
+		data = _data
 	}
-	this.getData = () => {
+
+	function save(data) {
+		try {
+			service_save(data)
+		} catch (e) {
+			toastr.error('保存失败')
+		}
+	}
+
+	function getData() {
 		return data
 	}
-	this.getProperties = () => {
-		if (!data) {
+
+	function getProperties() {
+		if (!service_validate()) {
 			return []
 		} else {
 			let propertySet = new Set()
-			data.nodes.filter((item) => {
+			data.cytoscape.elements.nodes.filter((item) => {
 				return item.group === 'nodes'
 			}).forEach((item) => {
 				Object.keys(item.data).forEach((property) => {
@@ -51,12 +76,13 @@ export default function DataManager() {
 			return [...propertySet]
 		}
 	}
-	this.getValuesByProperty = (property) => {
-		if (!property || property === '') {
+
+	function getValuesByProperty(property) {
+		if (!service_validate() || !property || property === '') {
 			return []
 		} else {
 			let valueSet = new Set()
-			data.nodes.filter((item) => {
+			data.cytoscape.elements.nodes.filter((item) => {
 				return item.group === 'nodes'
 			}).forEach((item) => {
 				// 为了提高效率，此处假设外部传入的property属性一定是存在的
@@ -67,5 +93,56 @@ export default function DataManager() {
 			})
 			return [...valueSet]
 		}
+	}
+
+	function onCytoscapeManagerThunkCall(_cytoscapeManagerThunk) {
+		cytoscapeManagerThunk = _cytoscapeManagerThunk
+	}
+
+	function onEditorManagerThunkCall(editorManagerThunk) {
+		editorManagerThunk = _editorManagerThunk
+	}
+	/*service*/
+	function service_save() {
+		let cytoscapeManager = service_getCytoscapeManager(),
+			editorManager = service_editorManager()
+		if (cytoscapeManager && editorManager) {
+			localStorage.setItem("cybrowse-data", JSON.stringify({
+				defaultStyle: "",
+				customStyle: "",
+				mappingStyle: "",
+				specificStyle: "",
+				layout: "",
+				cybrowse: "",
+			}))
+		} else {
+			throw new Error()
+		}
+	}
+	/*functional*/
+	function service_validate() {
+		return (data && data.cytoscape && data.cytoscape.elements)
+	}
+
+	function service_getCytoscapeManager() {
+		let cytoscapeManager
+		if (cytoscapeManagerThunk) {
+			cytoscapeManager = cytoscapeManagerThunk()
+		}
+		if (!cytoscapeManager) {
+			throw new Error()
+		}
+		return cytoscapeManager
+	}
+
+	function service_getEditorManager() {
+		let editorManager
+		if (editorManagerThunk) {
+			editorManager = editorManagerThunk()
+		}
+		if (!editorManager) {
+			throw new Error()
+		}
+		return editorManager
 	}
 }

@@ -4,11 +4,11 @@ import async from 'async'
 import assert from 'assert'
 import immutable from 'immutable'
 import postal from 'postal'
-import Column from './Column'
+import MappingColumn from './MappingColumn'
 import MappingType from './MappingType'
 import MappingContent from './MappingContent'
 
-export default function BackgroundColor() {
+export default function Mapping() {
 	let _this = this
 	let props
 	let $container
@@ -26,15 +26,6 @@ export default function BackgroundColor() {
 	this.getView = function () {
 		return base.getView()
 	}
-	this.getPropertyName = function () {
-		return 'background-color'
-	}
-	this.show = function () {
-		base.show()
-	}
-	this.hide = function () {
-		base.hide()
-	}
 
 	function getBase() {
 		return {
@@ -46,24 +37,6 @@ export default function BackgroundColor() {
 			getView: function () {
 				return $view
 			},
-			show: function () {
-				$view.removeClass("hidden")
-			},
-			hide: function () {
-				$view.addClass("hidden")
-			},
-			render: function () {
-				viewService.render()
-			},
-			updateCytoscape: function (property, mappingValue, value) {
-				cytoscapeInstance = context.get('cytoscapeInstance')
-				console.log(cytoscapeInstance)
-				cytoscapeInstance.batch(function () {
-					cytoscapeInstance.style().selector(`node[${property}='${mappingValue}']`).style({
-						'background-color': value
-					}).update()
-				})
-			}
 		}
 	}
 
@@ -74,7 +47,6 @@ export default function BackgroundColor() {
 				context = _context
 				$container = props.container
 				manager = props.manager
-				cytoscapeInstance = props.cytoscapeInstance
 			}
 		}
 	}
@@ -88,17 +60,14 @@ export default function BackgroundColor() {
 				if ($view) {
 					$view.remove()
 				}
-				let template = _.template(viewService.getTemplate())({
-					defaultValue: '',
-					customValue: '',
-				})
+				let template = _.template(viewService.getTemplate())({})
 				$view = $(template)
 				$container.append($view)
-				let column = new Column()
+				let mappingColumn = new MappingColumn()
 				let mappingType = new MappingType()
 				let mappingContent = new MappingContent()
-				column.init({
-					container: $view.find('.fn-background-column-wrap'),
+				mappingColumn.init({
+					container: $view.find('.fn-background-mapping-column-wrap'),
 					onChange: () => {
 						mappingContent.update()
 					},
@@ -113,33 +82,21 @@ export default function BackgroundColor() {
 				})
 				mappingContent.init({
 					container: $view.find('.fn-background-mapping-content-wrap'),
-					column: column,
+					mappingColumn: mappingColumn,
 					mappingType: mappingType,
 					manager: manager,
 					onChange: (mappingValue, value) => {
-						let property = column.getValue()
+						let property = mappingColumn.getValue()
 						base.updateCytoscape(property, mappingValue, value)
 					}
 				})
 			},
 			getTemplate: () => {
 				return `<div>
-          <div>
-						<label>背景颜色</label>
-					</div>
-          <div>
-						<div class='input-group'>
-							<span class='input-group-addon'>默认</span>
-							<input class='form-control' type='text' value='<%=defaultValue%>' disabled/>
-						</div>
-					</div>
 					<div>
-						<div class=''>自定义</div>
-						<div>
-							<div class='fn-background-column-wrap'></div>
-							<div class='fn-background-mapping-type-wrap'></div>
-							<div class='fn-background-mapping-content-wrap'></div>
-						</div>
+						<div class='fn-background-mapping-column-wrap'></div>
+						<div class='fn-background-mapping-type-wrap'></div>
+						<div class='fn-background-mapping-content-wrap'></div>
 					</div>
         </div>`
 			}
@@ -147,12 +104,6 @@ export default function BackgroundColor() {
 	}
 
 	function getEventService() {
-		return {
-			init: () => {
-				postal.channel().subscribe('dataManager.load', () => {
-					base.render()
-				})
-			}
-		}
+		return {}
 	}
 }

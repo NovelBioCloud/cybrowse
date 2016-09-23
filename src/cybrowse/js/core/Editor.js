@@ -5,6 +5,7 @@ import assert from 'assert'
 import immutable from 'immutable'
 import postal from 'postal'
 import NodeEditor from './NodeEditor'
+import ConfigSelector from './ConfigSelector'
 export default function Editor() {
 	let _this = this
 	let props
@@ -13,7 +14,8 @@ export default function Editor() {
 	let $view
 	let tabState
 	let defaultConfig
-	let nodeEditor
+	let configSelector
+	let editorTab
 	let base = getBase()
 	let dataService = getDataService()
 	let viewService = getViewService()
@@ -30,26 +32,15 @@ export default function Editor() {
 	function getBase() {
 		return {
 			init: (props, context) => {
-				async.series([
-						(cb) => {
-							dataService.init(props, context)
-							cb()
-            }, (cb) => {
-							dataService.loadDefaultConfig(cb)
-            }, (cb) => {
-							viewService.init()
-							cb()
-            }, (cb) => {
-							eventService.init()
-							cb()
-            }
-          ],
-					(err, results) => {})
+				dataService.init(props, context)
+				viewService.init()
+				eventService.init()
 			},
-			reloadDefaultConfig: () => {
-
-			},
-			setCytoscape: (cy) => {}
+			setCytoscape: (cy) => {},
+			updateDefaultConfig: (name) => {
+				manager.updateDefaultConfig(name)
+				editorTab.updateDefaultConfig()
+			}
 		}
 	}
 
@@ -75,63 +66,103 @@ export default function Editor() {
 		return {
 			getTemplate: () => {
 				return `<div >
-					<ul class="nav nav-tabs nav-justified" role="tablist">
-					  <li role="presentation" class="active">
-							<a href="#home" role="tab" data-toggle="tab">节点信息</a>
-						</li>
-					  <li role="presentation">
-							<a href="#profile" role="tab" data-toggle="tab">连线信息</a>
-						</li>
-					  <li role="presentation">
-							<a href="#messages" role="tab" data-toggle="tab">全局信息</a>
-						</li>
-					</ul>
-					<!-- Tab panes -->
-					<div class="tab-content">
-					  <div role="tabpanel" class="tab-pane fade in active" id="home">
-							<div style='padding-top:15px'>
-								<div class='fn-node-editor-container'></div>
-							</div>
-						</div>
-					  <div role="tabpanel" class="tab-pane fade" id="profile">
-							<div style='padding-top:15px'>
-								<div class='fn-edge-editor-container'>edge</div>
-							</div>
-						</div>
-					  <div role="tabpanel" class="tab-pane fade" id="messages">
-							<div style='padding-top:15px'>
-								<div class='fn-network-editor-container'>network</div>
-							</div>
-						</div>
-					</div>
+					<div class='fn-editor-config-selector-container'></div>
+					<div class='fn-editor-editor-tab-container'></div>
         </div>`
 			},
-			init: () => {	console.log(context)
+			init: () => {
 				$view = $(viewService.getTemplate())
 				$container.append($view)
-				nodeEditor = new NodeEditor()
-				nodeEditor.init({
-					cytoscapeInstance: cytoscapeInstance,
+				configSelector = new ConfigSelector()
+				configSelector.init({
 					manager: manager,
-					container: $view.find(".fn-node-editor-container")
+					onConfigChange: (name) => {
+						base.updateDefaultConfig(name)
+					},
+					container: $view.find(".fn-editor-config-selector-container")
+				})
+				editorTab = new EditorTab()
+				editorTab.init({
+					manager: manager,
+					container: $view.find(".fn-editor-editor-tab-container")
 				}, context)
-				viewService.showTab(tabState)
 			},
-			showTab: (tabState) => {
-				if (tabState.view === 'node') {
-
-				}
-			}
 		}
 	}
 
 	function getEventService() {
 		return {
-			init: () => {
-				postal.channel().subscribe('defaultConfig.reload', () => {
-					base.reloadDefaultConfig()
-				})
-			}
+			init: () => {}
 		}
+	}
+}
+
+function EditorTab() {
+	let _this = this,
+		$container, $view, props, manager
+
+	this.init = (props) => {
+		init(props)
+	}
+	this.updateDefaultConfig = () => {
+		updateDefaultConfig()
+	}
+
+	/** base **/
+	function init(_props) {
+		props = _props
+		$container = props.container
+		manager = props.manager
+		view_init()
+	}
+
+	function updateDefaultConfig() {
+		$container.empty()
+		view_init()
+	}
+	/** service **/
+
+	function view_init() {
+		$view = $(_.template(view_getTemplate())({}))
+		$view.appendTo($container)
+		let nodeEditor = new NodeEditor()
+		nodeEditor.init({
+			container: $view.find('.fn-node-editor-container'),
+			manager: manager
+		})
+	}
+
+	function view_getTemplate() {
+		return `<div >
+			<ul class="nav nav-tabs nav-justified" role="tablist">
+				<li role="presentation" class="active">
+					<a href="#home" role="tab" data-toggle="tab">节点信息</a>
+				</li>
+				<li role="presentation">
+					<a href="#profile" role="tab" data-toggle="tab">连线信息</a>
+				</li>
+				<li role="presentation">
+					<a href="#messages" role="tab" data-toggle="tab">全局信息</a>
+				</li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane fade in active" id="home">
+					<div style='padding-top:15px'>
+						<div class='fn-node-editor-container'></div>
+					</div>
+				</div>
+				<div role="tabpanel" class="tab-pane fade" id="profile">
+					<div style='padding-top:15px'>
+						<div class='fn-edge-editor-container'>edge</div>
+					</div>
+				</div>
+				<div role="tabpanel" class="tab-pane fade" id="messages">
+					<div style='padding-top:15px'>
+						<div class='fn-network-editor-container'>network</div>
+					</div>
+				</div>
+			</div>
+		</div>`
 	}
 }

@@ -44,8 +44,7 @@ export default function Toolbar() {
 				cytoscape = _cytoscape
 			},
 			loadData: () => {
-				manager.getDataManager().load()
-				postal.channel().publish('dataManager.load')
+				props.onReload()
 			}
 		}
 	}
