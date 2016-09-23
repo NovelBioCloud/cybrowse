@@ -32,7 +32,6 @@ export default function Mapping() {
 			init: function (props, context) {
 				dataService.init(props, context)
 				viewService.init()
-				eventService.init()
 			},
 			getView: function () {
 				return $view
@@ -68,6 +67,7 @@ export default function Mapping() {
 				let mappingContent = new MappingContent()
 				mappingColumn.init({
 					container: $view.find('.fn-background-mapping-column-wrap'),
+					value: '',
 					onChange: () => {
 						mappingContent.update()
 					},
@@ -75,6 +75,7 @@ export default function Mapping() {
 				})
 				mappingType.init({
 					container: $view.find('.fn-background-mapping-type-wrap'),
+					value: '',
 					onChange: () => {
 						mappingContent.update()
 					},
@@ -85,6 +86,7 @@ export default function Mapping() {
 					mappingColumn: mappingColumn,
 					mappingType: mappingType,
 					manager: manager,
+					value: {},
 					onChange: (mappingValue, value) => {
 						let property = mappingColumn.getValue()
 						base.updateCytoscape(property, mappingValue, value)
@@ -93,10 +95,18 @@ export default function Mapping() {
 			},
 			getTemplate: () => {
 				return `<div>
+          <div>default value <i class='fa fa-angle-double-down '></i></div>
 					<div>
-						<div class='fn-background-mapping-column-wrap'></div>
-						<div class='fn-background-mapping-type-wrap'></div>
-						<div class='fn-background-mapping-content-wrap'></div>
+            <div>
+						  <div class='fn-background-mapping-column-wrap'></div>
+						  <div class='fn-background-mapping-type-wrap'></div>
+						  <div class='fn-background-mapping-content-wrap'></div>
+            </div>
+            <div>
+              <button class='btn btn-sm'>
+                <i class='fa fa-fw fa-trash'></i>
+              </button>
+            </div>
 					</div>
         </div>`
 			}

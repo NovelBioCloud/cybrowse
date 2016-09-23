@@ -4,8 +4,8 @@ import async from 'async'
 import assert from 'assert'
 import immutable from 'immutable'
 import postal from 'postal'
-import PropertySelector from './node/PropertySelector'
-import PropertyEditor from './node/PropertyEditor'
+import PropertySelector from './PropertySelector'
+import PropertyEditor from './PropertyEditor'
 
 export default function NodeEditor() {
 	let _this = this
@@ -18,17 +18,16 @@ export default function NodeEditor() {
 	let viewService = getViewService()
 	let eventService = getEventService()
 	let cytoscapeInstance
-	let context
-	this.init = (props, context) => {
-		base.init(props, context)
+	this.init = (props) => {
+		base.init(props)
 	}
 	this.getView = () => {
 		return base.getView()
 	}
 	function getBase() {
 		return {
-			init: (props, context) => {
-				dataService.init(props, context)
+			init: (props) => {
+				dataService.init(props)
 				viewService.init()
 			},
 			getView: () => {
@@ -39,9 +38,8 @@ export default function NodeEditor() {
 
 	function getDataService() {
 		return {
-			init: function (_props, _context) {
+			init: function (_props) {
 				props = _props
-				context = _context
 				$container = props.container
 				manager = props.manager
 				cytoscapeInstance = props.cytoscapeInstance
@@ -65,12 +63,12 @@ export default function NodeEditor() {
 					onChange: (property, selected) => {
 						propertyEditor.rerenderEditor(property, selected)
 					}
-				}, context)
+				})
 				propertyEditor.init({
 					container: $view.find('.fn-property-editor-wrap'),
 					manager: manager,
 					cytoscapeInstance: cytoscapeInstance
-				}, context)
+				})
 			},
 			getTemplate: () => {
 				return `<div>

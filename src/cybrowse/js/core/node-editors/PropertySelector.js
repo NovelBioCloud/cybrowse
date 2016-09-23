@@ -31,7 +31,6 @@ export default function PropertySelector() {
 				eventService.init()
 			},
 			onChange: function (property, selected) {
-				console.log(property)
 				onChange && onChange(property.name, selected)
 			},
 			showAll: function () {

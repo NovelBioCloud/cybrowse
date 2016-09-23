@@ -31,8 +31,6 @@ function CybrowseView() {
 	let manager
 	let viewService = getViewService()
 	let base = getBase()
-	let context = new Map()
-	context.set('cybrowseView-base', base)
 	this.init = (props) => {
 		base.init(props)
 	}
@@ -79,7 +77,7 @@ function CybrowseView() {
 					onReload: (data) => {
 						base.reload(data)
 					}
-				}, context)
+				})
 			},
 			repaint: () => {
 				$container.empty()
@@ -90,27 +88,26 @@ function CybrowseView() {
 }
 
 function CybrowseView2() {
-	this.init = function (props, context) {
+	this.init = function (props) {
+		let manager = props.manager
 		let toolbar = new Toolbar()
 		let editor = new Editor()
 		let cytoscape = new Cytoscape()
 		toolbar.init({
 			container: props.toolbarContainer,
-			manager: props.manager,
+			manager: manager,
 			onReload: props.onReload
-		}, context)
+		})
 		editor.init({
 			container: props.editorContainer,
-			manager: props.manager
-		}, context)
+			manager: manager
+		})
 		cytoscape.init({
 			container: props.cytoscapeContainer,
-			manager: props.manager,
+			manager: manager,
 			initializedCallback: (cytoscape) => {
-				context.set('cytoscapeInstance', cytoscape)
-				toolbar.setCytoscape(cytoscape)
-				editor.setCytoscape(cytoscape)
+				manager.setCytoscape(cytoscape)
 			}
-		}, context)
+		})
 	}
 }

@@ -7,6 +7,7 @@ import postal from 'postal'
 import {
 	DefaultConfigManager,
 	DataManager,
+	CytoscapeManager,
 } from './manager'
 
 export default function Manager() {
@@ -14,23 +15,16 @@ export default function Manager() {
 		//** manager **//
 	let defaultConfigManager
 	let dataManager
+	let cytoscapeManager = new CytoscapeManager()
 	let dataService = getDataService()
 	this.init = (cb) => {
-		async.series([
-				(cb) => {
-					dataService.initDefaultConfigManager(cb)
-        }, (cb) => {
-					dataService.initDataManager()
-					cb()
-        }, (cb) => {
-					dataService.initManagers(cb)
-        }, (cb) => {
-					cb()
-        }
-      ],
-			(err, results) => {
-				cb(err, results)
-			})
+		dataService.initDefaultConfigManager(() => {
+			dataService.initDataManager()
+			cb()
+		})
+	}
+	this.setCytoscape = (cytoscape) => {
+		cytoscapeManager.setCytoscape(cytoscape)
 	}
 	this.getDataManager = () => {
 		return dataManager
@@ -53,6 +47,7 @@ export default function Manager() {
 	this.updateDefaultConfig = () => {
 		console.log('todo')
 	}
+
 	function getDataService() {
 		return {
 			initDefaultConfigManager: (cb) => {
@@ -63,9 +58,6 @@ export default function Manager() {
 				dataManager = new DataManager()
 				dataManager.load(cb)
 			},
-			initManagers: (cb) => {
-				cb()
-			}
 		}
 	}
 }

@@ -4,7 +4,9 @@ import async from 'async'
 import assert from 'assert'
 import immutable from 'immutable'
 import postal from 'postal'
-import NodeEditor from './NodeEditor'
+import {
+	NodeEditor
+} from './node-editors'
 import ConfigSelector from './ConfigSelector'
 export default function Editor() {
 	let _this = this
@@ -21,9 +23,8 @@ export default function Editor() {
 	let viewService = getViewService()
 	let eventService = getEventService()
 	let cytoscapeInstance
-	let context
-	this.init = function (props, context) {
-		base.init(props, context)
+	this.init = function (props) {
+		base.init(props)
 	}
 	this.setCytoscape = (cytoscape) => {
 		base.setCytoscape(cytoscape)
@@ -31,8 +32,8 @@ export default function Editor() {
 
 	function getBase() {
 		return {
-			init: (props, context) => {
-				dataService.init(props, context)
+			init: (props) => {
+				dataService.init(props)
 				viewService.init()
 				eventService.init()
 			},
@@ -46,9 +47,8 @@ export default function Editor() {
 
 	function getDataService() {
 		return {
-			init: (_props, _context) => {
+			init: (_props) => {
 				props = _props
-				context = _context
 				manager = props.manager
 				$container = $(props.container)
 				tabState = {
@@ -85,7 +85,7 @@ export default function Editor() {
 				editorTab.init({
 					manager: manager,
 					container: $view.find(".fn-editor-editor-tab-container")
-				}, context)
+				})
 			},
 		}
 	}

@@ -14,7 +14,7 @@ function DefaultConfigService() {
 export default function DefaultConfigManager() {
 	let defaultConfig
 	let defaultConfigService = new DefaultConfigService()
-	this.load = (callback, emitEvent = false) => {
+	this.load = (callback) => {
 		defaultConfigService.load().then((data) => {
 			defaultConfig = data
 			if (callback) {

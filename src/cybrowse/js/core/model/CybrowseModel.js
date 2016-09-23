@@ -1,6 +1,7 @@
 import CytoscapeModel from './CytoscapeModel'
-import EditorModel from './EditorModel'
+import ConfigModel from './ConfigModel'
 export default class CybrowseModel {
 	cytoscape = new CytoscapeModel()
-	editor = new EditorModel()
+	config = new ConfigModel()
+	layout
 }
