@@ -12,102 +12,171 @@ import Manager from './Manager'
 
 export default function App() {
 	this.init = (props) => {
-		let cybrowseView = new CybrowseView()
 		let manager = new Manager()
-		manager.init(() => {
-			cybrowseView.init({
-				container: props.container,
-				manager: manager
-			})
+		let cybrowseCore = new CybrowseCore()
+		manager.init()
+		cybrowseCore.init({
+			container: props.container,
+			manager: manager
 		})
 	}
 }
 
-function CybrowseView() {
+function CybrowseCore() {
 	let _this = this
 	let $container
 	let $view
 		//** manager **//
-	let manager
-	let viewService = getViewService()
-	let base = getBase()
-	this.init = (props) => {
-		base.init(props)
-	}
-	this.getView = () => {
-		return $view
+	let manager, service
+
+	/**view**/
+	this.init = _.bind(init)
+
+	/**base**/
+	function init(props) {
+		$container = props.container
+		manager = props.manager
+		view_init()
 	}
 
-	function getBase() {
-		return {
-			init: (props) => {
-				$container = props.container
-				manager = props.manager
-				viewService.init()
-			},
-			reload: (data) => {
-				manager.getDataManager().load()
-				viewService.repaint()
-			}
-		}
+	/**service**/
+	function view_init() {
+		view_repaint()
 	}
 
-	function getViewService() {
-		return {
-			getTemplate: () => {
-				return `<div class='class-app'>
-          <div class='app-title'>
-            <div class='app-toolbar-wrap' data-toolbar></div>
-          </div>
-          <div class='app-content'>
-            <div class='app-editor-wrap container-fluid' data-editor></div>
-            <div class='app-cytoscape-wrap container-fluid' data-cytoscape></div>
-          </div>
-        </div>`
-			},
-			init: () => {
-				$view = $(viewService.getTemplate())
-				$container.append($view)
-				let cybrowseView2 = new CybrowseView2()
-				cybrowseView2.init({
-					toolbarContainer: $container.find("[data-toolbar]"),
-					editorContainer: $container.find("[data-editor]"),
-					cytoscapeContainer: $container.find("[data-cytoscape]"),
-					manager: manager,
-					onReload: (data) => {
-						base.reload(data)
-					}
-				})
-			},
-			repaint: () => {
-				$container.empty()
-				viewService.init()
-			}
-		}
+	function view_getTemplate() {
+		return `<div class='class-app'>
+			<div class='app-title'>
+				<div class='app-toolbar-wrap' data-toolbar></div>
+			</div>
+			<div class='app-content'>
+				<div class='app-editor-wrap container-fluid' data-editor></div>
+				<div class='app-cytoscape-wrap container-fluid' data-cytoscape></div>
+			</div>
+		</div>`
 	}
+
+	function view_repaint() {
+		$container.empty()
+		$view = $(view_getTemplate())
+		$container.append($view)
+		let cybrowseView = new CybrowseView()
+		cybrowseView.init({
+			toolbarContainer: $container.find("[data-toolbar]"),
+			editorContainer: $container.find("[data-editor]"),
+			cytoscapeContainer: $container.find("[data-cytoscape]"),
+			manager: manager,
+			service: {}
+		})
+	}
+
 }
 
-function CybrowseView2() {
+function CybrowseView() {
+	let manager
+	let toolbar
+	let service
+	let composer
+	let listener
 	this.init = function (props) {
-		let manager = props.manager
-		let toolbar = new Toolbar()
-		let editor = new Editor()
-		let cytoscape = new Cytoscape()
+		manager = props.manager
+		composer = new EditorCytoscapeComposer()
+		toolbar = new Toolbar()
+		service = props.service
 		toolbar.init({
 			container: props.toolbarContainer,
 			manager: manager,
-			onReload: props.onReload
+			service: {
+				onLoadLocalStorageData: _.bind(onLoadLocalStorageData),
+				onLoad: _.bind(onLoad),
+				save: _.bind(save),
+				saveAsPng: _.bind(saveAsPng),
+				saveAsJpeg: _.bind(saveAsJpeg),
+			}
 		})
+		composer.init({
+			editorContainer: props.editorContainer,
+			cytoscapeContainer: props.cytoscapeContainer,
+			manager: manager,
+			service: {
+				setManagerUpdateListener: _.bind(setManagerUpdateListener),
+				emitManagerUpdateEvent: _.bind(emitManagerUpdateEvent)
+			}
+		})
+	}
+
+	function loadLocalStorageData() {
+		manager.getCybrowseManager().loadLocalStorageData()
+		composer.repaint()
+	}
+
+	function load(data) {
+		manager.getCybrowseManager().load(data)
+		composer.repaint()
+	}
+
+	function onLoadLocalStorageData() {
+		loadLocalStorageData()
+	}
+
+	function onLoad(data) {
+		load(data)
+	}
+
+	function save() {
+		manager.getConfigManager().save()
+	}
+
+	function saveAsPng() {
+		manager.getCybrowseManager().save()
+	}
+
+	function saveAsJpeg() {
+		manager.getCybrowseManager().save()
+	}
+
+	function setManagerUpdateListener(_listener) {
+		listener = _listener
+	}
+
+	function emitManagerUpdateEvent() {
+		listener && listener()
+	}
+}
+
+function EditorCytoscapeComposer() {
+	let editor
+	let cytoscape
+	let service
+	let manager
+	this.init = function (props) {
+		manager = props.manager
+		editor = new Editor()
+		cytoscape = new Cytoscape()
+		service = props.service
 		editor.init({
 			container: props.editorContainer,
-			manager: manager
+			manager: manager,
+			emitManagerUpdateEvent: _.bind(emitManagerUpdateEvent),
 		})
 		cytoscape.init({
 			container: props.cytoscapeContainer,
 			manager: manager,
-			initializedCallback: (cytoscape) => {
-				manager.setCytoscape(cytoscape)
-			}
+			setManagerUpdateListener: _.bind(setManagerUpdateListener)
 		})
+	}
+	this.repaint = _.bind(repaint)
+
+	function repaint() {
+		editor.repaint()
+		cytoscape.repaint()
+	}
+
+	function setManagerUpdateListener(cb) {
+		service.setManagerUpdateListener && service.setManagerUpdateListener(cb)
+	}
+
+	function emitManagerUpdateEvent() {
+		return service.emitManagerUpdateEvent && service.emitManagerUpdateEvent()
 	}
 }

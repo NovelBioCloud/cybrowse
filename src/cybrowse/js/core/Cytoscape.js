@@ -5,88 +5,66 @@ import assert from 'assert'
 import immutable from 'immutable'
 import postal from 'postal'
 import cytoscape from 'cytoscape'
+import configs from './common/configs'
 
 export default function Cytoscape() {
 	let _this = this
 	let $container
 	let $view
 	let defaultConfig
+	let cytoscapeManager
 	let cytoscapeInstance
-	let dataService = getDataService()
-	let viewService = getViewService()
-	let eventService = getEventService()
-	let base = getBase()
 	let props
 	let manager
-	this.init = function (props) {
-		base.init(props)
+	let setManagerUpdateListener
+	this.init = _.bind(init)
+	this.repaint = _.bind(repaint)
+
+	function repaint() {
+		$view.remove()
+		view_init()
 	}
 
-	function getBase() {
-		return {
-			init: function (props) {
-				dataService.init(props)
-				viewService.init()
-				eventService.init()
-			},
-			reload: function () {
-				cytoscapeInstance.remove(cytoscapeInstance.elements())
-				cytoscapeInstance.add(manager.getDataManager().getData())
-			}
-		}
+	function init(props) {
+		data_init(props)
+		view_init()
 	}
 
-	function getDataService() {
-		return {
-			init: (_props) => {
-				props = _props
-				$container = $(props.container)
-				manager = props.manager
-			},
-		}
+	function managerUpdateListener() {
+		repaint()
 	}
 
-	function getViewService() {
-		return {
-			getTemplate: () => {
-				return `<div class='class-cytoscape'>
+	function data_init(_props) {
+		props = _props
+		$container = $(props.container)
+		manager = props.manager
+		setManagerUpdateListener = props.setManagerUpdateListener
+	}
+
+	function view_getTemplate() {
+		return `<div class='class-cytoscape'>
           <div class='cytoscape-view' data-cytoscape-view></div>
         </div>`
-			},
-			init: () => {
-				let defaultConfig = manager.getDefaultConfigManager().getData()
-
-				$view = $(viewService.getTemplate())
-				$container.append($view)
-				let cytoscapeView = $container.find("[data-cytoscape-view]")
-				cytoscapeInstance = cytoscape({
-					container: cytoscapeView,
-					style: []
-				});
-				try {
-					let cybrowseData = manager.getDataManager().getData()
-					cytoscapeInstance.add(cybrowseData.nodes)
-					cytoscapeInstance.add(cybrowseData.edges)
-					cytoscapeInstance.style().resetToDefault().update()
-					cytoscapeInstance.style()
-						.fromJson(_.concat(defaultConfig.style, cybrowseData.styles)).update()
-
-				} catch (e) {
-
-				}
-				if (props.initializedCallback) {
-					props.initializedCallback(cytoscapeInstance)
-				}
-			}
-		}
 	}
 
-	function getEventService() {
-		return {
-			init: () => {
-			}
-		}
+	function view_init() {
+		$view = $(view_getTemplate())
+		$container.append($view)
+		let cytoscapeView = $container.find("[data-cytoscape-view]")
+		cytoscapeInstance = cytoscape({
+			container: cytoscapeView,
+			style: []
+		});
+
+		/**初始化cytoscape**/
+		cytoscapeManager = manager.getCytoscapeManager()
+		cytoscapeManager.setCytoscape(cytoscapeInstance)
+		try {
+			cytoscapeManager.repaint()
+		} catch (e) {}
+		setManagerUpdateListener && setManagerUpdateListener(managerUpdateListener)
 	}
+
 }
 
 const defaultLayout = {

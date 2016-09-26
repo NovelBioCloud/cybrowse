@@ -1,3 +1,3 @@
-export DefaultConfigManager from './DefaultConfigManager'
-export DataManager from './DataManager'
 export CytoscapeManager from './CytoscapeManager'
+export ConfigManager from './ConfigManager'
+export CybrowseManager from './CybrowseManager'

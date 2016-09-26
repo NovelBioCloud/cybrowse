@@ -1,7 +1,13 @@
-export default function ConfigManager() {
+export default function CytoscapeManager() {
 	let cytoscape
-	this.setCytoscape = (_cytoscape) => {
+	this.setCytoscape = setCytoscape
+	this.getCytoscape = getCytoscape
+
+	function setCytoscape(_cytoscape) {
 		cytoscape = _cytoscape
 	}
-	this.getCytoscape = () => cytoscape
+
+	function getCytoscape() {
+		return cytoscape
+	}
 }

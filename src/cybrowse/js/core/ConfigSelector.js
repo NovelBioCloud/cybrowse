@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import $ from 'jquery'
+import configs from './common/configs'
 export default function ConfigSelector() {
 	let _this = this,
 		$container, $view, props
@@ -13,7 +14,8 @@ export default function ConfigSelector() {
 		data_init(props)
 		view_init()
 	}
-	function onConfigChange(value){
+
+	function onConfigChange(value) {
 		props.onConfigChange && props.onConfigChange(value)
 	}
 	/** service **/
@@ -25,11 +27,22 @@ export default function ConfigSelector() {
 	/** view **/
 	function view_init() {
 		let template = view_getTemplate()
-		let configs = manager.getConfigs()
+		let layout = configs.style.map((item) => {
+			return {
+				value: item.name,
+				name: item.name
+			}
+		})
 		$view = $(_.template(template)({
-			configs
+			layout: layout
 		}))
 		$container.append($view)
+		let configManager = manager.getConfigManager()
+		let config = configManager.getData()
+		let defaultStyle = config.defaultStyle
+		if (defaultStyle && defaultStyle.name) {
+			$view.find('.fn-column-select').val(defaultStyle.name)
+		}
 		$view.find('.fn-column-select').change((event) => {
 			onConfigChange($(event.target).val())
 		})
@@ -39,16 +52,12 @@ export default function ConfigSelector() {
 		return `
       <div>
         <select class='fn-column-select form-control input-sm'>
-          <option>----</option>
-        <% _.each(configs,(config)=>{ %>
-          <option><%=config.name%></option>
+          <option></option>
+        <% _.each(layout,(item)=>{ %>
+          <option value='<%=item.value%>'><%=item.name%></option>
         <% })%>
         </select>
       </div>
     `
-	}
-	/** event **/
-	function event_init() {
-
 	}
 }

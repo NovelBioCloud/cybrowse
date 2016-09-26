@@ -12,9 +12,10 @@ module.exports = {
 		source: 'src/cybrowse/less/app.less',
 		target: 'dist/cybrowse/',
 	}],
-	es6: [{
-		source: 'src/cybrowse/js/app.js',
-		target: 'dist/cybrowse/',
-		name: 'app.js'
+	es6: [
+		{
+			source: 'src/cybrowse/js/app.js',
+			target: 'dist/cybrowse/',
+			name: 'app.js'
 	}]
 }

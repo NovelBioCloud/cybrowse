@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 //app.use(require('connect-livereload')());
 
-app.use('/cybrowse', express.static('cybrowse'));
+app.use('/cybrowse/**', express.static('cybrowse'));
 app.use('/lib/**', express.static('lib'));
 app.use('/redux', express.static('redux'));
 app.use('/react-redux', express.static('react-redux'));

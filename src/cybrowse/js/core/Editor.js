@@ -18,95 +18,73 @@ export default function Editor() {
 	let defaultConfig
 	let configSelector
 	let editorTab
-	let base = getBase()
-	let dataService = getDataService()
-	let viewService = getViewService()
-	let eventService = getEventService()
-	let cytoscapeInstance
-	this.init = function (props) {
-		base.init(props)
-	}
-	this.setCytoscape = (cytoscape) => {
-		base.setCytoscape(cytoscape)
+	this.init = _.bind(init)
+	this.repaint = _.bind(repaint)
+
+	function init(props) {
+		data_init(props)
+		view_init()
 	}
 
-	function getBase() {
-		return {
-			init: (props) => {
-				dataService.init(props)
-				viewService.init()
-				eventService.init()
-			},
-			setCytoscape: (cy) => {},
-			updateDefaultConfig: (name) => {
-				manager.updateDefaultConfig(name)
-				editorTab.updateDefaultConfig()
-			}
+	function repaint() {
+		$view.remove()
+		view_init()
+	}
+
+	function updateDefaultStyle(name) {
+		manager.getConfigManager().updateDefaultStyle(name)
+		editorTab.repaint()
+		props.emitManagerUpdateEvent()
+	}
+
+
+
+	function data_init(_props) {
+		props = _props
+		manager = props.manager
+		$container = $(props.container)
+		tabState = {
+			view: 'node'
 		}
 	}
 
-	function getDataService() {
-		return {
-			init: (_props) => {
-				props = _props
-				manager = props.manager
-				$container = $(props.container)
-				tabState = {
-					view: 'node'
-				}
-			},
-			loadDefaultConfig: (cb) => {
-				// manager.getDefaultConfigManager.getData()
-				cb()
-			}
-		}
+	function data_loadDefaultConfig(cb) {
+		cb()
 	}
 
-	function getViewService() {
-		return {
-			getTemplate: () => {
-				return `<div >
-					<div class='fn-editor-config-selector-container'></div>
-					<div class='fn-editor-editor-tab-container'></div>
-        </div>`
-			},
-			init: () => {
-				$view = $(viewService.getTemplate())
-				$container.append($view)
-				configSelector = new ConfigSelector()
-				configSelector.init({
-					manager: manager,
-					onConfigChange: (name) => {
-						base.updateDefaultConfig(name)
-					},
-					container: $view.find(".fn-editor-config-selector-container")
-				})
-				editorTab = new EditorTab()
-				editorTab.init({
-					manager: manager,
-					container: $view.find(".fn-editor-editor-tab-container")
-				})
-			},
-		}
+	function view_getTemplate() {
+		return `
+			<div >
+				<div class='fn-editor-config-selector-container'></div>
+				<div class='fn-editor-editor-tab-container'></div>
+      </div>`
 	}
 
-	function getEventService() {
-		return {
-			init: () => {}
-		}
+	function view_init() {
+		$view = $(view_getTemplate())
+		$container.append($view)
+		configSelector = new ConfigSelector()
+		configSelector.init({
+			manager: manager,
+			onConfigChange: (name) => {
+				updateDefaultStyle(name)
+			},
+			container: $view.find(".fn-editor-config-selector-container")
+		})
+		editorTab = new EditorTab()
+		editorTab.init({
+			manager: manager,
+			container: $view.find(".fn-editor-editor-tab-container")
+		})
 	}
+
 }
 
 function EditorTab() {
 	let _this = this,
-		$container, $view, props, manager
-
-	this.init = (props) => {
-		init(props)
-	}
-	this.updateDefaultConfig = () => {
-		updateDefaultConfig()
-	}
+		$container, $view, props, manager, nodeEditor
+	this.init = init
+	this.repaint = repaint
 
 	/** base **/
 	function init(_props) {
@@ -116,16 +94,15 @@ function EditorTab() {
 		view_init()
 	}
 
-	function updateDefaultConfig() {
-		$container.empty()
-		view_init()
+	function repaint() {
+		nodeEditor.repaint()
 	}
 	/** service **/
 
 	function view_init() {
 		$view = $(_.template(view_getTemplate())({}))
 		$view.appendTo($container)
-		let nodeEditor = new NodeEditor()
+		nodeEditor = new NodeEditor()
 		nodeEditor.init({
 			container: $view.find('.fn-node-editor-container'),
 			manager: manager
@@ -136,28 +113,28 @@ function EditorTab() {
 		return `<div >
 			<ul class="nav nav-tabs nav-justified" role="tablist">
 				<li role="presentation" class="active">
-					<a href="#home" role="tab" data-toggle="tab">节点信息</a>
+					<a href="#editor_node" role="tab" data-toggle="tab" data-tab-name='node'>节点信息</a>
 				</li>
 				<li role="presentation">
-					<a href="#profile" role="tab" data-toggle="tab">连线信息</a>
+					<a href="#editor_edge" role="tab" data-toggle="tab" data-tab-name='edge'>连线信息</a>
 				</li>
 				<li role="presentation">
-					<a href="#messages" role="tab" data-toggle="tab">全局信息</a>
+					<a href="#editor_general" role="tab" data-toggle="tab" data-tab-name='general'>全局信息</a>
 				</li>
 			</ul>
 			<!-- Tab panes -->
 			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane fade in active" id="home">
+				<div role="tabpanel" class="tab-pane fade in active" id="editor_node">
 					<div style='padding-top:15px'>
 						<div class='fn-node-editor-container'></div>
 					</div>
 				</div>
-				<div role="tabpanel" class="tab-pane fade" id="profile">
+				<div role="tabpanel" class="tab-pane fade" id="editor_edge">
 					<div style='padding-top:15px'>
 						<div class='fn-edge-editor-container'>edge</div>
 					</div>
 				</div>
-				<div role="tabpanel" class="tab-pane fade" id="messages">
+				<div role="tabpanel" class="tab-pane fade" id="editor_general">
 					<div style='padding-top:15px'>
 						<div class='fn-network-editor-container'>network</div>
 					</div>

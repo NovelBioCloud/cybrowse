@@ -68,10 +68,10 @@ export default function MappingContent() {
 			},
 			init: function () {
 				$container.empty()
-				let dataManager = manager.getDataManager()
+				let cybrowseManager = manager.getCybrowseManager()
 				let columnValue = mappingColumn.getValue()
 				let typeValue = mappingType.getValue()
-				let values = dataManager.getValuesByProperty(columnValue)
+				let values = manager.getConfigManager().getValuesByProperty(columnValue)
 				let template = _.template(viewService.getTemplate())({
 					values: values
 				})

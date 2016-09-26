@@ -13,7 +13,6 @@ export default function Toolbar() {
 	let cytoscape
 	let dataService = getDataService()
 	let viewService = getViewService()
-	let eventService = getEventService()
 	let base = getBase()
 	let manager
 	this.init = (props) => {
@@ -22,29 +21,18 @@ export default function Toolbar() {
 	this.getView = () => {
 		return $view
 	}
-	this.setCytoscape = (cytoscape) => {
-		base.setCytoscape(cytoscape)
-	}
 
 	function getBase() {
 		return {
 			init: (props) => {
-				async.series([
-					(cb) => {
-						dataService.init(props)
-						cb()
-          }, (cb) => {
-						viewService.init()
-						eventService.init()
-						cb()
-          }
-        ])
+				dataService.init(props)
+				viewService.init()
 			},
-			setCytoscape: (_cytoscape) => {
-				cytoscape = _cytoscape
+			onLoadLocalStorageData: () => {
+				props.service.onLoadLocalStorageData()
 			},
-			loadData: () => {
-				props.onReload()
+			save: () => {
+				props.service.save()
 			}
 		}
 	}
@@ -53,7 +41,7 @@ export default function Toolbar() {
 		return {
 			init: (_props) => {
 				props = _props
-				$container = $(props.container)
+				$container = props.container
 				manager = props.manager
 			},
 		}
@@ -75,8 +63,8 @@ export default function Toolbar() {
 					          <ul class="dropdown-menu" role="menu">
 											<li><a href="#" class='fn-toolbar-clear-data'>新建</a></li>
 											<li><a href="#" class='fn-toolbar-clear-local'>清楚缓存</a></li>
-					            <li><a href="#" class='fn-toolbar-load-data'>打开</a></li>
-					            <li><a href="#" class='fn-toolbar-save-data'>保存</a></li>
+					            <li><a href="#" class='fn-toolbar-load-local-data'>加载本地数据</a></li>
+					            <li><a href="#" class='fn-toolbar-save-data'>保存到本地</a></li>
 											<li><a href="#" class='fn-toolbar-save-as'>保存为...</a></li>
 					            <li class="divider"></li>
 					            <li><a href="#">退出</a></li>
@@ -102,22 +90,16 @@ export default function Toolbar() {
 				$view = $(viewService.getTemplate())
 				$container.append($view)
 				$view.find('.fn-toolbar-save-data').click(function () {
-					console.log(cytoscape.elements())
-					localStorage.setItem("cybrowse-data", JSON.stringify(cytoscape.json()))
+					base.save()
+				})
+				$view.find('.fn-toolbar-load-local-data').click(() => {
+					base.onLoadLocalStorageData()
 				})
 			},
 		}
 	}
 
-	function getEventService() {
-		return {
-			init: () => {
-				$view.find('.fn-toolbar-load-data').click(() => {
-					base.loadData()
-				})
-			},
-		}
-	}
+
 
 
 }

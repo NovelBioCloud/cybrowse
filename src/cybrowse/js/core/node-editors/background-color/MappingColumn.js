@@ -50,7 +50,7 @@ export default function Column() {
 					//TODO
 			},
 			getProperties: function () {
-				return manager.getDataManager().getProperties()
+				return manager.getConfigManager().getProperties()
 			}
 		}
 	}
