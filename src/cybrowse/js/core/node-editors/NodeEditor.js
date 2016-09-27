@@ -27,6 +27,10 @@ export default function NodeEditor() {
 		view_render()
 	}
 
+	function emitManagerUpdateEvent() {
+		props.service.emitManagerUpdateEvent()
+	}
+
 	function data_init(_props) {
 		props = _props
 		$container = props.container
@@ -47,11 +51,13 @@ export default function NodeEditor() {
 			container: $view.find('.fn-property-selector-wrap'),
 			onChange: (property, selected) => {
 				propertyEditor.rerenderEditor(property, selected)
-			}
+			},
+			emitManagerUpdateEvent: emitManagerUpdateEvent
 		})
 		propertyEditor.init({
 			container: $view.find('.fn-property-editor-wrap'),
 			manager: manager,
+			emitManagerUpdateEvent: emitManagerUpdateEvent
 		})
 	}
 

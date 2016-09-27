@@ -20,6 +20,10 @@ export default function Mapping() {
 	let manager
 	let cytoscapeInstance
 	let context
+	let mappingColumn, mappingType, mappingContent
+	let viewState = {
+		showDetail: true
+	}
 	this.init = function (props, context) {
 		base.init(props, context)
 	}
@@ -31,45 +35,161 @@ export default function Mapping() {
 		return {
 			init: function (props, context) {
 				dataService.init(props, context)
-				viewService.init()
+				viewService.render()
 			},
 			getView: function () {
 				return $view
 			},
+			updateConfig: function (property, mappingType, mappingValue, value) {
+				dataService.updateConfig(property, mappingType, mappingValue, value)
+			},
+			removeMapping: function () {
+				dataService.removeMapping()
+				viewService.render()
+			},
+			addMapping: function () {
+				dataService.addMapping()
+				viewService.render()
+			},
+			updateMappingContent: function () {
+				mappingContent && mappingContent.update()
+			},
+			showDetail: function () {
+
+			},
+			toggle: function () {
+
+			}
 		}
 	}
 
 	function getDataService() {
 		return {
-			init: function (_props, _context) {
+			init: (_props, _context) => {
 				props = _props
 				context = _context
 				$container = props.container
 				manager = props.manager
+			},
+			updateConfig: (property, mappingType, mappingValue, value) => {
+				let configManager = manager.getConfigManager()
+				let cytoscaeManager = manager.getCytoscapeManager()
+				configManager.emitEvent({
+					type: 'node.style.mapping.data.update',
+					data: {
+						styleName: 'background-color',
+						propertyName: property,
+						mappingType: mappingType,
+						propertyValue: mappingValue,
+						styleValue: value
+					}
+				})
+				cytoscaeManager.updateCytoscapeView()
+			},
+			addMapping: () => {
+				let configManager = manager.getConfigManager()
+				let cytoscaeManager = manager.getCytoscapeManager()
+				configManager.emitEvent({
+					type: 'node.style.mapping.update',
+					data: {
+						styleName: 'background-color',
+						mappingType: 'discrete',
+						mappingColumn: ''
+					}
+				})
+				cytoscaeManager.updateCytoscapeView()
+			},
+			removeMapping: () => {
+				let configManager = manager.getConfigManager()
+				configManager.emitEvent({
+					type: 'node.style.mapping.remove',
+					data: {
+						styleName: 'background-color'
+					}
+				})
+				cytoscaeManager.updateCytoscapeView()
 			}
 		}
 	}
 
 	function getViewService() {
 		return {
-			init: () => {
-				viewService.render()
-			},
 			render: () => {
-				if ($view) {
-					$view.remove()
+				let configManager = manager.getConfigManager()
+				let config = configManager.getData()
+				let mappingData = config.style.node.mapping['background-color']
+				console.log(mappingData)
+				if (!mappingData.state || mappingData.state === 'init') {
+					viewService.renderInitView()
+				} else {
+					viewService.renderInitedView()
 				}
-				let template = _.template(viewService.getTemplate())({})
-				$view = $(template)
-				$container.append($view)
-				let mappingColumn = new MappingColumn()
-				let mappingType = new MappingType()
-				let mappingContent = new MappingContent()
+			},
+			renderInitView: () => {
+				$view && $view.remove()
+				$view = $(_.template(viewService.getInitStateTemplate())({}))
+				$view.appendTo($container)
+				mappingColumn = null
+				mappingType = null
+				mappingContent = null
+				$view.find('.fn-mapping-add').click(() => {
+					base.addMapping()
+				})
+			},
+			renderInitedView: () => {
+				$view && $view.remove()
+				$view = $(_.template(viewService.getInitedStateTemplate())({}))
+				$view.appendTo($container)
+				mappingColumn = new MappingColumn()
+				mappingType = new MappingType()
+				mappingContent = new MappingContent()
+				mappingColumn.init({
+					container: $view.find('.fn-background-mapping-column-wrap'),
+					onChange: () => {
+						let property = mappingColumn.getValue()
+						let mappingTypeValue = mappingType.getValue()
+						mappingContent.update()
+						base.updateConfig(property, mappingTypeValue, '', '')
+					},
+					manager: manager
+				})
+				mappingType.init({
+					container: $view.find('.fn-background-mapping-type-wrap'),
+					onChange: () => {
+						let property = mappingColumn.getValue()
+						let mappingTypeValue = mappingType.getValue()
+						mappingContent.update()
+						base.updateConfig(property, mappingTypeValue, '', '')
+					},
+					manager: manager
+				})
+				mappingContent.init({
+					container: $view.find('.fn-background-mapping-content-wrap'),
+					mappingColumn: mappingColumn,
+					mappingType: mappingType,
+					manager: manager,
+					onChange: (mappingValue, value) => {
+						let property = mappingColumn.getValue()
+						let mappingTypeValue = mappingType.getValue()
+						base.updateConfig(property, mappingTypeValue, mappingValue, value)
+					}
+				})
+				$view.find('.fn-mapping-remove').click(() => {
+					base.removeMapping()
+				})
+			},
+			renderDiscreteView: () => {
+				$view && $view.remove()
+				$view = $(_.template(viewService.getInitedStateTemplate())({}))
+				$view.appendTo($container)
+				mappingColumn = new MappingColumn()
+				mappingType = new MappingType()
+				mappingContent = new MappingContent()
 				mappingColumn.init({
 					container: $view.find('.fn-background-mapping-column-wrap'),
 					value: '',
 					onChange: () => {
-						mappingContent.update()
+						base.updateMappingContent()
 					},
 					manager: manager
 				})
@@ -77,7 +197,7 @@ export default function Mapping() {
 					container: $view.find('.fn-background-mapping-type-wrap'),
 					value: '',
 					onChange: () => {
-						mappingContent.update()
+						base.updateMappingContent()
 					},
 					manager: manager
 				})
@@ -89,26 +209,42 @@ export default function Mapping() {
 					value: {},
 					onChange: (mappingValue, value) => {
 						let property = mappingColumn.getValue()
-						base.updateCytoscape(property, mappingValue, value)
+						let mappingTypeValue = mappingType.getValue()
+						base.updateConfig(property, mappingTypeValue, mappingValue, value)
 					}
 				})
+				$view.find('.fn-mapping-remove').click(() => {
+					base.removeMapping()
+				})
 			},
-			getTemplate: () => {
+			getInitStateTemplate: () => {
 				return `<div>
-          <div>default value <i class='fa fa-angle-double-down '></i></div>
+					<div><i class='fa fa-angle-double-down '></i></div>
 					<div>
-            <div>
-						  <div class='fn-background-mapping-column-wrap'></div>
-						  <div class='fn-background-mapping-type-wrap'></div>
-						  <div class='fn-background-mapping-content-wrap'></div>
-            </div>
-            <div>
-              <button class='btn btn-sm'>
-                <i class='fa fa-fw fa-trash'></i>
-              </button>
-            </div>
+						<div>
+							<button class='btn btn-sm fn-mapping-add'>
+								<i class='fa fa-fw fa-plus'></i>
+							</button>
+						</div>
 					</div>
-        </div>`
+				</div>`
+			},
+			getInitedStateTemplate: () => {
+				return `<div>
+					<div><i class='fa fa-angle-double-down '></i></div>
+					<div>
+						<div>
+							<button class='btn btn-sm fn-mapping-remove'>
+								<i class='fa fa-fw fa-trash'></i>
+							</button>
+						</div>
+						<div>
+							<div class='fn-background-mapping-column-wrap'></div>
+							<div class='fn-background-mapping-type-wrap'></div>
+							<div class='fn-background-mapping-content-wrap'></div>
+						</div>
+					</div>
+				</div>`
 			}
 		}
 	}

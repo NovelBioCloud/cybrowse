@@ -5,7 +5,7 @@ export default class StyleConfigModel {
 			node: {
 				trunk: {
 					'background-color': {
-						styleValue: ""
+						styleValue: "red"
 					}
 				},
 				mapping: {

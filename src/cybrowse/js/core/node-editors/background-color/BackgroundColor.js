@@ -83,7 +83,8 @@ export default function BackgroundColor() {
 				let specific = new Specific()
 				trunk.init({
 					container: $view.find('.fn-background-trunk-wrap'),
-					manager: manager
+					manager: manager,
+					emitManagerUpdateEvent: props.emitManagerUpdateEvent
 				})
 				mapping.init({
 					container: $view.find('.fn-background-mapping-wrap'),

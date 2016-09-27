@@ -28,10 +28,15 @@ export default function Manager() {
 	}
 
 	function data_init() {
-		configManager = new ConfigManager()
-		configManager.init()
 		cytoscapeManager = new CytoscapeManager()
+		configManager = new ConfigManager()
 		cybrowseManager = new CybrowseManager()
+		cytoscapeManager.init({
+			configManager
+		})
+		configManager.init({
+			cytoscapeManager
+		})
 		cybrowseManager.init({
 			cytoscapeManager: cytoscapeManager,
 			configManager: configManager

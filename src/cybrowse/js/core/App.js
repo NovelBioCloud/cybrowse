@@ -9,7 +9,7 @@ import Toolbar from './Toolbar'
 import Editor from './Editor'
 import Cytoscape from './Cytoscape'
 import Manager from './Manager'
-
+import toastr from 'toastr'
 export default function App() {
 	this.init = (props) => {
 		let manager = new Manager()
@@ -87,11 +87,12 @@ function CybrowseView() {
 			container: props.toolbarContainer,
 			manager: manager,
 			service: {
-				onLoadLocalStorageData: _.bind(onLoadLocalStorageData),
-				onLoad: _.bind(onLoad),
+				loadLocalStorageData: _.bind(loadLocalStorageData),
 				save: _.bind(save),
+				load: _.bind(load),
 				saveAsPng: _.bind(saveAsPng),
 				saveAsJpeg: _.bind(saveAsJpeg),
+				clearLocalData: _.bind(clearLocalData)
 			}
 		})
 		composer.init({
@@ -105,26 +106,42 @@ function CybrowseView() {
 		})
 	}
 
-	function loadLocalStorageData() {
-		manager.getCybrowseManager().loadLocalStorageData()
-		composer.repaint()
-	}
-
 	function load(data) {
-		manager.getCybrowseManager().load(data)
-		composer.repaint()
+		try {
+			manager.getConfigManager().load(data)
+			composer.repaint()
+			toastr.success("加载数据成功")
+		} catch (e) {
+			toastr.error("加载数据失败")
+		}
 	}
 
-	function onLoadLocalStorageData() {
-		loadLocalStorageData()
+	function clearLocalData() {
+		try {
+			manager.getConfigManager().clearLocalData()
+			toastr.success("清楚缓存成功")
+		} catch (e) {
+			toastr.error("清楚缓存失败")
+		}
 	}
 
-	function onLoad(data) {
-		load(data)
+	function loadLocalStorageData() {
+		try {
+			manager.getConfigManager().loadLocalStorageData()
+			composer.repaint()
+			toastr.success("加载本地数据成功")
+		} catch (e) {
+			toastr.error("加载本地数据失败")
+		}
 	}
 
 	function save() {
-		manager.getConfigManager().save()
+		try {
+			manager.getConfigManager().save()
+			toastr.success("保存本地数据成功")
+		} catch (e) {
+			toastr.error("保存本地数据失败")
+		}
 	}
 
 	function saveAsPng() {

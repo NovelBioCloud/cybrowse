@@ -11,46 +11,44 @@ export default function Toolbar() {
 	let $container
 	let $view
 	let cytoscape
-	let dataService = getDataService()
-	let viewService = getViewService()
-	let base = getBase()
 	let manager
-	this.init = (props) => {
-		base.init(props)
+	this.init = init
+	this.getView = getView
+
+	function init(props) {
+		data_init(props)
+		view_init()
 	}
-	this.getView = () => {
+
+	function loadLocalStorageData() {
+		props.service.loadLocalStorageData()
+	}
+
+	function save() {
+		props.service.save()
+	}
+
+	function clearLocalData() {
+		props.service.clearLocalData()
+	}
+
+	function load(data) {
+		props.service.load(data)
+	}
+
+	function getView() {
 		return $view
 	}
 
-	function getBase() {
-		return {
-			init: (props) => {
-				dataService.init(props)
-				viewService.init()
-			},
-			onLoadLocalStorageData: () => {
-				props.service.onLoadLocalStorageData()
-			},
-			save: () => {
-				props.service.save()
-			}
-		}
+
+	function data_init(_props) {
+		props = _props
+		$container = props.container
+		manager = props.manager
 	}
 
-	function getDataService() {
-		return {
-			init: (_props) => {
-				props = _props
-				$container = props.container
-				manager = props.manager
-			},
-		}
-	}
-
-	function getViewService() {
-		return {
-			getTemplate: () => {
-				return `<div>
+	function view_getTemplate() {
+		return `<div>
 					<nav class="navbar navbar-default" role="navigation">
 					  <div class="container-fluid">
 					    <div class="navbar-header">
@@ -63,7 +61,8 @@ export default function Toolbar() {
 					          <ul class="dropdown-menu" role="menu">
 											<li><a href="#" class='fn-toolbar-clear-data'>新建</a></li>
 											<li><a href="#" class='fn-toolbar-clear-local'>清楚缓存</a></li>
-					            <li><a href="#" class='fn-toolbar-load-local-data'>加载本地数据</a></li>
+					            <li><a href="#" class='fn-toolbar-load-data'>加载数据</a></li>
+											<li><a href="#" class='fn-toolbar-load-local-data'>加载本地数据</a></li>
 					            <li><a href="#" class='fn-toolbar-save-data'>保存到本地</a></li>
 											<li><a href="#" class='fn-toolbar-save-as'>保存为...</a></li>
 					            <li class="divider"></li>
@@ -85,21 +84,22 @@ export default function Toolbar() {
 					  </div>
 					</nav>
 				</div>`
-			},
-			init: () => {
-				$view = $(viewService.getTemplate())
-				$container.append($view)
-				$view.find('.fn-toolbar-save-data').click(function () {
-					base.save()
-				})
-				$view.find('.fn-toolbar-load-local-data').click(() => {
-					base.onLoadLocalStorageData()
-				})
-			},
-		}
 	}
 
-
-
-
+	function view_init() {
+		$view = $(view_getTemplate())
+		$container.append($view)
+		$view.find('.fn-toolbar-save-data').click(function () {
+			save()
+		})
+		$view.find('.fn-toolbar-load-local-data').click(() => {
+			loadLocalStorageData()
+		})
+		$view.find('.fn-toolbar-clear-local').click(() => {
+			clearLocalData()
+		})
+		$view.find('.fn-toolbar-load-data').click(() => {
+			load()
+		})
+	}
 }

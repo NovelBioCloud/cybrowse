@@ -5,6 +5,33 @@ let defaultConfig = {
 		node: {
 			trunk: {
 				'background-color': {
+					styleValue: "red"
+				},
+				'width': {
+					styleValue: 30
+				},
+				height: {
+					styleValue: 50
+				}
+			},
+			mapping: {},
+			specific: {}
+		},
+		edge: {
+			trunk: {
+				'background-color': {
+					styleValue: ""
+				}
+			},
+			mapping: {},
+			specific: {}
+		},
+	}, {
+		name: 'DefaultConfig2',
+		general: {},
+		node: {
+			trunk: {
+				'background-color': {
 					styleValue: ""
 				}
 			},

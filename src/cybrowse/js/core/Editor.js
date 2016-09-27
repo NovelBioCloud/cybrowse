@@ -37,7 +37,9 @@ export default function Editor() {
 		props.emitManagerUpdateEvent()
 	}
 
-
+	function emitManagerUpdateEvent() {
+		props.emitManagerUpdateEvent()
+	}
 
 	function data_init(_props) {
 		props = _props
@@ -74,7 +76,10 @@ export default function Editor() {
 		editorTab = new EditorTab()
 		editorTab.init({
 			manager: manager,
-			container: $view.find(".fn-editor-editor-tab-container")
+			container: $view.find(".fn-editor-editor-tab-container"),
+			service: {
+				emitManagerUpdateEvent
+			}
 		})
 	}
 
@@ -82,15 +87,13 @@ export default function Editor() {
 
 function EditorTab() {
 	let _this = this,
-		$container, $view, props, manager, nodeEditor
+		$container, $view, props, manager, service, nodeEditor
 	this.init = init
 	this.repaint = repaint
 
 	/** base **/
-	function init(_props) {
-		props = _props
-		$container = props.container
-		manager = props.manager
+	function init(props) {
+		data_init(props)
 		view_init()
 	}
 
@@ -98,6 +101,12 @@ function EditorTab() {
 		nodeEditor.repaint()
 	}
 	/** service **/
+	function data_init(_props) {
+		props = _props
+		$container = props.container
+		manager = props.manager
+		service = props.service
+	}
 
 	function view_init() {
 		$view = $(_.template(view_getTemplate())({}))
@@ -105,7 +114,10 @@ function EditorTab() {
 		nodeEditor = new NodeEditor()
 		nodeEditor.init({
 			container: $view.find('.fn-node-editor-container'),
-			manager: manager
+			manager: manager,
+			service: {
+				emitManagerUpdateEvent: service.emitManagerUpdateEvent
+			}
 		})
 	}
 

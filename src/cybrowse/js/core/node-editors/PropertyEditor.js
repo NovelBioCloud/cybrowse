@@ -78,8 +78,8 @@ export default function PropertyEditor() {
 				backgroundColor.init({
 					container: $view,
 					manager: manager,
-					cytoscapeInstance: cytoscapeInstance
-				}, context)
+					emitManagerUpdateEvent: props.emitManagerUpdateEvent
+				})
 			}
 		}
 	}

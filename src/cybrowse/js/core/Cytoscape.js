@@ -31,7 +31,7 @@ export default function Cytoscape() {
 	}
 
 	function managerUpdateListener() {
-		repaint()
+		view_resetStyle()
 	}
 
 	function data_init(_props) {
@@ -41,6 +41,11 @@ export default function Cytoscape() {
 		setManagerUpdateListener = props.setManagerUpdateListener
 	}
 
+	function view_resetStyle() {
+		let configManager = manager.getConfigManager()
+		cytoscapeInstance.style().resetToDefault().fromJson(configManager.getStyle()).update()
+	}
+
 	function view_getTemplate() {
 		return `<div class='class-cytoscape'>
           <div class='cytoscape-view' data-cytoscape-view></div>
@@ -48,20 +53,21 @@ export default function Cytoscape() {
 	}
 
 	function view_init() {
+		console.log('update cytoscape')
 		$view = $(view_getTemplate())
 		$container.append($view)
 		let cytoscapeView = $container.find("[data-cytoscape-view]")
+		let configManager = manager.getConfigManager()
+		let config = configManager.getData()
 		cytoscapeInstance = cytoscape({
 			container: cytoscapeView,
-			style: []
+			style: configManager.getStyle(),
+			elements: _.concat(configManager.getNodes(), configManager.getEdges()),
 		});
 
 		/**初始化cytoscape**/
 		cytoscapeManager = manager.getCytoscapeManager()
 		cytoscapeManager.setCytoscape(cytoscapeInstance)
-		try {
-			cytoscapeManager.repaint()
-		} catch (e) {}
 		setManagerUpdateListener && setManagerUpdateListener(managerUpdateListener)
 	}
 
