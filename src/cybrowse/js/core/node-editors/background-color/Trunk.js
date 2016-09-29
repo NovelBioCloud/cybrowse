@@ -22,6 +22,8 @@ export default function Trunk() {
 
 	function updateNodeTrunkStyle(styleValue) {
 		data_updateTrunkStyle(styleValue)
+		view_repaint()
+		manager.getCytoscapeManager().updateCytoscapeStyle()
 	}
 
 	function removeNodeTrunkStyle() {
@@ -38,8 +40,6 @@ export default function Trunk() {
 	function data_updateTrunkStyle(styleValue) {
 		let configManager = manager.getConfigManager()
 		configManager.updateNodeTrunkStyle('background-color', styleValue)
-		view_repaint()
-		props.emitManagerUpdateEvent()
 	}
 
 	function view_repaint() {
@@ -48,13 +48,23 @@ export default function Trunk() {
 		$container.append($view)
 	}
 
-	function view_getTemplate() {
+	function view_getDefaultStyleTemplate() {
 		return `
 			<div>
-        <span><%=value%></span>
-        <button class='fn-trunk-edit btn btn-sm'>edit</button>
-				<button class='fn-trunk-remove btn btn-sm'>remove</button>
+        <div><input type='color' class='fn-trunk-edit' value='<%=styleValue%>'/></div>
       </div>`
+	}
+
+	function view_getCustomStyleTemplate() {
+		return `
+			<div>
+				<div>
+					<input type='color' class='fn-trunk-edit' value='<%=styleValue%>'/>
+					<button class='fn-trunk-remove btn btn-sm btn-default'>
+						<i class='fa fa-fw fa-trash'/>
+					</button>
+				</div>
+			</div>`
 	}
 
 	function view_init() {
@@ -64,19 +74,23 @@ export default function Trunk() {
 
 	function view_getInitView() {
 		let config = manager.getConfigManager().getData()
-		let nodeTrunkData = config.style.node.trunk
-		let defaultTrunkData = config.defaultStyle.node.trunk
-		let styleValue = defaultTrunkData['background-color'].styleValue
-		if (nodeTrunkData['background-color'] && nodeTrunkData['background-color'].styleValue) {
-			styleValue = nodeTrunkData['background-color'].styleValue
+		let nodeTrunkData = config.style.node.trunk['background-color']
+		let $view
+		let styleValue
+		let template
+		if (nodeTrunkData && nodeTrunkData.styleValue) {
+			styleValue = nodeTrunkData.styleValue
+			template = view_getCustomStyleTemplate()
+		} else {
+			let defaultTrunkData = config.defaultStyle.node.trunk['background-color']
+			styleValue = defaultTrunkData.styleValue
+			template = view_getDefaultStyleTemplate()
 		}
-
-		let $view = $(_.template(view_getTemplate())({
-			value: styleValue
+		$view = $(_.template(template)({
+			styleValue
 		}))
-		$view.find('.fn-trunk-edit').click(() => {
-			let value = prompt("", "")
-			updateNodeTrunkStyle(value)
+		$view.find('.fn-trunk-edit').change((event) => {
+			updateNodeTrunkStyle(event.target.value)
 		})
 		$view.find('.fn-trunk-remove').click(() => {
 			removeNodeTrunkStyle()

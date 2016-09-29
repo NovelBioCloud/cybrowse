@@ -4,6 +4,7 @@ import async from 'async'
 import assert from 'assert'
 import immutable from 'immutable'
 import postal from 'postal'
+import ColorEditor from '../_component/color-editor/ColorEditor'
 
 export default function MappingContent() {
 	let _this = this,
@@ -29,11 +30,11 @@ export default function MappingContent() {
 		return {
 			init: function (props) {
 				dataService.init(props)
-				viewService.init()
+				viewService.render()
 				eventService.init()
 			},
 			update: function () {
-				viewService.init()
+				viewService.render()
 			},
 			onChange: function (mappingValue, value) {
 				onChange && onChange(mappingValue, value)
@@ -50,6 +51,12 @@ export default function MappingContent() {
 				mappingColumn = props.mappingColumn
 				mappingType = props.mappingType
 				onChange = props.onChange
+			},
+			getMappingContentItems: function () {
+				return manager.getConfigManager().getData().style.node.mapping['background-color'].data.mappingContent || []
+			},
+			getPropertyValues: function () {
+				return manager.getConfigManager().getPropertyValuesByPropertyName(mappingColumn.getValue())
 			}
 		}
 	}
@@ -57,30 +64,30 @@ export default function MappingContent() {
 	function getViewService() {
 		return {
 			getTemplate: function () {
-				return `<div>
-          <% values.forEach((value)=>{%>
-            <div>
-              <label><%=value%></label>
-              <input type='text' class='form-control fn-mapping-content-input' data-mapping-value='<%=value%>'/>
-            </div>
-          <% }) %>
-        </div>`
+				return `<div></div>`
 			},
-			init: function () {
+			render: function () {
 				$container.empty()
-				let cybrowseManager = manager.getCybrowseManager()
-				let columnValue = mappingColumn.getValue()
-				let typeValue = mappingType.getValue()
-				let values = manager.getConfigManager().getValuesByProperty(columnValue)
-				let template = _.template(viewService.getTemplate())({
-					values: values
+				$view = $(viewService.getTemplate())
+				$view.appendTo($container)
+				let propertyValues = dataService.getPropertyValues()
+				let mappingContentItems = dataService.getMappingContentItems()
+				propertyValues.forEach((propertyValue) => {
+					let mappingContentInput = new MappingContentInput()
+					let mappintContentItem = _.find(mappingContentItems, {
+						propertyValue
+					})
+					let styleValue = mappintContentItem ? mappintContentItem.styleValue : ""
+					mappingContentInput.init({
+						container: $view,
+						propertyValue: propertyValue,
+						styleValue: styleValue,
+						onChange: (propertyValue, styleValue) => {
+							base.onChange(propertyValue, styleValue)
+						}
+					})
 				})
-				$view = $(template)
-				$view.on('.fn-mapping-content-input').change(function (event) {
-					let target = event.target
-					base.onChange($(target).data('mapping-value'), $(target).val())
-				})
-				$container.append($view)
+
 			}
 		}
 	}
@@ -91,5 +98,57 @@ export default function MappingContent() {
 
 			}
 		}
+	}
+}
+
+function MappingContentInput() {
+	let _this = this,
+		props, $container, $view, propertyValue, styleValue, onChange
+
+	this.init = init
+
+	function init(props) {
+		data_init(props)
+		view_init()
+	}
+
+	function changeStyleValue(newStyleValue) {
+		onChange && onChange(propertyValue, newStyleValue)
+	}
+
+	function data_init(_props) {
+		props = _props
+		$container = props.container
+		propertyValue = props.propertyValue
+		styleValue = props.styleValue
+		onChange = props.onChange
+	}
+
+	function view_init() {
+		$view && $view.remove()
+		$view = $(_.template(view_getTemplate())({
+			propertyValue,
+			styleValue
+		}))
+		$view.appendTo($container)
+		let colorEditor = ColorEditor.newInstance()
+		colorEditor.init({
+			container: $view.find('.fn-mapping-content-color'),
+			onChange: changeStyleValue.bind(this),
+			value: styleValue
+		})
+		$view.find('.fn-mapping-content-input').change((event) => {
+			changeStyleValue($(event.target).val())
+		})
+	}
+
+	function view_getTemplate() {
+		return `
+			<div>
+				<label><%=propertyValue%></label>
+				<div class='fn-mapping-content-color'></div>
+				<input type='text' class='form-control fn-mapping-content-input hidden' value='<%=styleValue%>'/>
+			</div>
+		`
 	}
 }

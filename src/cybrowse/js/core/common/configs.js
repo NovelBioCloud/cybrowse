@@ -5,13 +5,16 @@ let defaultConfig = {
 		node: {
 			trunk: {
 				'background-color': {
-					styleValue: "red"
+					styleValue: "#FF0000"
 				},
 				'width': {
 					styleValue: 30
 				},
 				height: {
 					styleValue: 50
+				},
+				content: {
+					styleValue: "data(id)"
 				}
 			},
 			mapping: {},
@@ -32,7 +35,7 @@ let defaultConfig = {
 		node: {
 			trunk: {
 				'background-color': {
-					styleValue: ""
+					styleValue: "#FFFF00"
 				}
 			},
 			mapping: {},

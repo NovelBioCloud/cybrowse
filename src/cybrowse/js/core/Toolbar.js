@@ -23,7 +23,9 @@ export default function Toolbar() {
 	function loadLocalStorageData() {
 		props.service.loadLocalStorageData()
 	}
-
+	function create() {
+		props.service.create()
+	}
 	function save() {
 		props.service.save()
 	}
@@ -59,7 +61,7 @@ export default function Toolbar() {
 					        <li class="dropdown">
 					          <a href="#" class="dropdown-toggle" data-toggle="dropdown">文件<span class="caret"></span></a>
 					          <ul class="dropdown-menu" role="menu">
-											<li><a href="#" class='fn-toolbar-clear-data'>新建</a></li>
+											<li><a href="#" class='fn-toolbar-new'>新建</a></li>
 											<li><a href="#" class='fn-toolbar-clear-local'>清楚缓存</a></li>
 					            <li><a href="#" class='fn-toolbar-load-data'>加载数据</a></li>
 											<li><a href="#" class='fn-toolbar-load-local-data'>加载本地数据</a></li>
@@ -89,6 +91,9 @@ export default function Toolbar() {
 	function view_init() {
 		$view = $(view_getTemplate())
 		$container.append($view)
+		$view.find('.fn-toolbar-new').click(()=>{
+			create()
+		})
 		$view.find('.fn-toolbar-save-data').click(function () {
 			save()
 		})

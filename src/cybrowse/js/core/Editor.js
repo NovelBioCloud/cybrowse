@@ -31,14 +31,18 @@ export default function Editor() {
 		view_init()
 	}
 
-	function updateDefaultStyle(name) {
-		manager.getConfigManager().updateDefaultStyle(name)
+	function updateGlobalStyle(name) {
+		manager.getConfigManager().updateGlobalStyle(name)
 		editorTab.repaint()
-		props.emitManagerUpdateEvent()
+		manager.getCytoscapeManager().updateCytoscapeView()
 	}
-
+	function updateGlobalLayout(name) {
+		manager.getConfigManager().updateLayout(name)
+		editorTab.repaint()
+		manager.getCytoscapeManager().updateCytoscapeLayout()
+	}
 	function emitManagerUpdateEvent() {
-		props.emitManagerUpdateEvent()
+		manager.getCytoscapeManager().updateCytoscapeView()
 	}
 
 	function data_init(_props) {
@@ -68,8 +72,11 @@ export default function Editor() {
 		configSelector = new ConfigSelector()
 		configSelector.init({
 			manager: manager,
-			onConfigChange: (name) => {
-				updateDefaultStyle(name)
+			onStyleChange: (name) => {
+				updateGlobalStyle(name)
+			},
+			onLayoutChange: (name) => {
+				updateGlobalLayout(name)
 			},
 			container: $view.find(".fn-editor-config-selector-container")
 		})

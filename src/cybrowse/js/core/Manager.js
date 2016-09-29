@@ -8,7 +8,7 @@ import {
 	CybrowseManager,
 	CytoscapeManager,
 	ConfigManager,
-	DataManager
+	SpecificEditorManager
 } from './manager'
 
 export default function Manager() {
@@ -17,11 +17,13 @@ export default function Manager() {
 	let configManager
 	let cybrowseManager
 	let cytoscapeManager
-	this.init = _.bind(init)
+	let specificEditorManager
 
+	this.init = _.bind(init)
 	this.getCytoscapeManager = () => cytoscapeManager
 	this.getConfigManager = () => configManager
 	this.getCybrowseManager = () => cybrowseManager
+	this.getSpecificEditorManager = () => specificEditorManager
 
 	function init() {
 		data_init()
@@ -31,6 +33,8 @@ export default function Manager() {
 		cytoscapeManager = new CytoscapeManager()
 		configManager = new ConfigManager()
 		cybrowseManager = new CybrowseManager()
+		specificEditorManager = new SpecificEditorManager()
+		specificEditorManager.init({})
 		cytoscapeManager.init({
 			configManager
 		})

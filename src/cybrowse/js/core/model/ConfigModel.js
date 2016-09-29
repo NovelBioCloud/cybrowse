@@ -6,21 +6,20 @@ export default function ConfigModel() {
 	this.data = {
 		nodes: [],
 		edges: [],
-		cytoscape: {
-			elements: {
-				nodes: [],
-				edges: []
-			}
+	}
+	this.cytoscape = {
+		elements: {
+			nodes: [],
+			edges: []
 		}
 	}
-	this.cytoscape = null
 	this.style = {
 		general: {},
 		node: {
 			trunk: {
 				'background-color': {
-					state: 'inited',
-					styleValue: "black"
+					state: 'init',
+					styleValue: null
 				}
 			},
 			mapping: {
@@ -29,7 +28,17 @@ export default function ConfigModel() {
 					data: null
 				}
 			},
-			specific: {}
+			specific: {
+				'background-color': {
+					data: [
+// {
+// 	idName:XX
+//	styleValue:XX
+// }
+
+					]
+				}
+			}
 		},
 		edge: {
 			trunk: {

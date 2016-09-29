@@ -84,7 +84,6 @@ export default function BackgroundColor() {
 				trunk.init({
 					container: $view.find('.fn-background-trunk-wrap'),
 					manager: manager,
-					emitManagerUpdateEvent: props.emitManagerUpdateEvent
 				})
 				mapping.init({
 					container: $view.find('.fn-background-mapping-wrap'),
@@ -97,18 +96,24 @@ export default function BackgroundColor() {
 			},
 			getTemplate: () => {
 				return `<div>
-          <div>
-						<label>背景颜色</label>
+					<div class="list-group">
+						<div class="">
+		          <div>
+								<label>背景颜色</label>
+							</div>
+							<div class='list-group'>
+								<div class="list-group-item">
+									<div class='fn-background-trunk-wrap'></div>
+								</div>
+								<div class="list-group-item">
+									<div class='fn-background-mapping-wrap'></div>
+								</div>
+								<div class="list-group-item">
+									<div class='fn-background-specific-wrap'></div>
+								</div>
+							</div>
+						</div>
 					</div>
-          <div>
-						<div class='fn-background-trunk-wrap'></div>
-					</div>
-					<div>
-						<div class='fn-background-mapping-wrap'></div>
-					</div>
-          <div>
-            <div class='fn-background-specific-wrap'></div>
-          </div>
         </div>`
 			}
 		}

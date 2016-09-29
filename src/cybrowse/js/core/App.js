@@ -10,6 +10,7 @@ import Editor from './Editor'
 import Cytoscape from './Cytoscape'
 import Manager from './Manager'
 import toastr from 'toastr'
+import CybrowseModel from './model/CybrowseModel'
 export default function App() {
 	this.init = (props) => {
 		let manager = new Manager()
@@ -92,7 +93,8 @@ function CybrowseView() {
 				load: _.bind(load),
 				saveAsPng: _.bind(saveAsPng),
 				saveAsJpeg: _.bind(saveAsJpeg),
-				clearLocalData: _.bind(clearLocalData)
+				clearLocalData: _.bind(clearLocalData),
+				create: _.bind(create)
 			}
 		})
 		composer.init({
@@ -104,6 +106,16 @@ function CybrowseView() {
 				emitManagerUpdateEvent: _.bind(emitManagerUpdateEvent)
 			}
 		})
+	}
+
+	function create() {
+		try {
+			manager.getConfigManager().load()
+			composer.repaint()
+			toastr.success("加载数据成功")
+		} catch (e) {
+			toastr.error("加载数据失败")
+		}
 	}
 
 	function load(data) {

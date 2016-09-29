@@ -15,8 +15,12 @@ export default function ConfigSelector() {
 		view_init()
 	}
 
-	function onConfigChange(value) {
-		props.onConfigChange && props.onConfigChange(value)
+	function onStyleChange(value) {
+		props.onStyleChange && props.onStyleChange(value)
+	}
+
+	function onLayoutChange(value) {
+		props.onLayoutChange && props.onLayoutChange(value)
 	}
 	/** service **/
 	function data_init(_props) {
@@ -27,36 +31,72 @@ export default function ConfigSelector() {
 	/** view **/
 	function view_init() {
 		let template = view_getTemplate()
-		let layout = configs.style.map((item) => {
+		let preStyleConfigs = configs.style.map((item) => {
+			return {
+				value: item.name,
+				name: item.name
+			}
+		})
+		let preLayoutConfigs = configs.layout.map((item) => {
 			return {
 				value: item.name,
 				name: item.name
 			}
 		})
 		$view = $(_.template(template)({
-			layout: layout
+			preStyleConfigs,
+			preLayoutConfigs
 		}))
 		$container.append($view)
 		let configManager = manager.getConfigManager()
 		let config = configManager.getData()
 		let defaultStyle = config.defaultStyle
 		if (defaultStyle && defaultStyle.name) {
-			$view.find('.fn-column-select').val(defaultStyle.name)
+			$view.find('.fn-column-style-select').val(defaultStyle.name)
 		}
-		$view.find('.fn-column-select').change((event) => {
-			onConfigChange($(event.target).val())
+		$view.find('.fn-column-style-select').change((event) => {
+			onStyleChange($(event.target).val())
+		})
+		let defaultLayout = config.defaultLayout
+		if (defaultLayout && defaultLayout.name) {
+			$view.find('.fn-column-layout-select').val(defaultLayout.name)
+		}
+		$view.find('.fn-column-layout-select').change((event) => {
+			onLayoutChange($(event.target).val())
 		})
 	}
 
 	function view_getTemplate() {
 		return `
       <div>
-        <select class='fn-column-select form-control input-sm'>
-          <option></option>
-        <% _.each(layout,(item)=>{ %>
-          <option value='<%=item.value%>'><%=item.name%></option>
-        <% })%>
-        </select>
+				<div class="panel panel-default">
+				  <div class="panel-body">
+						<div>
+							<div>
+								<label>全局样式</label>
+							</div>
+							<div>
+								<select class='fn-column-style-select form-control input-sm'>
+									<% _.each(preStyleConfigs,(item)=>{ %>
+									<option value='<%=item.value%>'><%=item.name%></option>
+									<% })%>
+								</select>
+							</div>
+						</div>
+						<div>
+							<div>
+								<label>布局</label>
+							</div>
+							<div>
+								<select class='fn-column-layout-select form-control input-sm'>
+									<% _.each(preLayoutConfigs,(item)=>{ %>
+									<option value='<%=item.value%>'><%=item.name%></option>
+									<% })%>
+								</select>
+							</div>
+						</div>
+				  </div>
+				</div>
       </div>
     `
 	}

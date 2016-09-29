@@ -42,6 +42,7 @@ export default function Mapping() {
 			},
 			updateConfig: function (property, mappingType, mappingValue, value) {
 				dataService.updateConfig(property, mappingType, mappingValue, value)
+				mappingContent.update()
 			},
 			removeMapping: function () {
 				dataService.removeMapping()
@@ -88,7 +89,6 @@ export default function Mapping() {
 			},
 			addMapping: () => {
 				let configManager = manager.getConfigManager()
-				let cytoscaeManager = manager.getCytoscapeManager()
 				configManager.emitEvent({
 					type: 'node.style.mapping.update',
 					data: {
@@ -97,7 +97,8 @@ export default function Mapping() {
 						mappingColumn: ''
 					}
 				})
-				cytoscaeManager.updateCytoscapeView()
+				let cytoscapeManager = manager.getCytoscapeManager()
+				cytoscapeManager.updateCytoscapeView()
 			},
 			removeMapping: () => {
 				let configManager = manager.getConfigManager()
@@ -107,7 +108,8 @@ export default function Mapping() {
 						styleName: 'background-color'
 					}
 				})
-				cytoscaeManager.updateCytoscapeView()
+				let cytoscapeManager = manager.getCytoscapeManager()
+				cytoscapeManager.updateCytoscapeView()
 			}
 		}
 	}
@@ -148,7 +150,6 @@ export default function Mapping() {
 					onChange: () => {
 						let property = mappingColumn.getValue()
 						let mappingTypeValue = mappingType.getValue()
-						mappingContent.update()
 						base.updateConfig(property, mappingTypeValue, '', '')
 					},
 					manager: manager
@@ -158,7 +159,6 @@ export default function Mapping() {
 					onChange: () => {
 						let property = mappingColumn.getValue()
 						let mappingTypeValue = mappingType.getValue()
-						mappingContent.update()
 						base.updateConfig(property, mappingTypeValue, '', '')
 					},
 					manager: manager
@@ -219,10 +219,9 @@ export default function Mapping() {
 			},
 			getInitStateTemplate: () => {
 				return `<div>
-					<div><i class='fa fa-angle-double-down '></i></div>
 					<div>
 						<div>
-							<button class='btn btn-sm fn-mapping-add'>
+							<button class='btn btn-sm btn-default fn-mapping-add'>
 								<i class='fa fa-fw fa-plus'></i>
 							</button>
 						</div>
@@ -231,10 +230,9 @@ export default function Mapping() {
 			},
 			getInitedStateTemplate: () => {
 				return `<div>
-					<div><i class='fa fa-angle-double-down '></i></div>
 					<div>
 						<div>
-							<button class='btn btn-sm fn-mapping-remove'>
+							<button class='btn btn-sm btn-default fn-mapping-remove'>
 								<i class='fa fa-fw fa-trash'></i>
 							</button>
 						</div>

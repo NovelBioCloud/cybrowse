@@ -51,6 +51,9 @@ export default function Column() {
 			},
 			getProperties: function () {
 				return manager.getConfigManager().getProperties()
+			},
+			getMappingColumnValue: function() {
+				return manager.getConfigManager().getData().style.node.mapping['background-color'].data.mappingColumn
 			}
 		}
 	}
@@ -60,7 +63,7 @@ export default function Column() {
 			getTemplate: function () {
 				return `<div>
           <select class='fn-column-select form-control'>
-            <option value=''>---</option>
+            <option value=''></option>
             <% _.each(properties, function(item){ %>
             <option value='<%=item%>'><%=item%></option>
             <% })%>
@@ -74,8 +77,11 @@ export default function Column() {
 				})
 				$view = $(template)
 				$container.append($view)
+				if (dataService.getMappingColumnValue()) {
+					$view.find('.fn-column-select').val(dataService.getMappingColumnValue())
+				}
 				$view.find('.fn-column-select').change(function (event) {
-					base.onChange($(this).val())
+					base.onChange($(event.target).val())
 				})
 			},
 		}

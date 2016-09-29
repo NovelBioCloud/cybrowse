@@ -71,7 +71,8 @@ export default function PropertySelector() {
 	function getViewService() {
 		return {
 			getTemplate: function () {
-				return `<div>
+				return `
+				<div style="margin-bottom:10px;">
 					<div class="btn-group btn-group-sm">
 						<div class="btn-group btn-group-sm">
 							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">

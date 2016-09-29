@@ -37,6 +37,9 @@ export default function MappingType() {
 			},
 			getValue: function () {
 				return $view.find('.fn-mapping-type-select').val()
+			},
+			getMappingTypeValue: function () {
+				return manager.getConfigManager().getData().style.node.mapping['background-color'].data.mappingType
 			}
 		}
 	}
@@ -50,8 +53,11 @@ export default function MappingType() {
 				onChange = props.onChange
 					//TODO
 			},
-			getTypes: function () {
+			getMappingTypes: function () {
 				return [['discrete', 'discrete mapping']]
+			},
+			getMappingTypeValue: function () {
+				return manager.getConfigManager().getData().style.node.mapping['background-color'].data.mappingType
 			}
 		}
 	}
@@ -68,15 +74,19 @@ export default function MappingType() {
         </div>`
 			},
 			init: function () {
-				let types = dataService.getTypes()
+				let types = dataService.getMappingTypes()
 				let template = _.template(viewService.getTemplate())({
 					types: types
 				})
 				$view = $(template)
 				$container.append($view)
+				if (dataService.getMappingTypeValue()) {
+					$view.find('.fn-column-select').val(dataService.getMappingTypeValue())
+				}
 				$view.find('.fn-column-select').change(function (event) {
 					base.onChange($(this).val())
 				})
+				$view.addClass('hidden')
 			},
 
 		}
