@@ -1,8 +1,8 @@
 module.exports = {
 	watchSrc: 'src/cybrowse/**',
 	clear: ['dist/cybrowse'],
-	copy: [{
-		source: 'src/cybrowse/html/*.html',
+	copy: [ {
+		source: 'src/cybrowse/html/**',
 		target: 'dist/cybrowse/',
 	}, {
 		source: 'src/cybrowse/data/*.json',
