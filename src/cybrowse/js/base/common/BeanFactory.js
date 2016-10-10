@@ -1,3 +1,4 @@
+/**工厂类 */
 export default function BeanFactory() {
 
   let typeStore = new Set()
