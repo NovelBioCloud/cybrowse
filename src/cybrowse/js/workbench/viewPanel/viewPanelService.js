@@ -1,7 +1,8 @@
+
 import $ from 'jquery'
 import Cytoscape from './cytoscape'
 import CyStyleService from '../cytoscape/cyStyleService'
-class CyPanel {
+class ViewPanel {
 
   init(props, context, options) {
     this.container = props.container
@@ -29,56 +30,64 @@ class CyPanel {
   }
 }
 
-export default class CyPanelService {
+export default class ViewPanelService {
   init(props, context) {
     this.props = props
     this.context = context
     this.services = this.context.services
     this.render()
+    this.initServices()
     this.registerCommand()
     this.registerListener()
+  }
+  initServices() {
+    const services = Object.assign({}, this.context.services)
+    this.services = services
+    const context = {
+      services: services
+    }
   }
   render(force) {
 
     if (force) {
       this.remove()
     }
-    if (!this.CyPanel) {
-      this.CyPanel = new CyPanel()
-      this.CyPanel.init({
-        container: this.getCyPanelContainer()
+    if (!this.viewPanel) {
+      this.viewPanel = new ViewPanel()
+      this.viewPanel.init({
+        container: this.getViewPanelContainer()
       }, this.context)
     }
   }
   remove() {
-    if (this.CyPanel) {
-      this.CyPanel.dispose()
-      this.CyPanel == null
+    if (this.ViewPanel) {
+      this.ViewPanel.dispose()
+      this.ViewPanel == null
     }
   }
   dispose() {
     this.remove()
   }
-  getCyPanelContainer() {
-    if (!this.cyPanelContainer) {
-      this.cyPanelContainer = $('<div/>', {
+  getViewPanelContainer() {
+    if (!this.viewPanelContainer) {
+      this.viewPanelContainer = $('<div/>', {
         class: 'cy-info-editor-service--cy-info-editor-container'
       }).appendTo($(this.props.container)).get(0)
     }
-    return this.cyPanelContainer
+    return this.viewPanelContainer
   }
   registerCommand() {
 
   }
   registerListener() {
-    const cyStyleService = this.context.cyStyleService
-    cyStyleService.on('update', function () {
-      console.log('cyStyleService updated')
-    })
+    // const cyStyleService = this.services.cyStyleService
+    // cyStyleService.on('update', function () {
+    //   console.log('cyStyleService updated')
+    // })
 
-    setTimeout(() => {
-      console.log('trigger cyStyleService update')
-      cyStyleService.update()
-    }, 2000)
+    // setTimeout(() => {
+    //   console.log('trigger cyStyleService update')
+    //   cyStyleService.update()
+    // }, 2000)
   }
 }

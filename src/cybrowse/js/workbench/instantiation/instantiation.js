@@ -7,7 +7,7 @@ import {
 import $ from 'jquery'
 import WindowService from './window/windowService'
 import KeybindingService from './keybinding/keybindingService'
-import Command from './command/command'
+import Command from '../command/command'
 import CommandService from './command/commandService'
 import ContextViewService from './contextView/contextViewService'
 
@@ -28,8 +28,6 @@ export default class Workbench extends EventEmitter {
   }
   initServices() {
     const services = this.services
-
-
 
     /**create workbenchManager*/
     const workbenchManager = new WorkbenchManager()
@@ -53,8 +51,6 @@ export default class Workbench extends EventEmitter {
     commandService.init({}, {
       services
     })
-
-
 
     /**init windowService*/
     let $container = $('<div/>', {

@@ -12,8 +12,6 @@ export default class Context {
     this.parent = null
   }
 
-
-
   addType(type, isSingleton) {
     if (isSingleton) {
       this.singletonBeanFactory.addType(type)
@@ -41,15 +39,21 @@ export default class Context {
 
   getBean(type) {
     if (this.singletonBeanFactory.has(type)) {
-      return this.getSingletonBean(type)
+      return this.findSingletonBean(type)
     } else if (this.prototypeBeanFactory.has(type)) {
       return this.getPrototypeBean(type)
     } else {
       return null
     }
   }
-
-  getSingletonBean(type) {
+  add(type, bean) {
+    this.addType(type, true)
+    this.singletonBeanInstanceStore.set(type, bean)
+  }
+  find(type) {
+    return this.findSingletonBean(type)
+  }
+  findSingletonBean(type) {
     if (this.singletonBeanInstanceStore.has(type)) {
       this.singletonBeanInstanceStore.get(type)
     } else {

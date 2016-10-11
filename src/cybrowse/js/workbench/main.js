@@ -1,44 +1,26 @@
 import $ from 'jquery'
 import _ from 'lodash'
 
-import Workbench from './Workbench'
-import {
-  Singletons
-} from '../base/common'
+import InstantiationService from './instantiation/instantiationService'
 import CommandService from './command/commandService'
+import KeybindingService from './keybinding/keybindingService'
+import NLService from './nl/nlService'
+import CytoscapeService from './cytoscape/cytoscapeService'
+export default function start() {
 
+  let instantiationService = new InstantiationService()
+  let commandService = new CommandService()
+  let keybindingService = KeybindingService.instance()
+  let cytoscapeService = new CytoscapeService()
+  let nls = new NLService()
 
-function openWorkspace() {
-  return new Promise(function (c, r) {
-    let workbench = new Workbench()
-    workbench.init({
-      test: 'test'
-    }, {
-      services: new Singletons()
-    })
-    c()
+  instantiationService.init({}, {
+    services: {
+      commandService,
+      keybindingService,
+      nls,
+      cytoscapeService
+    }
   })
+  
 }
-
-function resolveWorkspaceConfig() {
-  return new Promise(function (c, r) {
-    c()
-  })
-}
-
-function resolveNlsConfig() {
-  return new Promise(function (c, r) {
-    c()
-  })
-}
-
-function start() {
-  resolveNlsConfig().then(() => {
-    resolveWorkspaceConfig().then(() => {
-      openWorkspace().then(() => {
-        console.log('finish')
-      })
-    })
-  })
-}
-export default start
