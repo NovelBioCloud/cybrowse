@@ -1,52 +1,53 @@
 import $ from 'jquery'
+
+import dispose from '../../base/lifecycle/lifecycle'
 import TabPanelService from './tabPanelService'
-class ControlPanel {
-
-  init(props, context, options) {
-    this.container = props.container
-    this.render()
-  }
-  render() {
-    const $el = $('<div/>').appendTo($(this.container))
-    this.el = $el.get(0)
-    $(`<div/>`, {
-      text: 'test controlPanel'
-    }).appendTo($el)
-  }
-  dispose() {
-
-  }
-}
+import BaseStyleService from '../cytoscapeStyle/baseStyleService'
+import CurrentDataService from '../cytoscapeData/currentDataService'
+import CurrentStyleService from '../cytoscapeStyle/currentStyleService'
+import NodeStyleService from '../cytoscapeStyle/nodeStyleService'
+import EdgeStyleService from '../cytoscapeStyle/edgeStyleService'
 
 export default class ControlPanelService {
+  constructor() {
+    this._toDispose = []
+  }
   init(props, context) {
     this.props = props
     this.context = context
-    this.render()
-  }
-  render() {
-    let tabPanelService = new TabPanelService()
-    tabPanelService.init({
+    let baseStyleService = context.services.baseStyleService
+    baseStyleService.init({
       container: this.props.container
-    })
-    return
+    }, context)
+    let currentDataService = context.services.currentDataService
+    let currentStyleService = context.services.currentStyleService
+    let nodeStyleService = new NodeStyleService()
+    let edgeStyleService = new EdgeStyleService()
+    let tabPanelService = new TabPanelService()
+
+    currentDataService.init({
+
+    }, context)
+
+    tabPanelService.init({
+      container: this.props.container,
+    }, context)
+    currentStyleService.init({
+      baseStyleService
+    }, context)
+    nodeStyleService.init({
+      currentDataService,
+      currentStyleService,
+      container: tabPanelService.getContainer('node')
+    }, context)
+    edgeStyleService.init({
+      currentDataService,
+      currentStyleService,
+      container: tabPanelService.getContainer('edge')
+    }, context)
 
   }
-  remove() {
-    if (this.controlPanel) {
-      this.controlPanel.dispose()
-      this.controlPanel == null
-    }
-  }
   dispose() {
-    this.remove()
-  }
-  getHtmlControlPanel() {
-    if (!this.controlPanel) {
-      this.controlPanel = $('<div/>', {
-        class: ''
-      }).appendTo($(this.props.container)).get(0)
-    }
-    return this._controlPanel
+    dispose(this._toDispose)
   }
 }

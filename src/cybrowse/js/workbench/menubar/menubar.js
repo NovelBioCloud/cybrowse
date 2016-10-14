@@ -1,7 +1,8 @@
 import $ from 'jquery'
 import FileMenu from './fileMenu'
 import EditMenu from './editMenu'
-
+import LayoutMenu from './layoutMenu'
+import SaveMenu from './saveMenu'
 export default class Menubar {
 
   constructor() { }
@@ -15,14 +16,15 @@ export default class Menubar {
 
   render() {
     let container = this.container
-    const $el = $('<div/>', {
+    const $el = $(`<div  class='well well-sm'/>`).appendTo($(this.props.container))
+    this.el = $el.get(0)
+    const $menubar = $('<div/>', {
       'class': 'btn-menubar',
       role: 'toolbar'
-    }).appendTo($(this.props.container))
+    }).appendTo($el)
     const $btnGroup = $('<div/>', {
       class: 'btn-group'
-    }).appendTo($el)
-    this.el = $el.get(0)
+    }).appendTo($menubar)
 
     let fileMenu = new FileMenu()
     fileMenu.init(Object.assign(this.props, {
@@ -32,6 +34,15 @@ export default class Menubar {
     editMenu.init(Object.assign(this.props, {
       container: $btnGroup.get(0)
     }), this.context)
+    let layoutMenu = new LayoutMenu()
+    layoutMenu.init(Object.assign(this.props, {
+      container: $btnGroup.get(0)
+    }), this.context)
+    let saveMenu = new SaveMenu()
+    saveMenu.init(Object.assign(this.props, {
+      container: $btnGroup.get(0)
+    }), this.context)
+
   }
   destroy() {
     this.$el.remove()

@@ -1,4 +1,4 @@
-export default class toolbar {
+export default class Toolbar {
   constructor() {
 
   }

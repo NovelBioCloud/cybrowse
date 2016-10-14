@@ -1,7 +1,6 @@
 import $ from 'jquery'
 import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
-import CytoscapeService from '../cytoscape/cytoscapeService'
 import FileSelector from '../../base/fileSelector/fileSelector'
 const EditMenuCommands = {
   newEdit: 'command.editMenu.newEdit',
@@ -56,14 +55,14 @@ export default class EditMenu {
     console.log('newEdit')
   }
   openEdit() {
-    const cytoscapeService = this.services.cytoscapeService
+    
     FileSelector.show({
       accept: ".jpg, .png, .jpeg, .tiff|images/*",
       onChange: (edits) => {
         console.log(edits)
       }
     })
-    cytoscapeService.setData(null)
+    //TODO
   }
   initServices() {
     const services = Object.assign({}, this.context.services)

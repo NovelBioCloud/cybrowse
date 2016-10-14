@@ -5,13 +5,13 @@ import InstantiationService from './instantiation/instantiationService'
 import CommandService from './command/commandService'
 import KeybindingService from './keybinding/keybindingService'
 import NLService from './nl/nlService'
-import CytoscapeService from './cytoscape/cytoscapeService'
+import StorageService from './storage/storageService'
 export default function start() {
 
   let instantiationService = new InstantiationService()
   let commandService = new CommandService()
   let keybindingService = KeybindingService.instance()
-  let cytoscapeService = new CytoscapeService()
+  let storageService = StorageService.instance()
   let nls = new NLService()
 
   instantiationService.init({}, {
@@ -19,8 +19,8 @@ export default function start() {
       commandService,
       keybindingService,
       nls,
-      cytoscapeService
+      storageService
     }
   })
-  
+
 }

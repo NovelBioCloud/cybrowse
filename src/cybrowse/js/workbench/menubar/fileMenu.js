@@ -1,14 +1,13 @@
 import $ from 'jquery'
 import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
-import CytoscapeService from '../cytoscape/cytoscapeService'
 import FileSelector from '../../base/fileSelector/fileSelector'
 const FileMenuCommands = {
   newFile: 'command.fileMenu.newFile',
   openFile: 'command.fileMenu.openFile'
 }
 export {
-FileMenuCommands
+  FileMenuCommands
 }
 
 export default class FileMenu {
@@ -64,14 +63,137 @@ export default class FileMenu {
     console.log('newFile')
   }
   openFile() {
-    const cytoscapeService = this.services.cytoscapeService
+    const currentDataService = this.services.currentDataService
     FileSelector.show({
       accept: ".jpg, .png, .jpeg, .tiff|images/*",
       onChange: (files) => {
         console.log(files)
       }
     })
-    cytoscapeService.setData(null)
+    currentDataService.setData([{
+      "data": {
+        "id": "68",
+        "activityRatio": 0.0,
+        "plotted": true,
+        "description": "",
+        "enabled": true,
+        "shared_name": "Node 3",
+        "moleculeType": "Kinase",
+        "name": "Node 3",
+        "randomInitialConcentration": false,
+        "SUID": 68,
+        "initialConcentration": 0,
+        "selected": false,
+        "levels": 100,
+        "canonicalName": "test3"
+      },
+      "position": {
+        "x": 73.0,
+        "y": -112.0
+      },
+      "selected": false
+    }, {
+      "data": {
+        "id": "66",
+        "activityRatio": 0.0,
+        "plotted": true,
+        "description": "test2",
+        "enabled": true,
+        "shared_name": "Node 2",
+        "moleculeType": "Kinase",
+        "name": "Node 2",
+        "randomInitialConcentration": false,
+        "SUID": 66,
+        "initialConcentration": 0,
+        "selected": false,
+        "levels": 100,
+        "canonicalName": "test2"
+      },
+      "position": {
+        "x": -284.0,
+        "y": 72.0
+      },
+      "selected": false
+    }, {
+      "data": {
+        "id": "64",
+        "activityRatio": 0.0,
+        "plotted": true,
+        "description": "test1",
+        "enabled": true,
+        "shared_name": "Node 1",
+        "moleculeType": "Gene",
+        "name": "Node 1",
+        "randomInitialConcentration": false,
+        "SUID": 64,
+        "initialConcentration": 0,
+        "selected": false,
+        "levels": 100,
+        "canonicalName": "test1"
+      },
+      "position": {
+        "x": -464.0,
+        "y": -109.0
+      },
+      "selected": false
+    }, {
+      "data": {
+        "id": "76",
+        "source": "66",
+        "target": "68",
+        "shared_interaction": "interacts with",
+        "increment": 1,
+        "description": "",
+        "k": 0.004,
+        "enabled": true,
+        "shared_name": "Node 2 (interacts with) Node 3",
+        "scenario": 0,
+        "name": "Node 2 (interacts with) Node 3",
+        "interaction": "interacts with",
+        "SUID": 76,
+        "selected": false,
+        "canonicalName": "test2 --> test3"
+      },
+      "selected": false
+    }, {
+      "data": {
+        "id": "74",
+        "source": "64",
+        "target": "66",
+        "shared_interaction": "interacts with",
+        "increment": 1,
+        "description": "",
+        "k": 0.006,
+        "enabled": false,
+        "shared_name": "Node 1 (interacts with) Node 2",
+        "scenario": 0,
+        "name": "Node 1 (interacts with) Node 2",
+        "interaction": "interacts with",
+        "SUID": 74,
+        "selected": false,
+        "canonicalName": "test1 --> test2"
+      },
+      "selected": false
+    }, {
+      "data": {
+        "id": "72",
+        "source": "64",
+        "target": "68",
+        "shared_interaction": "interacts with",
+        "increment": 1,
+        "description": "",
+        "k": 0.004,
+        "enabled": true,
+        "shared_name": "Node 1 (interacts with) Node 3",
+        "scenario": 0,
+        "name": "Node 1 (interacts with) Node 3",
+        "interaction": "interacts with",
+        "SUID": 72,
+        "selected": false,
+        "canonicalName": "test1 --> test3"
+      },
+      "selected": false
+    }])
   }
   registerListener() {
     const $el = $(this.el)

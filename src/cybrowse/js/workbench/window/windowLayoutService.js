@@ -78,11 +78,11 @@ export default class WindowLayoutService {
           <div class:'window-layout'>
             <div class='fn-menubar'></div>
             <div class='fn-toolbar'></div>
-            <div class='fn-table-panel'></div>
             <div style='display:flex;flex-direction: row;'>
               <div class='fn-control-panel' style='width:400px;background:#f2f2f2;'></div>
               <div class='fn-view-panel' style='flex:auto'></div>
             </div>
+            <div class='fn-table-panel'></div>
           </div>
         `).hide().appendTo($(this.container))
         $el.find('.fn-menubar').append($(this.menubarContainer))
