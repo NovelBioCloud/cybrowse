@@ -1,4 +1,4 @@
-import dispose from '../../base/lifecycle/lifecycle'
+import { dispose } from '../../base/lifecycle/lifecycle'
 import Emitter from '../../base/emitter/emitter'
 export default class CurrentStyleService {
   init(props, context) {

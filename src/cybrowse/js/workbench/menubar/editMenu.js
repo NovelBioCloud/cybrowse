@@ -3,11 +3,11 @@ import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
 import FileSelector from '../../base/fileSelector/fileSelector'
 const EditMenuCommands = {
-  newEdit: 'command.editMenu.newEdit',
-  openEdit: 'command.editMenu.openEdit'
+  undo: 'command.editMenu.undo',
+  redo: 'command.editMenu.redo'
 }
 export {
-EditMenuCommands
+  EditMenuCommands
 }
 
 export default class EditMenu {
@@ -24,12 +24,12 @@ export default class EditMenu {
   render() {
     const $el = $(`
       <div class='btn-group'>
-        <button type='button' class='fn-edit-menu btn btn-default dropdown-toggle btn-sm' data-toggle='dropdown'>
+        <button type='button' class='fn-edit-menu btn btn-default dropdown-toggle' data-toggle='dropdown'>
           编辑(E)
         </button>
         <ul class='dropdown-menu' role='menu'>
-          <li><a class='fn-new-edit' href='javascript:void(0)'>撤销</a></li>
-          <li><a class='fn-open-edit' href='javascript:void(0)'>恢复</a></li>
+          <li><a class='fn-undo' href='javascript:void(0)'>撤销</a></li>
+          <li><a class='fn-redo' href='javascript:void(0)'>恢复</a></li>
         </ul>
       </div>
     `)
@@ -38,31 +38,24 @@ export default class EditMenu {
   }
   registerCommand() {
     const commandService = this.services.commandService
-    commandService.registerCommand(EditMenuCommands.newEdit, {
+    commandService.registerCommand(EditMenuCommands.undo, {
       args: null,
       handle: () => {
-        this.newEdit()
+        this.undo()
       }
     })
-    commandService.registerCommand(EditMenuCommands.openEdit, {
+    commandService.registerCommand(EditMenuCommands.redo, {
       args: null,
       handle: () => {
-        this.openEdit()
+        this.redo()
       }
     })
   }
-  newEdit() {
-    console.log('newEdit')
+  undo() {
+    console.log('todo undo')
   }
-  openEdit() {
-    
-    FileSelector.show({
-      accept: ".jpg, .png, .jpeg, .tiff|images/*",
-      onChange: (edits) => {
-        console.log(edits)
-      }
-    })
-    //TODO
+  redo() {
+    console.log('todo redo')
   }
   initServices() {
     const services = Object.assign({}, this.context.services)
@@ -79,11 +72,11 @@ export default class EditMenu {
       $el.find('.fn-edit-menu').trigger('click')
       return false
     });
-    $el.find('.fn-new-edit').on('click', () => {
-      commandService.runCommand(EditMenuCommands.newEdit)
+    $el.find('.fn-undo').on('click', () => {
+      commandService.runCommand(EditMenuCommands.undo)
     })
-    $el.find('.fn-open-edit').on('click', () => {
-      commandService.runCommand(EditMenuCommands.openEdit)
+    $el.find('.fn-redo').on('click', () => {
+      commandService.runCommand(EditMenuCommands.redo)
     })
   }
   destroy() {

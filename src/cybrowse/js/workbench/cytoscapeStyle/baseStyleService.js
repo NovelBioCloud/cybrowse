@@ -53,7 +53,7 @@ export default class BaseStyleService {
             "background-opacity": 1.0,
             "color": "rgb(0,0,0)",
             "shape": "roundrectangle",
-            "content": "data(name)"
+            "content": "data(id)"
           }
         }]
       },

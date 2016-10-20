@@ -3,6 +3,8 @@ import FileMenu from './fileMenu'
 import EditMenu from './editMenu'
 import LayoutMenu from './layoutMenu'
 import SaveMenu from './saveMenu'
+import StyleMenu from './styleMenu'
+
 export default class Menubar {
 
   constructor() { }
@@ -16,14 +18,14 @@ export default class Menubar {
 
   render() {
     let container = this.container
-    const $el = $(`<div  class='well well-sm'/>`).appendTo($(this.props.container))
+    const $el = $(`<div style='padding:10px 0px'/>`).appendTo($(this.props.container))
     this.el = $el.get(0)
     const $menubar = $('<div/>', {
       'class': 'btn-menubar',
-      role: 'toolbar'
+      'role': 'toolbar'
     }).appendTo($el)
     const $btnGroup = $('<div/>', {
-      class: 'btn-group'
+      'class': 'btn-group'
     }).appendTo($menubar)
 
     let fileMenu = new FileMenu()
@@ -40,6 +42,10 @@ export default class Menubar {
     }), this.context)
     let saveMenu = new SaveMenu()
     saveMenu.init(Object.assign(this.props, {
+      container: $btnGroup.get(0)
+    }), this.context)
+    let styleMenu = new StyleMenu()
+    styleMenu.init(Object.assign(this.props, {
       container: $btnGroup.get(0)
     }), this.context)
 

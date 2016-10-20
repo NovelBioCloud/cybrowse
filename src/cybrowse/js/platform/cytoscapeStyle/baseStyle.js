@@ -61,7 +61,7 @@ class BaseStyleView extends EventEmitter {
     }
   }
   update() {
-    this.$el = $('<div/>').appendTo($(this.container))
+    this.$el = $('<div/>').css('padding-bottom', '10px').appendTo($(this.container))
     this.$el.html(_.template(`
       <select class="form-control">
         <%

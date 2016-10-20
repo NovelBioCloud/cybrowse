@@ -4,10 +4,12 @@ import {
 import Emitter from '../../base/emitter/emitter'
 import $ from 'jquery'
 import WindowLayoutService, { WindowLayoutServiceContainer } from './windowLayoutService'
+import MessageService from '../messageService/messageService'
 import ToolbarService from '../toolbar/toolbarService'
 import ViewPanelService from '../viewPanel/viewPanelService'
 import ControlPanelService from '../controlPanel/controlPanelService'
 import TablePanelService from '../tablePanel/tablePanelService'
+import TableDatasourceService from '../tablePanel/tableDatasourceService'
 import MenubarService from '../menubar/menubarService'
 import BaseStyleService from '../cytoscapeStyle/baseStyleService'
 import CurrentDataService from '../cytoscapeData/currentDataService'
@@ -16,7 +18,8 @@ import NodeStyleService from '../cytoscapeStyle/nodeStyleService'
 import EdgeStyleService from '../cytoscapeStyle/edgeStyleService'
 import CurrentLayoutService from '../cytoscapeLayout/currentLayoutService'
 import _ from 'lodash'
-import dispose from '../../base/lifecycle/lifecycle'
+import { dispose } from '../../base/lifecycle/lifecycle'
+import cytoscapeEvents from '../constants/cytoscapeEvents'
 
 export default class WindowService extends EventEmitter {
   constructor(container) {
@@ -28,38 +31,49 @@ export default class WindowService extends EventEmitter {
   init(props, context) {
     this.props = props
     this.context = context
+    /**关闭窗口的时候的回调函数，由于网页版本没有关闭按钮，此方法只是为了未来添加关闭功能的时候调用**/
+    this._onClose = this.props.onClose
+
+  }
+  ready() {
     this.initServices()
     this.registerCommand()
     this.registerListener()
-
   }
   get onDidResize() {
     return this._onResize.event
   }
   initServices() {
 
+    const currentDataService = new CurrentDataService()
+    const currentStyleService = new CurrentStyleService()
+    const currentLayoutService = new CurrentLayoutService()
     const windowLayoutService = new WindowLayoutService()
     const menubarService = new MenubarService()
     const toolbarService = new ToolbarService()
     const viewPanelService = new ViewPanelService()
     const baseStyleService = new BaseStyleService()
-
     const controlPanelService = new ControlPanelService()
     const tablePanelService = new TablePanelService()
-    const currentDataService = new CurrentDataService()
-    const currentStyleService = new CurrentStyleService()
-    const currentLayoutService = new CurrentLayoutService()
+    const tableDatasourceService = new TableDatasourceService()
+    const messageService = MessageService.instance()
+    this._toDispose.concat([windowLayoutService, menubarService, toolbarService,
+      viewPanelService, baseStyleService, controlPanelService, tablePanelService,
+      tableDatasourceService, currentDataService, currentStyleService, currentLayoutService
+    ])
     const services = Object.assign({
-      baseStyleService,
       currentDataService,
       currentStyleService,
       currentLayoutService,
+      baseStyleService,
       windowLayoutService,
       menubarService,
       toolbarService,
       viewPanelService,
       controlPanelService,
-      tablePanelService
+      tablePanelService,
+      tableDatasourceService,
+      messageService
     }, this.context.services)
     this.services = services
     const context = {
@@ -68,6 +82,7 @@ export default class WindowService extends EventEmitter {
 
     const container = $('<div/>').appendTo(document.body).get(0)
     windowLayoutService.init({ container: container }, context)
+    windowLayoutService.ready()
     menubarService.init({
       container: this.getContainer(WindowLayoutServiceContainer.menubar)
     }, context)
@@ -77,13 +92,16 @@ export default class WindowService extends EventEmitter {
     controlPanelService.init({
       container: this.getContainer(WindowLayoutServiceContainer.controlPanel)
     }, context)
+    tableDatasourceService.init({}, context)
     viewPanelService.init({
       container: this.getContainer(WindowLayoutServiceContainer.viewPanel)
     }, context)
     tablePanelService.init({
       container: this.getContainer(WindowLayoutServiceContainer.tablePanel)
     }, context)
-
+    tableDatasourceService.ready()
+    tablePanelService.ready()
+    viewPanelService.ready()
   }
   getContainer(containerName) {
     return this.services.windowLayoutService.getContainer(containerName)
@@ -96,6 +114,7 @@ export default class WindowService extends EventEmitter {
     const currentDataService = this.services.currentDataService
     const currentStyleService = this.services.currentStyleService
     const currentLayoutService = this.services.currentLayoutService
+    const tableDatasourceService = this.services.tableDatasourceService
     this._toDispose.push(currentDataService.onChange(() => {
       viewPanelService.updateData()
     }))
@@ -105,7 +124,10 @@ export default class WindowService extends EventEmitter {
     this._toDispose.push(currentLayoutService.onChange(() => {
       viewPanelService.updateLayout()
     }))
+  }
 
+  show() {
+    const currentDataService = this.services.currentDataService
     setTimeout(() => {
       currentDataService.setData([{
         "data": {
@@ -122,6 +144,7 @@ export default class WindowService extends EventEmitter {
           "initialConcentration": 0,
           "selected": false,
           "levels": 100,
+          "color": "#f2f2f3",
           "canonicalName": "test3"
         },
         "position": {
@@ -144,6 +167,7 @@ export default class WindowService extends EventEmitter {
           "initialConcentration": 0,
           "selected": false,
           "levels": 100,
+          "color": "#440044",
           "canonicalName": "test2"
         },
         "position": {
@@ -166,6 +190,7 @@ export default class WindowService extends EventEmitter {
           "initialConcentration": 0,
           "selected": false,
           "levels": 100,
+          "color": "#997766",
           "canonicalName": "test1"
         },
         "position": {
@@ -233,8 +258,10 @@ export default class WindowService extends EventEmitter {
       }])
     }, 1000)
   }
-  show() {
-    console.log(123)
+
+  onClose() {
+    this.dispose()
+    this.props && this.props.onClose && this.props.onClose()
   }
   dispose() {
     dispose(this._toDispose)

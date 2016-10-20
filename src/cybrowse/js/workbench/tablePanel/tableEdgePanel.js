@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import _ from 'lodash'
-export default class TableNodePanel {
+export default class TableEdgePanel {
 
   constructor() {
   }
@@ -10,15 +10,15 @@ export default class TableNodePanel {
     const $el = $('<div/>').appendTo($(container))
     this.$el = $el
   }
-  update(nodeElements) {
-    const nodeDatas = _.map(nodeElements, (item) => {
+  update(edgeElements) {
+    const edgeDatas = _.map(edgeElements, (item) => {
       return item.data
     })
     let $el = this.$el
 
     let $table = $('<table/>', { class: 'table' })
     let keys = []
-    _.each(nodeDatas, (data) => {
+    _.each(edgeDatas, (data) => {
       keys.push(_.keys(data))
     })
     keys = _.concat(...keys)
@@ -30,12 +30,11 @@ export default class TableNodePanel {
     })
 
     let $content = $('<tbody/>').appendTo($table)
-    _.each(nodeDatas, (data) => {
+    _.each(edgeDatas, (data) => {
       let $row = $('<tr/>').appendTo($content)
       _.each(keys, (key) => {
         let value = data[key]
         $(`<td>${value}</td>`).appendTo($row)
-
       })
     })
     $el.empty()

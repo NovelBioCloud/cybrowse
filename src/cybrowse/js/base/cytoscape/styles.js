@@ -1,3 +1,4 @@
+import _ from 'lodash'
 export const NodeStyleName = {
   backgroundColor: 'background-color'
 }
@@ -10,28 +11,38 @@ class StyleDetail {
     this._style = style
     this._nodeDefaultValue = []
     this._edgeDefaultValue = []
-    this._nodeMapping = []
-    this._edgeMapping = []
+    this._nodePassthroughMapping = []
+    this._edgePassthroughMapping = []
+    this._nodeDiscreteMapping = []
+    this._edgeDiscreteMapping = []
     this._nodeBypass = []
     this._edgeBypass = []
     this._nodeSelected = []
     this._edgeSelected = []
     style.style.forEach((item) => {
       if (item.selector === 'node') {
-        this._nodeDefaultValue.push(item)
+        if (this._nodeDefaultValue.length == 0) {
+          this._nodeDefaultValue.push(item)
+        } else {
+          this._nodePassthroughMapping.push(item)
+        }
       } else if (item.selector === 'edge') {
-        this._edgeDefaultValue.push(item)
+        if (this._edgeDefaultValue.length == 0) {
+          this._edgeDefaultValue.push(item)
+        } else {
+          this._edgePassthroughMapping.push(item)
+        }
       } else if (/node\[/.test(item.selector)) {
         if (/node\[ id/.test(item.selector)) {
           this._nodeBypass.push(item)
         } else {
-          this._nodeMapping.push(item)
+          this._nodeDiscreteMapping.push(item)
         }
       } else if (/edge\[/.test(item.selector)) {
         if (/edge\[ id/.test(item.selector)) {
           this._edgeBypass.push(item)
         } else {
-          this._edgeMapping.push(item)
+          this._edgeDiscreteMapping.push(item)
         }
       } else if (/node:selected/.test(item.selector)) {
         this._nodeSelected = [item]
@@ -51,28 +62,41 @@ class StyleDetail {
         style: {}
       })
     }
+    if (this._nodePassthroughMapping.length === 0) {
+      this._nodePassthroughMapping.push({
+        selector: 'node',
+        style: {}
+      })
+    }
+    if (this._edgePassthroughMapping.length === 0) {
+      this._edgePassthroughMapping.push({
+        selector: 'edge',
+        style: {}
+      })
+    }
     if (this._nodeSelected.length === 0) {
       this._nodeSelected.push({
         selector: 'node:selected',
-        style: { "background-color": "rgb(255,255,0)" }
+        style: { "background-color": "#FFFF00" }
       })
-
     }
     if (this._edgeSelected.length === 0) {
       this._edgeSelected.push({
         selector: 'edge:selected',
-        style: { "line-color": "rgb(255,0,0)" }
+        style: { "line-color": "#FFFF00" }
       })
     }
   }
   build() {
     this._style.style = [
       ...this._nodeDefaultValue,
-      ...this._nodeMapping,
+      ...this._nodePassthroughMapping,
+      ...this._nodeDiscreteMapping,
       ...this._nodeBypass,
       ...this._nodeSelected,
       ...this._edgeDefaultValue,
-      ...this._edgeMapping,
+      ...this._edgePassthroughMapping,
+      ...this._edgeDiscreteMapping,
       ...this._edgeBypass,
       ...this._edgeSelected
     ]
@@ -84,6 +108,10 @@ export class NodeStyleModel {
     this._styleName = styleName
     this._currentStyleService = currentStyleService
   }
+  getDefaultValue() {
+    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    return styleDetail._nodeDefaultValue[0].style[this._styleName]
+  }
   setDefaultValue(value) {
     let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
     styleDetail._nodeDefaultValue[0].style[this._styleName] = value
@@ -94,6 +122,21 @@ export class NodeStyleModel {
     delete (styleDetail._nodeDefaultValue[0].style)[this._styleName]
     styleDetail.build()
   }
+  getBypass(id) {
+    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let bypassStyle = _.find(styleDetail._nodeBypass, (item) => {
+      return item.selector == `node[ id = '${id}' ]`
+    })
+    if (!bypassStyle) {
+      bypassStyle = {
+        selector: `node[ id = '${id}' ]`,
+        style: {}
+      }
+      styleDetail._nodeBypass.push(bypassStyle)
+    }
+    styleDetail.build()
+    return bypassStyle.style[this._styleName]||null
+  }
   setBypass(id, value) {
     let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
     let bypassStyle = _.find(styleDetail._nodeBypass, (item) => {
@@ -101,7 +144,7 @@ export class NodeStyleModel {
     })
     if (!bypassStyle) {
       bypassStyle = {
-        selector: `node[ id = '${id} ]`,
+        selector: `node[ id = '${id}' ]`,
         style: {}
       }
       styleDetail._nodeBypass.push(bypassStyle)
@@ -109,7 +152,7 @@ export class NodeStyleModel {
     bypassStyle.style[this._styleName] = value
     styleDetail.build()
   }
-  removeBypass(id, value) {
+  removeBypass(id) {
     let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
     let bypassStyle = _.find(styleDetail._nodeBypass, (item) => {
       return item.selector == `node[ id = '${id}' ]`
@@ -119,7 +162,7 @@ export class NodeStyleModel {
     }
     styleDetail.build()
   }
-  setMapping(attrName, attrValue, value) {
+  getDiscreteMapping(attrName, attrValue) {
     let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
     let mappingStyle = _.find(styleDetail._nodeBypass, (item) => {
       return item.selector == `node[${attrName} = '${attrValue}' ]` && item.style[this._styleName]
@@ -129,20 +172,87 @@ export class NodeStyleModel {
         selector: `node[${attrName} = '${attrValue}' ]`,
         style: {}
       }
-      styleDetail._nodeMapping.push(bypassStyle)
+      styleDetail._nodeDiscreteMapping.push(bypassStyle)
+    }
+    styleDetail.build()
+    return mappingStyle.style[this._styleName]
+  }
+  setDiscreteMapping(attrName, attrValue, value) {
+    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let mappingStyle = _.find(styleDetail._nodeDiscreteMapping, (item) => {
+      return item.selector == `node[${attrName} = '${attrValue}' ]` && item.style[this._styleName]
+    })
+    if (!mappingStyle) {
+      mappingStyle = {
+        selector: `node[${attrName} = '${attrValue}' ]`,
+        style: {}
+      }
+      styleDetail._nodeDiscreteMapping.push(mappingStyle)
     }
     mappingStyle.style[this._styleName] = value
     styleDetail.build()
   }
-  removeMapping(attrName, attrValue) {
+  removeDiscreteMapping(attrName, attrValue) {
     let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
-    let mappingStyle = _.find(styleDetail._nodeBypass, (item) => {
+    let mappingStyle = _.find(styleDetail._nodeDiscreteMapping, (item) => {
       return item.selector == `node[${attrName} = '${attrValue}' ]` && item.style[this._styleName]
     })
     if (mappingStyle) {
-      _.pull(styleDetail._nodeBypass, mappingStyle)
+      _.pull(styleDetail._nodeDiscreteMapping, mappingStyle)
     }
     styleDetail.build()
+  }
+  removeDiscreteMappings(attrName) {
+    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    _.remove(styleDetail._nodeDiscreteMapping, (item) => {
+      return new RegExp(`node\\[${attrName} = '(.*)' \\]`).test(item.selector) && item.style[this._styleName]
+    })
+    styleDetail.build()
+  }
+  setPassthroughMapping(attrName) {
+    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    styleDetail._nodePassthroughMapping[0].style[this._styleName] = `data(${attrName})`
+    styleDetail.build()
+  }
+  removePassthroughMapping() {
+    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    if (styleDetail._nodePassthroughMapping[0].style[this._styleName]) {
+      delete styleDetail._nodePassthroughMapping[0].style[this._styleName]
+    }
+    styleDetail.build()
+  }
+  getMappingInfo() {
+    const passthrough = 'passthrough'
+    const discrete = 'discrete'
+    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let passthroughMapping = styleDetail._nodePassthroughMapping[0]
+    let discreteMapping = styleDetail._nodeDiscreteMapping
+    let mappingType = null
+    let mappingAttrName = null
+    let mappingDetail = []
+    if (passthroughMapping.style[this._styleName]) {
+      mappingType = passthrough
+      const styleValue = passthroughMapping.style[this._styleName]
+      mappingAttrName = new RegExp('data\\((\\w+?)\\)').exec(styleValue)[1]
+
+    } else {
+      discreteMapping.forEach(item => {
+        if (item.style[this._styleName]) {
+          let reg = /node\[(.*) = '(.*)' \]/gi;
+          let [foo, attrName, attrValue] = reg.exec(item.selector)
+          if (attrName && attrValue) {
+            mappingAttrName = attrName
+            mappingDetail.push([attrName, attrValue])
+          }
+        }
+      })
+      if (mappingDetail.length != 0) {
+        mappingType = discrete
+      } else {
+        mappingType = null
+      }
+    }
+    return [mappingType, mappingAttrName, mappingDetail]
   }
 }
 
@@ -186,7 +296,7 @@ export class EdgeStyleModel {
     }
     styleDetail.build()
   }
-  setMapping(attrName, attrValue, value) {
+  setDiscreteMapping(attrName, attrValue, value) {
     let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
     let mappingStyle = _.find(styleDetail._edgeBypass, (item) => {
       return item.selector == `edge[${attrName} = '${attrValue}' ]` && item.style[this._styleName]
@@ -196,12 +306,12 @@ export class EdgeStyleModel {
         selector: `edge[${attrName} = '${attrValue}' ]`,
         style: {}
       }
-      styleDetail._edgeMapping.push(bypassStyle)
+      styleDetail._edgeDiscreteMapping.push(bypassStyle)
     }
     mappingStyle.style[this._styleName] = value
     styleDetail.build()
   }
-  removeMapping(attrName, attrValue) {
+  removeDiscreteMapping(attrName, attrValue) {
     let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
     let mappingStyle = _.find(styleDetail._edgeBypass, (item) => {
       return item.selector == `edge[${attrName} = '${attrValue}' ]` && item.style[this._styleName]

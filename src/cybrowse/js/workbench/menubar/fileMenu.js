@@ -25,7 +25,7 @@ export default class FileMenu {
   render() {
     const $el = $(`
       <div class='btn-group'>
-        <button type='button' class='fn-file-menu btn btn-default dropdown-toggle btn-sm' data-toggle='dropdown'>
+        <button type='button' class='fn-file-menu btn btn-default dropdown-toggle' data-toggle='dropdown'>
           文件(F)
         </button>
         <ul class='dropdown-menu' role='menu'>

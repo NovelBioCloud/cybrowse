@@ -7,19 +7,22 @@ export default class FileSelector {
     onChange
   }) {
     $fileSelector && $fileSelector.remove()
-    $fileSelector = $(`<input type='file'/>`).hide().appendTo(document.body)
-    accept && $fileSelector.attr({
+    $fileSelector = $(`<div style='width:0px;height:0px;overflow:hidden'/>`).appendTo(document.body)
+    const $input = $(`<input type='file'/>`).appendTo($fileSelector)
+    accept && $input.attr({
       accept: accept
     })
-    multiple && $fileSelector.attr({
+    multiple && $input.attr({
       multiple: 'multiple'
     })
-    $fileSelector.change(
+    $input.change(
       function (e) {
         onChange && onChange(e.target.files)
         $(this).remove()
       })
-    $fileSelector.click()
+    setTimeout(() => {
+      $input.click()
+    }, 100)
   }
 }
 FileSelector.show = (options) => {

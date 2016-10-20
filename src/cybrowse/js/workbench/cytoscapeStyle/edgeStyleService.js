@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import EdgeStyle from '../../platform/cytoscapeStyle/edgeStyle'
-import dispose from '../../base/lifecycle/lifecycle'
+import { dispose } from '../../base/lifecycle/lifecycle'
 import Emitter from '../../base/emitter/emitter'
 
 export default class EdgeStyleService {

@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import NodeBackground from './node/background/background'
-import ViewService from './node/viewService'
+import NodeStyleLayout from './node/nodeStyleLayout'
 export default class NodeStyle {
   constructor() {
 
@@ -8,19 +8,21 @@ export default class NodeStyle {
   init(props, context) {
     this.props = props
     this.context = context
-
-    const viewService = new ViewService()
-    viewService.init({
+  }
+  ready() {
+    const props = this.props
+    const context = this.context
+    const nodeStyleLayout = new NodeStyleLayout()
+    nodeStyleLayout.init({
       container: props.container
     })
     const nodeBackground = new NodeBackground()
     this.nodeBackground = nodeBackground
     nodeBackground.init({
-      container: viewService.getContainer('background')
+      container: nodeStyleLayout.getContainer('background')
     }, context)
-
   }
-  updateStyle(){
+  updateStyle() {
     this.nodeBackground.update()
   }
 }

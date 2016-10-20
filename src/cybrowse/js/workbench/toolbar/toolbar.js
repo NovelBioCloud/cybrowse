@@ -15,11 +15,11 @@ export default class Toolbar {
   render() {
     let container = this.container
     const $el = $(`
-      <div class='well well-sm'>
-        <div class="btn-group">
-          <button type="button" class="fn-center btn btn-default btn-sm">居中</button>
-          <button type="button" class="fn-zoom-out btn btn-default btn-sm">放大</button>
-          <button type="button" class="fn-zoom-in btn btn-default btn-sm">缩小</button>
+      <div style='padding:0 0 10px 0'>
+        <div class='btn-group'>
+          <button type='button' class='fn-center btn btn-default btn-sm'>居中</button>
+          <button type='button' class='fn-zoom-in btn btn-default btn-sm'>放大</button>
+          <button type='button' class='fn-zoom-out btn btn-default btn-sm'>缩小</button>
         </div>
       </div>
     `).appendTo($(this.props.container))

@@ -23,20 +23,13 @@ export default class TabPanelService {
         this._panels.set(TabPanelServicePanel.node, container)
       }
     },
-      {
-        id: 'tab-edge',
-        name: 'edge',
-        callback: (container) => {
-          this._panels.set(TabPanelServicePanel.edge, container)
-        }
-      }, {
-        id: 'tab-other',
-        name: 'other',
-        callback: (container) => {
-          this._panels.set(TabPanelServicePanel.other, container)
-        }
+    {
+      id: 'tab-edge',
+      name: 'edge',
+      callback: (container) => {
+        this._panels.set(TabPanelServicePanel.edge, container)
       }
-    ]
+    }]
     this.tabPanel.init({
       entries: panelEntries,
       container: props.container,

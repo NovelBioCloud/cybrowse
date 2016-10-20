@@ -3,22 +3,18 @@ import $ from 'jquery'
 import { saveAs } from 'file-saver'
 import EventMitter from 'events'
 import Cytoscape from './cytoscape'
-import dispose from '../../base/lifecycle/lifecycle'
+import { dispose } from '../../base/lifecycle/lifecycle'
 import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
 import { SaveMenuCommand } from '../menubar/saveMenu'
+import cytoscapeEvents from '../constants/cytoscapeEvents'
 export const ViewPanelCommand = {
   center: 'command:viewPanel.center',
   zoomOut: 'command:viewPanel.zoomOut',
   zoomIn: 'command:viewPanel.zoomIn',
 
 }
-let events = {
-  tapstart: '', tapdrag: '', tapdragover: '', tapdragout: '',
-  tapend: '', tap: '', taphold: '', cxttapstart: '', cxttapend: '',
-  cxttap: '', cxtdrag: '', cxtdragover: '', cxtdragout: '',
-  boxstart: '', boxend: '', boxselect: '', box: ''
-}
+
 class ViewPanel extends EventMitter {
 
   constructor() {
@@ -46,7 +42,7 @@ class ViewPanel extends EventMitter {
     this.cy.center()
   }
   initEvent() {
-    Object.keys(events).forEach((eventName) => {
+    Object.keys(cytoscapeEvents).forEach((eventName) => {
       this.cy.on(eventName, (event) => {
         this.emit(eventName, event)
       });
@@ -58,14 +54,14 @@ class ViewPanel extends EventMitter {
         this.cy.center()
       }
     })
-    commandService.registerCommand(ViewPanelCommand.zoomOut, {
+    commandService.registerCommand(ViewPanelCommand.zoomIn, {
       args: null,
       handle: () => {
         const zoom = this.cy.zoom() + 0.1
         this.cy.zoom(zoom)
       }
     })
-    commandService.registerCommand(ViewPanelCommand.zoomIn, {
+    commandService.registerCommand(ViewPanelCommand.zoomOut, {
       args: null,
       handle: () => {
         const zoom = this.cy.zoom() - 0.1
@@ -116,23 +112,30 @@ class ViewPanel extends EventMitter {
     });
 
     keybindingService.bind(['ctrl+shift++'], function (e) {
-      commandService.runCommand(ViewPanelCommand.zoomOut)
+      commandService.runCommand(ViewPanelCommand.zoomIn)
       return false
     });
 
     keybindingService.bind(['ctrl+shift+-'], function (e) {
-      commandService.runCommand(ViewPanelCommand.zoomIn)
+      commandService.runCommand(ViewPanelCommand.zoomOut)
       return false
     });
   }
   setElements(elements) {
-    this.cytoscape.cy.remove(this.cytoscape.cy.elements())
-    this.cytoscape.cy.add(elements)
-    console.log(this.cytoscape.cy.elements())
+    try {
+      this.cytoscape.cy.remove(this.cytoscape.cy.elements())
+      this.cytoscape.cy.add(elements)
+    } catch (e) {
+      this.context.services.messageService.error('数据加载错误')
+    }
   }
   setStyles(style) {
-    console.log(style.style)
-    this.cy.style(style.style)
+    try {
+      this.cy.style().resetToDefault()
+      this.cy.style(style.style)
+    } catch (e) {
+      this.context.services.messageService.error('数据加载错误')
+    }
   }
 
   setLayout(layout) {
@@ -145,12 +148,14 @@ class ViewPanel extends EventMitter {
 export default class ViewPanelService extends EventMitter {
   constructor() {
     super()
+    this._toDispose = []
   }
   init(props, context) {
     this.props = props
     this.context = context
     this.services = this.context.services
-    this._toDispose = []
+  }
+  ready() {
     this.render()
     this.initServices()
     this.registerListener()
@@ -193,7 +198,7 @@ export default class ViewPanelService extends EventMitter {
   }
 
   registerListener() {
-    Object.keys(events).forEach((eventName) => {
+    Object.keys(cytoscapeEvents).forEach((eventName) => {
       this._toDispose.push((() => {
         let callback = (event) => {
           this.emit(eventName, event)
@@ -210,10 +215,8 @@ export default class ViewPanelService extends EventMitter {
   update() {
     const currentDataService = this.context.services.currentDataService
     const currentStyleService = this.context.services.currentStyleService
-    const currentLayoutService = this.context.services.currentLayoutService
     this.viewPanel.setElements(currentDataService.getData())
     this.viewPanel.setStyles(currentStyleService.getStyle())
-    this.viewPanel.setLayout(currentLayoutService.getLayout())
   }
   updateData() {
     const currentDataService = this.context.services.currentDataService

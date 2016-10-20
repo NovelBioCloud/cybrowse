@@ -1,5 +1,6 @@
-import dispose from '../../base/lifecycle/lifecycle'
+import { dispose } from '../../base/lifecycle/lifecycle'
 import TableNodePanel from './tableNodePanel'
+import TableEdgePanel from './tableEdgePanel'
 import TableTabPanelService from './tableTabPanelService'
 export default class TablePanelService {
 
@@ -7,37 +8,41 @@ export default class TablePanelService {
     this._toDispose = []
     this.props = props
     this.context = context
+    this.services = this.context.services
+  }
+  ready() {
     this.initServices()
     this.registerListener()
   }
-
   initServices() {
-    this.services = this.context.services
     const tableTabPanelService = new TableTabPanelService()
     tableTabPanelService.init({
       container: this.props.container
     }, this.context)
-    const tableNodePanel = new TableNodePanel()
-    tableNodePanel.init({
+    this.tableNodePanel = new TableNodePanel()
+    this.tableNodePanel.init({
       container: tableTabPanelService.getContainer('node')
-    }, {})
+    }, this.context)
+    this.tableEdgePanel = new TableEdgePanel()
+    this.tableEdgePanel.init({
+      container: tableTabPanelService.getContainer('edge')
+    }, this.context)
   }
 
   registerListener() {
-    const viewPanelService = this.services.viewPanelService
-    this._toDispose.push(
-      (() => {
-        let callback = (event) => {
-          this.onTap(event)
-        }
-        viewPanelService.on('tap', callback)
-        return {
-          dispose: () => {
-            viewPanelService.off('tap', callback)
-          }
-        }
-      })()
-    )
+    const tableDatasourceService = this.services.tableDatasourceService
+    this._toDispose.push(tableDatasourceService.onNodeChange((nodeDatas) => {
+      this.setNodeData(nodeDatas)
+    }))
+    this._toDispose.push(tableDatasourceService.onEdgeChange((edgeDatas) => {
+      this.setEdgeData(edgeDatas)
+    }))
+  }
+  setNodeData(nodeDatas) {
+    this.tableNodePanel.update(nodeDatas)
+  }
+  setEdgeData(edgeDatas) {
+    this.tableEdgePanel.update(edgeDatas)
   }
   dispose() {
     dispose(this._toDispose)

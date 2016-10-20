@@ -1,6 +1,6 @@
+import _ from 'lodash'
 
-
-export default function dispose(disposable) {
+function dispose(disposable) {
   if (_.isArray(disposable)) {
     disposable.forEach((item) => {
       dispose(item)
@@ -9,3 +9,6 @@ export default function dispose(disposable) {
     disposable && disposable.dispose && disposable.dispose()
   }
 }
+export default {
+  dispose
+} 

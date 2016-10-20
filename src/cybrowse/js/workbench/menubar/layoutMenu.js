@@ -25,7 +25,7 @@ export default class LayoutMenu {
   render() {
     const $el = $(`
       <div class='btn-group'>
-        <button type='button' class='fn-layout-menu btn btn-default dropdown-toggle btn-sm' data-toggle='dropdown'>
+        <button type='button' class='fn-layout-menu btn btn-default dropdown-toggle' data-toggle='dropdown'>
           布局(L)
         </button>
         <ul class='fn-menu-items dropdown-menu' role='menu'>

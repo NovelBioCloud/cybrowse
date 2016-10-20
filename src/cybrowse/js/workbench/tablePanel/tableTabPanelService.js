@@ -20,18 +20,20 @@ export default class TableTabPanelService {
       name: 'node',
       callback: (container) => {
         this._panels.set(TableTabPanelServicePanel.node, container)
+        $(container).css({
+          'max-height': '150px',
+          'overflow': 'auto'
+        })
       }
     }, {
       id: 'table-tab-edge',
       name: 'edge',
       callback: (container) => {
         this._panels.set(TableTabPanelServicePanel.edge, container)
-      }
-    }, {
-      id: 'table-tab-other',
-      name: 'other',
-      callback: (container) => {
-        this._panels.set(TableTabPanelServicePanel.other, container)
+        $(container).css({
+          'max-height': '150px',
+          'overflow': 'auto'
+        })
       }
     }]
     this.tabPanel.init({

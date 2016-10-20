@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-import dispose from '../../base/lifecycle/lifecycle'
+import { dispose } from '../../base/lifecycle/lifecycle'
 import TabPanelService from './tabPanelService'
 import BaseStyleService from '../cytoscapeStyle/baseStyleService'
 import CurrentDataService from '../cytoscapeData/currentDataService'

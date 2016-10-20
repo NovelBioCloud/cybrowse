@@ -3,6 +3,8 @@ import Emitter from '../../base/emitter/emitter'
 export default class CurrentDataService {
   constructor() {
     this._onChange = new Emitter()
+    this._nodes = []
+    this._edges = []
   }
   get onChange() {
     return this._onChange.event
@@ -11,18 +13,24 @@ export default class CurrentDataService {
 
   }
   getData() {
-    return [...this.nodes, ...this.edges]
+    return [...this._nodes, ...this._edges]
   }
   setData(elements) {
-    this.nodes = []
-    this.edges = []
+    this._nodes = []
+    this._edges = []
     elements.forEach((item) => {
       if (item.data.target) {
-        this.edges.push(item)
+        this._edges.push(item)
       } else {
-        this.nodes.push(item)
+        this._nodes.push(item)
       }
     })
     this._onChange.emit()
+  }
+  getNodeData() {
+    return this._nodes
+  }
+  getEdgeData() {
+    return this._edges
   }
 }
