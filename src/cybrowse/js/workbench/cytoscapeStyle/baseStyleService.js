@@ -1,6 +1,7 @@
 import BaseStyle from '../../platform/cytoscapeStyle/baseStyle'
 import Emitter from '../../base/emitter/emitter'
-
+import { StyleDetail } from '../../base/cytoscape/styles'
+import _ from 'lodash'
 export default class BaseStyleService {
 
   constructor() {
@@ -30,7 +31,7 @@ export default class BaseStyleService {
 
   }
   initStyleEntries() {
-    this.styleEntries = [
+    this.styleEntries = _.map([
       {
         id: 'default',
         name: 'default',
@@ -63,7 +64,10 @@ export default class BaseStyleService {
         title: 'name1',
         style: []
       }
-    ]
+    ], (style) => {
+      new StyleDetail(style).build()
+      return style
+    })
   }
   getStyle(styleName) {
     styleName = styleName || this.activeEntryId

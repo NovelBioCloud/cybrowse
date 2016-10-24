@@ -1,12 +1,14 @@
 import createCytoscape from 'cytoscape'
 import $ from 'jquery'
-
+/**cytoscape包装类 */
 export default class Cytoscape {
 
   init(props, context) {
     this.container = props.container
-    this.el = $('<div/>', {
-      style: 'height:400px;background:#f4f4f4;'
+    this.el = $('<div/>').css({
+      'width': '1200px',
+      'height': '600px',
+      'background': '#f4f4f4'
     }).appendTo($(this.container)).get(0)
     this.cy = createCytoscape({
       container: this.el,

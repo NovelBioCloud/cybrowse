@@ -2,13 +2,7 @@ import $ from 'jquery'
 import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
 import FileSelector from '../../base/fileSelector/fileSelector'
-const EditMenuCommands = {
-  undo: 'command.editMenu.undo',
-  redo: 'command.editMenu.redo'
-}
-export {
-  EditMenuCommands
-}
+import { EditMenuCommands } from '../command/commands'
 
 export default class EditMenu {
 
@@ -25,7 +19,7 @@ export default class EditMenu {
     const $el = $(`
       <div class='btn-group'>
         <button type='button' class='fn-edit-menu btn btn-default dropdown-toggle' data-toggle='dropdown'>
-          编辑(E)
+          编辑&nbsp;(ALT+E)
         </button>
         <ul class='dropdown-menu' role='menu'>
           <li><a class='fn-undo' href='javascript:void(0)'>撤销</a></li>

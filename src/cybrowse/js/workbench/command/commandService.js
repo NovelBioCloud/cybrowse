@@ -1,15 +1,18 @@
+/**命令服务 */
 export default class CommandService {
   constructor() {
     this._command = new Map()
   }
-  init(props, {
-    services
-  }) {
-
+  init(props, context) {
+    this.props = props
+    this.context = context
   }
+
+  /**注册命令 */
   registerCommand(id, command) {
     this._command.set(id, command)
   }
+  /**执行命令 */
   runCommand(id, ...args) {
     return new Promise((c, e) => {
       let command = this._command.get(id)

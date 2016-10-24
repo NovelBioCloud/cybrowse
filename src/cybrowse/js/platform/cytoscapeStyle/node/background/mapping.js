@@ -39,12 +39,16 @@ export default class Mapping {
       dataModel,
       container: contentContainer
     }, this.context)
+    this.mappingViewModel = mappingViewModel
     mappingViewModel.init({
       briefInfo,
       contentInfo,
       dataModel,
       styleModel
     }, this.context)
+  }
+  update() {
+    this.mappingViewModel.update()
   }
 }
 
@@ -72,7 +76,7 @@ class MappingViewModel extends EventEmitter {
   set showContentInfo(value) {
     if (this._showContentInfo !== value) {
       this._showContentInfo = value
-      this._contentInfo.update()
+      this._contentInfo.updateDisplay()
     }
   }
   get showContentInfo() {
@@ -92,7 +96,10 @@ class MappingViewModel extends EventEmitter {
   updateBriefInfoType() {
     this._briefInfo.update()
   }
-
+  update() {
+    this._contentInfo.update()
+    this._briefInfo.update()
+  }
 }
 class BriefInfo {
   init(props, context) {
@@ -134,7 +141,7 @@ class ContentInfo {
   setViewModel(viewModel) {
     this._viewModel = viewModel
     this.render()
-    this.update()
+    this.updateDisplay()
   }
 
   render() {
@@ -147,6 +154,7 @@ class ContentInfo {
     }).appendTo(this.$container)
     const $attrInfo = $('<div/>').appendTo(this.$container)
     const contentInfoViewModel = new ContentInfoViewModel()
+    this.contentInfoViewModel = contentInfoViewModel
     const mappingType = new MappingType()
     const attrName = new AttrName()
     const attrInfo = new AttrInfo()
@@ -171,6 +179,9 @@ class ContentInfo {
     }, this.context)
   }
   update() {
+    this.contentInfoViewModel.update()
+  }
+  updateDisplay() {
     if (this._viewModel.showContentInfo) {
       this.$container.stop().show()
     } else {
@@ -282,6 +293,11 @@ class ContentInfoViewModel {
   set activeAttrInfos(value) {
     throw new Error('todo')
   }
+  update() {
+    this._attrInfo.update()
+    this._attrName.update()
+    this._mappingType.update()
+  }
 }
 
 class MappingType extends EventEmitter {
@@ -296,21 +312,18 @@ class MappingType extends EventEmitter {
   }
   setViewModel(viewModel) {
     this._viewModel = viewModel
-    this.render()
     this.update()
   }
-  render() {
 
-  }
   update() {
     this.$container.empty()
     const $el = $(`
       <div style='display:flex'>
         <div style='width:100px;line-height:30px'><label>匹配方式</label></div>
-        <div display='flex:auto;line-height:30px' class='fn-select'></div>
+        <div style='width:200px;line-height:30px' class='fn-select'></div>
       </div>`).appendTo(this.$container)
     const $select = $(_.template(`
-      <select class='form-control'>
+      <select class='form-control input-sm'>
         <option value=''>--请选择--</option>
         <%_.each(mappingTypes,(mappingType)=>{%>
         <option value='<%=mappingType%>'><%=mappingType%></option>
@@ -342,22 +355,18 @@ class AttrName extends EventEmitter {
   }
   setViewModel(viewModel) {
     this._viewModel = viewModel
-    this.render()
     this.update()
-  }
-  render() {
-    this.$container.empty()
   }
   update() {
     this.$container.empty()
     const $el = $(`
       <div style='display:flex'>
         <div style='width:100px;line-height:30px'><label>匹配属性</label></div>
-        <div display='flex:auto;line-height:30px' class='fn-select'></div>
+        <div style='width:200px;line-height:30px' class='fn-select'></div>
       </div>`).appendTo(this.$container)
 
     const $select = $(_.template(`
-      <select class='form-control'>
+      <select class='form-control input-sm'>
         <option value=''>--请选择--</option>
         <%_.each(attrNames,(attrName)=>{%>
         <option value='<%=attrName%>'><%=attrName%></option>
@@ -389,10 +398,7 @@ class AttrInfo extends EventEmitter {
   }
   setViewModel(viewModel) {
     this._viewModel = viewModel
-    this.render()
     this.update()
-  }
-  render() {
   }
   update() {
     this.$container.empty()
@@ -400,11 +406,12 @@ class AttrInfo extends EventEmitter {
       //do nothing 
     } else {
       if (this._viewModel.selectedType === 'discrete') {
-        const $el = $('<div/>').appendTo(this.$container)
+        const $el = $('<div/>').css({ 'max-height': '150px', overflow: 'auto' }).appendTo(this.$container)
         console.log(this._viewModel.attrInfos)
         this._viewModel.attrInfos.forEach((item) => {
-          const $itemContainer = $('<div/>', {
-            style: 'height:30px;line-height:30px'
+          const $itemContainer = $('<div/>').css({
+            'height': '30px',
+            'line-height': '30px'
           }).appendTo($el)
           const attrItemViewModel = new AttrItemViewModel()
           const attrItem = new AttrItem()
@@ -521,7 +528,7 @@ class ColorComponent {
         onChange && onChange(event)
       })
 
-      const $remove = $(`<i class='fa fa-trash fa-fw fa-lg ac-pointer'></i>`).appendTo($container)
+      const $remove = $(`<i class='fa fa-times fa-fw fa-lg ac-pointer'></i>`).appendTo($container)
       $remove.click((e) => {
         onRemove && onRemove(event)
       })

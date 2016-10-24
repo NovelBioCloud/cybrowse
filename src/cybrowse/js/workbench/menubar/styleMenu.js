@@ -1,15 +1,7 @@
 import $ from 'jquery'
 import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
-
-const StyleMenuCommands = {
-  newStyle: 'command.styleMenu.newStyle',
-  importStyle: 'command.styleMenu.importStyle',
-  exportStyle: 'command.styleMenu.exportStyle',
-}
-export {
-  StyleMenuCommands
-}
+import {StyleMenuCommands} from '../command/commands'
 
 export default class StyleMenu {
 

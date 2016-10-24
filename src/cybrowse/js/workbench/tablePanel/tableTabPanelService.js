@@ -7,7 +7,7 @@ const TableTabPanelServicePanel = {
   edge: 'edge',
   other: 'other'
 }
-
+/**table 的布局服务 */
 export default class TableTabPanelService {
   constructor() {
   }
@@ -21,7 +21,7 @@ export default class TableTabPanelService {
       callback: (container) => {
         this._panels.set(TableTabPanelServicePanel.node, container)
         $(container).css({
-          'max-height': '150px',
+          'height': '150px',
           'overflow': 'auto'
         })
       }
@@ -31,7 +31,7 @@ export default class TableTabPanelService {
       callback: (container) => {
         this._panels.set(TableTabPanelServicePanel.edge, container)
         $(container).css({
-          'max-height': '150px',
+          'height': '150px',
           'overflow': 'auto'
         })
       }

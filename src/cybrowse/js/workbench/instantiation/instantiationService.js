@@ -5,6 +5,7 @@ import $ from 'jquery'
 
 import Instantiation from './instantiation'
 
+/**运行实例服务 */
 export default class InstantiationService {
 
   init(props, context) {

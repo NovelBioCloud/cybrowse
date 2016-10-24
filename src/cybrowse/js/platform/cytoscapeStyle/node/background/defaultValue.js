@@ -11,6 +11,9 @@ export default class DefaultValue {
 
   }
   render() {
+    this.update()
+  }
+  update() {
     const props = this.props
     const context = this.context
     $(props.container).empty()
@@ -34,7 +37,6 @@ export default class DefaultValue {
         this.render()
       }
     })
-
   }
 }
 
@@ -57,7 +59,7 @@ class ColorComponent {
         onChange && onChange(event)
       })
 
-      const $remove = $(`<i class='fa fa-trash fa-fw fa-lg ac-pointer'></i>`).appendTo($el)
+      const $remove = $(`<i class='fa fa-times fa-fw fa-lg ac-pointer'></i>`).appendTo($el)
       $remove.click((e) => {
         onRemove && onRemove(e)
       })

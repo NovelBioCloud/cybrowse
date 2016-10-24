@@ -1,8 +1,18 @@
 import $ from 'jquery'
+
+/**
+ * 颜色选择工具，全局类
+ */
 let $colorSelector
+
+/**
+ * 颜色选择工具
+ */
 export default class ColorSelector {
   constructor({
+    /**默认值 */
     defaultValue,
+    /**回调函数，参数是选择的颜色 */
     onChange
   }) {
     $colorSelector && $colorSelector.remove()
@@ -19,6 +29,9 @@ export default class ColorSelector {
     }, 100)
   }
 }
+/**
+ * 颜色选择工具类
+ */
 ColorSelector.show = (options) => {
   new ColorSelector(options)
 }

@@ -3,13 +3,7 @@ import _ from 'lodash'
 import EventEmitter from 'events'
 import BaseModel from '../../base/model/baseModel'
 
-class BaseStyleContext {
 
-}
-
-class BaseStyleEntry {
-
-}
 
 export class BaseStyleModel extends BaseModel {
   constructor() {
@@ -64,13 +58,9 @@ class BaseStyleView extends EventEmitter {
     this.$el = $('<div/>').css('padding-bottom', '10px').appendTo($(this.container))
     this.$el.html(_.template(`
       <select class="form-control">
-        <%
-          _.each(entries,(entry)=>{
-            %>
-              <option value='<%=entry.id%>'><%=entry.name%></option>
-            <%
-          })
-        %>
+        <% _.each(entries,(entry)=>{ %>
+          <option value='<%=entry.id%>'><%=entry.name%></option>
+        <% }) %>
       </select>
     `)({ entries: this.model.getEntries() }))
     this.$el.find('select').on('change', (e) => {

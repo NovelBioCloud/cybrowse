@@ -1,6 +1,7 @@
 import toastr from 'toastr'
+/**信息提示服务 */
 export default class MessageService {
-  constructor(){
+  constructor() {
     throw new Error('use method MessageService.instance() to get the instance')
   }
 }

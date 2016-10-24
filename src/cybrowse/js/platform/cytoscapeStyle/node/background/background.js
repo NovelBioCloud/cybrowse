@@ -31,6 +31,7 @@ export default class Background {
     const styleModel = new NodeStyleModel(NodeStyleName.backgroundColor, currentStyleService)
     const dataModel = new DataModel(currentStyleService)
     const defaultValue = new DefaultValue()
+    this.defaultValue = defaultValue
     defaultValue.init({
       styleModel: styleModel,
       dataModel: dataModel,
@@ -53,6 +54,7 @@ export default class Background {
     }, context)
 
     const mapping = new Mapping()
+    this.mapping = mapping
     mapping.init({
       styleModel: styleModel,
       dataModel: dataModel,
@@ -61,6 +63,7 @@ export default class Background {
       contentContainer: backgroundView.getContainer('contentContainer')
     }, context)
     const bypass = new Bypass()
+    this.bypass = bypass
     bypass.init({
       styleModel: styleModel,
       dataModel: dataModel,
@@ -68,7 +71,9 @@ export default class Background {
     }, context)
   }
   update() {
-    this.render()
+    this.defaultValue.update()
+    this.mapping.update()
+    this.bypass.update()
   }
 }
 const ValueType = {

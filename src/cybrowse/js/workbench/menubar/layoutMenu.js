@@ -2,13 +2,7 @@ import $ from 'jquery'
 import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
 import FileSelector from '../../base/fileSelector/fileSelector'
-const LayoutMenuCommands = {
-  newLayout: 'command.LayoutMenu.newLayout',
-  openLayout: 'command.LayoutMenu.openLayout'
-}
-export {
-  LayoutMenuCommands
-}
+import { LayoutMenuCommands } from '../command/commands'
 
 export default class LayoutMenu {
 
@@ -26,7 +20,7 @@ export default class LayoutMenu {
     const $el = $(`
       <div class='btn-group'>
         <button type='button' class='fn-layout-menu btn btn-default dropdown-toggle' data-toggle='dropdown'>
-          布局(L)
+          布局&nbsp;(ALT+L)
         </button>
         <ul class='fn-menu-items dropdown-menu' role='menu'>
         </ul>

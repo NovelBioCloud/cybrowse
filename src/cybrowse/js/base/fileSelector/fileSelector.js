@@ -1,5 +1,8 @@
 import $ from 'jquery'
+
+/**全局的文件选择对象 */
 let $fileSelector
+/**文件选择类 */
 export default class FileSelector {
   constructor({
     accept,

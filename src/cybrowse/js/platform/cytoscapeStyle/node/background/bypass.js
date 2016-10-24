@@ -6,6 +6,7 @@ let bypassInstance
 export default class Bypass {
   constructor() {
     this._toDispose = []
+    console.log('bypass')
   }
   init(props, context) {
     if (bypassInstance) {
@@ -28,7 +29,7 @@ export default class Bypass {
       dataModel: props.dataModel
     }, context)
     bypassViewModel.ready()
-
+    this.bypassViewModel = bypassViewModel
     const viewPanelService = this.context.services.viewPanelService
     const eventName = 'tap'
     const listener = (event) => {
@@ -50,8 +51,12 @@ export default class Bypass {
       }
     })
   }
+  update() {
+    this.bypassViewModel.update()
+  }
   dispose() {
     lifecycle.dispose(this._toDispose)
+    this._toDispose = []
   }
 }
 class BypassViewModel {
@@ -69,6 +74,9 @@ class BypassViewModel {
   }
   ready() {
     this._bypassView.ready()
+  }
+  update() {
+    this._bypassView.update()
   }
   get id() {
     return this._id
@@ -152,7 +160,7 @@ class ColorComponent {
           onChange && onChange(event)
         })
 
-        const $remove = $(`<i class='fa fa-trash fa-fw fa-lg ac-pointer'></i>`).appendTo($el)
+        const $remove = $(`<i class='fa fa-times fa-fw fa-lg ac-pointer'></i>`).appendTo($el)
         $remove.click((e) => {
           onRemove && onRemove(event)
         })

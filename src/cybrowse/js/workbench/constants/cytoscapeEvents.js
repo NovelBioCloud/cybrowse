@@ -1,14 +1,21 @@
 let cytoscapeEvents = {
   tapstart: 'tapstart',
-  tapdrag: 'tapdrag', tapdragover: 'tapdragover', tapdragout: 'tapdragout',
+  tapdrag: 'tapdrag',
+  tapdragover: 'tapdragover',
+  tapdragout: 'tapdragout',
   tapend: 'tapend',
   tap: 'tap',
-  taphold: 'taphold', cxttapstart: 'cxttapstart', cxttapend: 'cxttapend',
+  taphold: 'taphold',
+  cxttapstart: 'cxttapstart',
+  cxttapend: 'cxttapend',
   cxttap: 'cxttap',
-  cxtdrag: 'cxtdrag', cxtdragover: 'cxtdragover', cxtdragout: 'cxtdragout',
+  cxtdrag: 'cxtdrag',
+  cxtdragover: 'cxtdragover',
+  cxtdragout: 'cxtdragout',
   boxstart: 'boxstart',
-  boxend: 'boxend'
-  , boxselect: 'boxselect', box: 'box'
+  boxend: 'boxend',
+  boxselect: 'boxselect',
+  box: 'box'
 }
 
 export default cytoscapeEvents

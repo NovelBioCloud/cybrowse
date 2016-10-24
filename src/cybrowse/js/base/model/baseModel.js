@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import EventMitter from 'events'
 
+/**视图对应的基本的模型类 */
 export default class BaseModel extends EventMitter {
   constructor() {
     super()
@@ -8,6 +9,8 @@ export default class BaseModel extends EventMitter {
     this._defaultValue = -1
   }
   init(props, context) {
+    this.props = props
+    this.context = context
   }
   setEntries(_entries, _defaultValue = 0) {
     if (!_.isArray(_entries)) {

@@ -1,5 +1,7 @@
 import $ from 'jquery'
-import { ViewPanelCommand } from '../viewPanel/viewPanelService'
+import { ViewPanelCommand } from '../command/commands'
+
+/**工具栏 */
 export default class Toolbar {
 
   constructor() { }

@@ -3,18 +3,7 @@ import saveAs from 'file-saver'
 import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
 import FileSelector from '../../base/fileSelector/fileSelector'
-
-window.todo=1
-const SaveMenuCommand = {
-  savePng: 'command:saveMenu.savePng',
-  saveJpg: 'command:saveMenu.saveJpg',
-  saveNetworkAndView: 'command:saveMenu.saveNetworkAndView',
-  saveNetwork: 'command:saveMenu.saveNetwork',
-  saveCvs: 'command:saveMenu.saveCvs'
-}
-export {
-  SaveMenuCommand
-}
+import { SaveMenuCommand } from '../command/commands'
 
 export default class SaveMenu {
 
@@ -32,7 +21,7 @@ export default class SaveMenu {
     const $el = $(`
       <div class='btn-group'>
         <button type='button' class='fn-file-menu btn btn-default dropdown-toggle' data-toggle='dropdown'>
-          保存(S)
+          保存&nbsp;(ALT+S)
         </button>
         <ul class='dropdown-menu' role='menu'>
           <li><a class='fn-save-png' href='javascript:void(0)'>保存为png图片</a></li>
@@ -55,7 +44,7 @@ export default class SaveMenu {
     }
   }
   registerCommand() {
-  
+
   }
 
   registerListener() {

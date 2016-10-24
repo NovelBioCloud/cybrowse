@@ -2,13 +2,7 @@ import $ from 'jquery'
 import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
 import FileSelector from '../../base/fileSelector/fileSelector'
-const FileMenuCommands = {
-  newFile: 'command.fileMenu.newFile',
-  openFile: 'command.fileMenu.openFile'
-}
-export {
-  FileMenuCommands
-}
+import { FileMenuCommands } from '../command/commands'
 
 export default class FileMenu {
 
@@ -26,11 +20,12 @@ export default class FileMenu {
     const $el = $(`
       <div class='btn-group'>
         <button type='button' class='fn-file-menu btn btn-default dropdown-toggle' data-toggle='dropdown'>
-          文件(F)
+          文件&nbsp;(ALT+F)
         </button>
         <ul class='dropdown-menu' role='menu'>
           <li><a class='fn-new-file' href='javascript:void(0)'>新建文件</a></li>
           <li><a class='fn-open-file' href='javascript:void(0)'>打开文件</a></li>
+          <li><a class='fn-import-file' href='javascript:void(0)'>导入文件</a></li>
         </ul>
       </div>
     `)
@@ -61,6 +56,9 @@ export default class FileMenu {
   }
   newFile() {
     console.log('newFile')
+  }
+  importFile() {
+
   }
   openFile() {
     const currentDataService = this.services.currentDataService
@@ -209,6 +207,9 @@ export default class FileMenu {
     })
     $el.find('.fn-open-file').on('click', () => {
       commandService.runCommand(FileMenuCommands.openFile)
+    })
+    $el.find('.fn-import-file').on('click', () => {
+      commandService.runCommand(FileMenuCommands.importFile)
     })
   }
   destroy() {

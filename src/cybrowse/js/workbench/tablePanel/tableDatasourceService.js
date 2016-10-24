@@ -3,12 +3,16 @@ import { dispose } from '../../base/lifecycle/lifecycle'
 import Emitter from '../../base/emitter/emitter'
 import cytoscapeEvents from '../constants/cytoscapeEvents'
 
+/**table 显示数据的方式 */
 const DatasourceStrategy = {
+  /**默认显示全部数据，viewPanel中有选择节点的时候，现实选择的节点信息 */
   auto: 'auto',
+  /**总是显示全部数据*/
   all: 'all',
+  /**总是只显示选择的数据 */
   select: 'select'
 }
-
+/**table数据源 */
 export default class TableDataSourceService {
   constructor() {
     this._toDispose = []

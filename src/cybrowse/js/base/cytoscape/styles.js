@@ -5,21 +5,37 @@ export const NodeStyleName = {
 export const EdgeStyleName = {
 
 }
-
-class StyleDetail {
+/**样式信息模型 */
+export class StyleDetail {
   constructor(style) {
     this._style = style
+    /**默认节点样式 */
     this._nodeDefaultValue = []
+    /**默认边样式 */
     this._edgeDefaultValue = []
+    /**直接属性值传值的节点样式 */
     this._nodePassthroughMapping = []
+    /**直接属性值传值的边样式 */
     this._edgePassthroughMapping = []
+    /**匹配属性值传值的节点样式 */
     this._nodeDiscreteMapping = []
+    /**匹配属性值传值的边样式 */
     this._edgeDiscreteMapping = []
+    /**直接设置的节点样式 */
     this._nodeBypass = []
+    /**直接设置的边样式 */
     this._edgeBypass = []
+    /** 自带样式，节点被选择后的样式*/
     this._nodeSelected = []
+    /** 自带样式，边被选择后的样式*/
     this._edgeSelected = []
-    style.style.forEach((item) => {
+
+    this.resolve()
+    this.setDefaultValue()
+  }
+  /**解析传入的样式文件 */
+  resolve() {
+    this._style.style.forEach((item) => {
       if (item.selector === 'node') {
         if (this._nodeDefaultValue.length == 0) {
           this._nodeDefaultValue.push(item)
@@ -50,6 +66,8 @@ class StyleDetail {
         this._edgeSelected = [item]
       }
     })
+  }
+  setDefaultValue() {
     if (this._nodeDefaultValue.length === 0) {
       this._nodeDefaultValue.push({
         selector: 'node',
@@ -87,6 +105,7 @@ class StyleDetail {
       })
     }
   }
+  /**构造样式文件 */
   build() {
     this._style.style = [
       ...this._nodeDefaultValue,
@@ -135,7 +154,7 @@ export class NodeStyleModel {
       styleDetail._nodeBypass.push(bypassStyle)
     }
     styleDetail.build()
-    return bypassStyle.style[this._styleName]||null
+    return bypassStyle.style[this._styleName] || null
   }
   setBypass(id, value) {
     let styleDetail = new StyleDetail(this._currentStyleService.getStyle())

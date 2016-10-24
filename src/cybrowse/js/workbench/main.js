@@ -10,11 +10,13 @@ import StorageService from './storage/storageService'
 
 export default function start() {
 
+
   let instantiationService = new InstantiationService()
   let commandService = new CommandService()
   let keybindingService = KeybindingService.instance()
   let storageService = StorageService.instance()
   let nls = new NLService()
+  /**析构函数 */
   let disposeService = () => {
     Lifecycle.dispose([commandService, keybindingService, storageService, nls])
   }
