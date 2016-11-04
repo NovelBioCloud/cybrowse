@@ -5,6 +5,9 @@ import LayoutMenu from './layoutMenu'
 import SaveMenu from './saveMenu'
 import StyleMenu from './styleMenu'
 
+/**
+ * 菜单类
+ */
 export default class Menubar {
 
   constructor() { }

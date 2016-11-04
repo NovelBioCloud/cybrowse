@@ -2,6 +2,10 @@
 import WindowService from '../window/windowService'
 import $ from 'jquery'
 
+/** 
+ * 项目实例
+ * 该类暂时没有特别的功能
+ */
 export default class Instantiation {
 
 

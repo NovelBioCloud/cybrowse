@@ -8,6 +8,9 @@ import KeybindingService from './keybinding/keybindingService'
 import NLService from './nl/nlService'
 import StorageService from './storage/storageService'
 
+/**
+ * 启动方法
+ */
 export default function start() {
 
 
@@ -16,7 +19,8 @@ export default function start() {
   let keybindingService = KeybindingService.instance()
   let storageService = StorageService.instance()
   let nls = new NLService()
-  /**析构函数 */
+  
+  /** 析构函数，销毁服务 */
   let disposeService = () => {
     Lifecycle.dispose([commandService, keybindingService, storageService, nls])
   }

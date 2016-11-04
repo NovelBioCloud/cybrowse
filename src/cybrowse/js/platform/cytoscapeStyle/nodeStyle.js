@@ -1,6 +1,9 @@
 import $ from 'jquery'
 import NodeBackground from './node/background/background'
 import NodeStyleLayout from './node/nodeStyleLayout'
+/**
+ * 节点样式管理类
+ */
 export default class NodeStyle {
   constructor() {
 

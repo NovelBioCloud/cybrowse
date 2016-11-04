@@ -4,12 +4,15 @@ import EventEmitter from 'events'
 import BaseModel from '../../base/model/baseModel'
 
 
-
+/**基础样式管理类 */
 export class BaseStyleModel extends BaseModel {
   constructor() {
     super()
   }
 }
+/**
+ * BaseStyle的视图类
+ */
 class BaseStyleView extends EventEmitter {
   constructor() {
     super()
@@ -80,6 +83,9 @@ class BaseStyleView extends EventEmitter {
     this.$el && this.$el.remove()
   }
 }
+/**
+ * BaseStyle，修改基本样式
+ */
 export default class BaseStyle extends EventEmitter {
   constructor() {
     super()

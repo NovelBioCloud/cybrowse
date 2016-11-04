@@ -2,7 +2,9 @@ import $ from 'jquery'
 import _ from 'lodash'
 import EventMitter from 'events'
 
-
+/**
+ * tab面板视图模型
+ */
 export class TabPanelModel extends EventMitter {
   constructor() {
     super()
@@ -56,6 +58,9 @@ export class TabPanelModel extends EventMitter {
     }
   }
 }
+/**
+ * tab 视图类
+ */
 export class TabPanelView extends EventMitter {
 
   constructor() {
@@ -157,6 +162,9 @@ export class TabPanelView extends EventMitter {
     this.$el && this.$el.remove()
   }
 }
+/**
+ * tab 面板
+ */
 export default class TabPanel {
 
   init(props, context, options) {

@@ -3,7 +3,9 @@ import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
 import FileSelector from '../../base/fileSelector/fileSelector'
 import { LayoutMenuCommands } from '../command/commands'
-
+/**
+ * 布局按钮类
+ */
 export default class LayoutMenu {
 
   init(props, context) {

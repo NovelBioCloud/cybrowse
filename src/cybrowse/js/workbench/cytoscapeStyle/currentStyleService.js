@@ -1,5 +1,7 @@
 import { dispose } from '../../base/lifecycle/lifecycle'
 import Emitter from '../../base/emitter/emitter'
+
+/**当前样式服务 */
 export default class CurrentStyleService {
   init(props, context) {
     this.props = props
@@ -22,7 +24,7 @@ export default class CurrentStyleService {
     this._style = this.baseStyleService.getStyle()
     this._onChange.emit()
   }
-  update(){
+  update() {
     this._onChange.emit()
   }
   getStyle() {

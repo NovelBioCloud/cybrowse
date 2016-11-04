@@ -1,16 +1,47 @@
 import $ from 'jquery'
 
-/**全局的文件选择对象 */
-let $fileSelector
-/**文件选择类 */
+/**
+ * 文件选择服务
+ */
+class FileSelectorService {
+  constructor() {
+    this._instance
+  }
+  set instance(value) {
+    this.dispose()
+    this._instance = value
+  }
+  dispose() {
+    if (this._instance) {
+      this._instance.dispose()
+    }
+  }
+  show(options) {
+    new FileSelector(options)
+  }
+}
+const fileSelectorService = new FileSelectorService()
+/**
+ * 文件选择类 
+ */
 export default class FileSelector {
+  /**
+   * 构造方法
+   * 
+   * @param {
+   *  accept,
+   *  multiple,
+   *  onChange
+   * }
+   */
   constructor({
     accept,
     multiple,
     onChange
   }) {
-    $fileSelector && $fileSelector.remove()
-    $fileSelector = $(`<div style='width:0px;height:0px;overflow:hidden'/>`).appendTo(document.body)
+    this._registerInstance()
+    const $fileSelector = $(`<div style='width:0px;height:0px;overflow:hidden'/>`).appendTo(document.body)
+    this.$fileSelector = $fileSelector
     const $input = $(`<input type='file'/>`).appendTo($fileSelector)
     accept && $input.attr({
       accept: accept
@@ -21,13 +52,25 @@ export default class FileSelector {
     $input.change(
       function (e) {
         onChange && onChange(e.target.files)
-        $(this).remove()
+        this._unregisterInstance()
       })
     setTimeout(() => {
       $input.click()
     }, 100)
   }
+  dispose() {
+    this.$fileSelector.remove()
+  }
+  _registerInstance() {
+    fileSelectorService.instance = this
+  }
+  _unregisterInstance() {
+    fileSelectorService.instance = null
+  }
 }
+/**
+ * 文件选择类工具方法 
+ */
 FileSelector.show = (options) => {
-  new FileSelector(options)
+  fileSelectorService.show(options)
 }

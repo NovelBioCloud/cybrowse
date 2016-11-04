@@ -4,8 +4,7 @@ import TabPanel from '../../platform/tabPanel/tabPanel'
 
 const TableTabPanelServicePanel = {
   node: 'node',
-  edge: 'edge',
-  other: 'other'
+  edge: 'edge'
 }
 /**table 的布局服务 */
 export default class TableTabPanelService {
@@ -26,16 +25,16 @@ export default class TableTabPanelService {
         })
       }
     }, {
-      id: 'table-tab-edge',
-      name: 'edge',
-      callback: (container) => {
-        this._panels.set(TableTabPanelServicePanel.edge, container)
-        $(container).css({
-          'height': '150px',
-          'overflow': 'auto'
-        })
-      }
-    }]
+        id: 'table-tab-edge',
+        name: 'edge',
+        callback: (container) => {
+          this._panels.set(TableTabPanelServicePanel.edge, container)
+          $(container).css({
+            'height': '150px',
+            'overflow': 'auto'
+          })
+        }
+      }]
     this.tabPanel.init({
       entries: panelEntries,
       container: props.container,

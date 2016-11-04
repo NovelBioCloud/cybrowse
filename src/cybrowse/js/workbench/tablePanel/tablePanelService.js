@@ -2,6 +2,8 @@ import { dispose } from '../../base/lifecycle/lifecycle'
 import TableNodePanel from './tableNodePanel'
 import TableEdgePanel from './tableEdgePanel'
 import TableTabPanelService from './tableTabPanelService'
+
+/** table面板服务 */
 export default class TablePanelService {
 
   init(props, context) {

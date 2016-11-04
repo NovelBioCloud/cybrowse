@@ -1,7 +1,11 @@
 import _ from 'lodash'
 
-/**析构对象的工具方法 */
-function dispose(disposable) {
+/**
+ * 销毁对象的工具方法 
+ * 
+ * @param disposable 一个有dispose方法的对象
+ */
+export function dispose(disposable) {
   if (_.isArray(disposable)) {
     disposable.forEach((item) => {
       dispose(item)
@@ -10,6 +14,3 @@ function dispose(disposable) {
     disposable && disposable.dispose && disposable.dispose()
   }
 }
-export default {
-  dispose
-} 

@@ -45,6 +45,9 @@ export default class TableDataSourceService {
     this._toDispose.push(this.currentDataService.onChange(() => {
       this.updateData()
     }))
+    this._toDispose.push(this.currentDataService.onUpdateProperty(() => {
+      this.updateData()
+    }))
     this.viewPanelService = context.services.viewPanelService
 
     _.each(['tapend'], (eventName) => {

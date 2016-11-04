@@ -3,16 +3,14 @@ import _ from 'lodash'
 import EventEmitter from 'events'
 import Color from 'color'
 import { NodeStyleName, EdgeStyleName, NodeStyleModel, EdgeStyleModel } from '../../../../base/cytoscape/styles'
-
 /**
- * 默认值修改
+ * 默认值修改类
  */
 export default class DefaultValue {
   init(props, context) {
     this.props = props
     this.context = context
     this.render()
-
   }
   render() {
     this.update()
@@ -44,9 +42,6 @@ export default class DefaultValue {
   }
 }
 
-/**
- * 颜色选择组件
- */
 class ColorComponent {
   init({
     container,

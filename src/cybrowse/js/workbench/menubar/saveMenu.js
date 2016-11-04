@@ -5,6 +5,9 @@ import KeybindingService from '../keybinding/keybindingService'
 import FileSelector from '../../base/fileSelector/fileSelector'
 import { SaveMenuCommand } from '../command/commands'
 
+/**
+ * 保存图片、样式相关的按钮
+ */
 export default class SaveMenu {
 
   init(props, context) {
@@ -29,7 +32,7 @@ export default class SaveMenu {
           <li><a class='fn-save-network' href='javascript:void(0)'>保存网络</a></li>
           <li><a class='fn-save-network-view' href='javascript:void(0)'>保存网络和视图</a></li>
           <li><a class='fn-save-style' href='javascript:void(0)'>保存样式</a></li>
-          <li><a class='fn-save-cvs' href='javascript:void(0)'>保存为CVS</a></li>
+          <li><a class='fn-save-csv' href='javascript:void(0)'>保存为CSV</a></li>
         </ul>
       </div>
     `)
@@ -70,8 +73,8 @@ export default class SaveMenu {
     $el.find('.fn-save-style').on('click', () => {
       commandService.runCommand(SaveMenuCommand.saveStyle)
     })
-    $el.find('.fn-save-cvs').on('click', () => {
-      commandService.runCommand(SaveMenuCommand.saveCvs)
+    $el.find('.fn-save-csv').on('click', () => {
+      commandService.runCommand(SaveMenuCommand.saveCsv)
     })
   }
   destroy() {

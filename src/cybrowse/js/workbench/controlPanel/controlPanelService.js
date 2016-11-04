@@ -8,6 +8,9 @@ import CurrentStyleService from '../cytoscapeStyle/currentStyleService'
 import NodeStyleService from '../cytoscapeStyle/nodeStyleService'
 import EdgeStyleService from '../cytoscapeStyle/edgeStyleService'
 
+/**
+ * 编辑框服务
+ */
 export default class ControlPanelService {
   constructor() {
     this._toDispose = []

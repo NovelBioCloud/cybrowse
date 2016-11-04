@@ -11,7 +11,9 @@ import Command from './command/command'
 import CommandService from './command/commandService'
 import ContextViewService from './contextView/contextViewService'
 
-
+/**
+ * 工作台，该项目的核心类
+ */
 export default class Workbench extends EventEmitter {
 
   constructor() {

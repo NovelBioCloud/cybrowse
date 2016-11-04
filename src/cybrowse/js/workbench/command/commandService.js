@@ -1,4 +1,6 @@
-/**命令服务 */
+/**
+ * 命令服务
+ */
 export default class CommandService {
   constructor() {
     this._command = new Map()

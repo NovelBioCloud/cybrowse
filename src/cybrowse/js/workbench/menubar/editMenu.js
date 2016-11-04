@@ -4,6 +4,7 @@ import KeybindingService from '../keybinding/keybindingService'
 import FileSelector from '../../base/fileSelector/fileSelector'
 import { EditMenuCommands } from '../command/commands'
 
+/**编辑按钮 */
 export default class EditMenu {
 
   init(props, context) {

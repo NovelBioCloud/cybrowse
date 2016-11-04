@@ -1,4 +1,6 @@
-/**命令model类 */
+/**
+ * 命令model类
+ */
 export default class Command {
   constructor(props) {
     this.args = props.args

@@ -2,21 +2,32 @@ import $ from 'jquery'
 import _ from 'lodash'
 import EventEmitter from 'events'
 import Color from 'color'
-import { NodeStyleName, EdgeStyleName, NodeStyleModel, EdgeStyleModel } from '../../../../base/cytoscape/styles'
+import { EdgeStyleName, EdgeStyleModel } from '../../../../base/cytoscape/styles'
 import DataModel from '../../../../base/cytoscape/datas'
 
 /**
  * 匹配传值
  */
 export default class Mapping {
+  /**
+   * 构造方法
+   */
   constructor() {
     this.flag = false
   }
+  /**
+   * 手动初始化方法
+   * @param props 常规参数
+   * @param context 上下文环境
+   */
   init(props, context) {
     this.props = props
     this.context = context
     this.render()
   }
+  /**
+   * 渲染视图
+   */
   render() {
     const {
       props,
@@ -50,15 +61,20 @@ export default class Mapping {
       styleModel
     }, this.context)
   }
+  /**
+   * 更新视图
+   */
   update() {
     this.mappingViewModel.update()
   }
 }
-
 /**
- * id匹配视图模型
+ * Mapping 的 ViewModel 对象
  */
 class MappingViewModel extends EventEmitter {
+  /**
+   * 构造方法
+   */
   constructor() {
     super()
     this._showContentInfo = false
@@ -69,6 +85,11 @@ class MappingViewModel extends EventEmitter {
     this._modelProvider = null
     this._briefInfo = null
   }
+  /**
+   * 手动初始化方法
+   * @param props 常规参数
+   * @param context 上下文环境
+   */
   init(props, context) {
     this.props = props
     this.context = context
@@ -78,13 +99,16 @@ class MappingViewModel extends EventEmitter {
     this._briefInfo.setViewModel(this)
     this._contentInfo.setViewModel(this)
   }
-
+  /**
+   * 设置内容
+   */
   set showContentInfo(value) {
     if (this._showContentInfo !== value) {
       this._showContentInfo = value
       this._contentInfo.updateDisplay()
     }
   }
+  
   get showContentInfo() {
     return this._showContentInfo
   }
@@ -107,9 +131,6 @@ class MappingViewModel extends EventEmitter {
     this._briefInfo.update()
   }
 }
-/**
- * 匹配信息图表
- */
 class BriefInfo {
   init(props, context) {
     this.props = props
@@ -140,9 +161,6 @@ class BriefInfo {
     })
   }
 }
-/**
- * 匹配信息内容详细
- */
 class ContentInfo {
   init(props, context) {
     this.props = props
@@ -202,7 +220,7 @@ class ContentInfo {
   }
 }
 /**
- * 内容详细视图模型
+ * 间接传值方式视图模型
  */
 class ContentInfoViewModel {
   constructor() {
@@ -222,7 +240,7 @@ class ContentInfoViewModel {
     this._attrInfo = props.attrInfo
     this._mappingViewModel = props.mappingViewModel
     const currentDataService = this.services.currentDataService
-    this.nodeDataModel = new DataModel(currentDataService).newNodeDataModel()
+    this.edgeDataModel = new DataModel(currentDataService).newEdgeDataModel()
     this._initProperties()
     this._attrInfo.setViewModel(this)
     this._attrName.setViewModel(this)
@@ -238,7 +256,7 @@ class ContentInfoViewModel {
     this._mappingViewModel.updateBriefInfoType()
   }
   get attrNames() {
-    return this.nodeDataModel.getAttrNames()
+    return this.edgeDataModel.getAttrNames()
   }
   get selectedAttrName() {
     return this._selectedAttrName
@@ -289,7 +307,7 @@ class ContentInfoViewModel {
   }
   getAttrValues() {
     if (this._selectedAttrName) {
-      return this.nodeDataModel.getAttrValues(this._selectedAttrName)
+      return this.edgeDataModel.getAttrValues(this._selectedAttrName)
     } else {
       return []
     }
@@ -315,7 +333,7 @@ class ContentInfoViewModel {
 }
 
 /**
- * 匹配类型
+ * 间接传值类型选择
  */
 class MappingType extends EventEmitter {
   constructor() {
@@ -359,8 +377,9 @@ class MappingType extends EventEmitter {
     })
   }
 }
+
 /**
- * 属性名
+ * 属性名修改
  */
 class AttrName extends EventEmitter {
   constructor() {
@@ -405,7 +424,7 @@ class AttrName extends EventEmitter {
 }
 
 /**
- * 属性值
+ * 属性内容
  */
 class AttrInfo extends EventEmitter {
   constructor() {
@@ -456,7 +475,7 @@ class AttrInfo extends EventEmitter {
   }
 }
 /**
- * 属性元素视图模型
+ * 属性修改元素视图模型
  */
 class AttrItemViewModel {
   constructor() {
@@ -498,8 +517,9 @@ class AttrItemViewModel {
     this._contentInfoViewModel.updateBriefInfoType()
   }
 }
+
 /**
- * 属性元素
+ * 属性修改元素
  */
 class AttrItem extends EventEmitter {
   constructor() {
@@ -540,6 +560,7 @@ class AttrItem extends EventEmitter {
     })
   }
 }
+
 /**
  * 颜色选择组件
  */

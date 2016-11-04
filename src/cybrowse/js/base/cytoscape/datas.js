@@ -1,24 +1,47 @@
 import _ from 'lodash'
-/**数据模型类 */
+/**
+ * 数据模型类，项目中通过该类来获取节点和连线的数据信息
+ */
 export default class DataModel {
+
+  /**
+   * 构造函数
+   * @param currentDataService 当前数据样式服务
+   */
   constructor(currentDataService) {
     this._currentDataService = currentDataService
   }
-  /**创建节点模型 */
+  /**
+   * 创建节点模型
+   * @return 节点数据模型
+   */
   newNodeDataModel() {
     return new NodeDataModel(this._currentDataService)
   }
-  /**创建连线模型 */
+  /**
+   * 创建连线模型
+   * @return 样式数据模型
+   */
   newEdgeDataModel() {
     return new EdgeDataModel(this._currentDataService)
   }
 }
-/**节点和边的数据模型基类 */
+/**
+ * 节点和边的数据模型基类，只是为了子类继承使用
+ * @see NodeDataModel EdgeDataModel
+ */
 class BaseModel {
+  /**
+   * 构造函数
+   * @param currentDataService 当前数据样式服务
+   */
   constructor(currentDataService) {
     this._currentDataService = currentDataService
   }
-  /**获取属性名 */
+  /**
+   * 获取属性名 
+   * @return 属性名
+   */
   getAttrNames() {
     const datas = this.getData()
     const attrNames = _.uniq(_.concat(..._.map(datas, (data) => {
@@ -26,7 +49,10 @@ class BaseModel {
     })))
     return attrNames
   }
-  /**获取属性值 */
+  /**
+   * 获取属性值 
+   * @return 属性值
+   */
   getAttrValues(attrName) {
     const datas = this.getData()
     const attrValues = _.uniq(_.map(datas, (data) => {
@@ -36,22 +62,42 @@ class BaseModel {
     return attrValues
   }
 }
-/**节点数据模型类 */
+/**
+ * 节点数据模型类，获取节点数据
+ * @see lineColor.js background.js
+ */
 class NodeDataModel extends BaseModel {
+  /**
+   * 构造函数
+   * @param currentDataService 当前数据样式服务
+   */
   constructor(currentDataService) {
     super(currentDataService)
   }
-  /**获取节点数据 */
+  /**
+   * 获取节点数据
+   * @return 获取当前节点数据
+   */
   getData() {
     return this._currentDataService.getNodeData()
   }
 }
-/**边的数据模型类 */
+/**
+ * 边的数据模型类，获取连线数据
+ * @see lineColor.js background.js
+ */
 class EdgeDataModel extends BaseModel {
+   /**
+   * 构造函数
+   * @param currentDataService 当前数据样式服务
+   */
   constructor(currentDataService) {
     super(currentDataService)
   }
-  /**获取边数据 */
+  /**
+   * 获取节点数据
+   * @return 获取当前连线数据
+   */
   getData() {
     return this._currentDataService.getEdgeData()
   }

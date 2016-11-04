@@ -1,7 +1,9 @@
 import EventEmitter from 'events'
 import Emitter from '../../base/emitter/emitter'
 import _ from 'lodash'
-
+/**
+ * 布局服务 
+ */
 export default class CurrentLayoutService {
   constructor() {
     this._onChange = new Emitter()

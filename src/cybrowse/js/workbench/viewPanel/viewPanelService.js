@@ -10,7 +10,9 @@ import { SaveMenuCommand, ViewPanelCommand } from '../command/commands'
 import cytoscapeEvents from '../constants/cytoscapeEvents'
 import ViewPanel from './viewPanel'
 
-/**视图服务 */
+/**
+ * cytoscape 视图服务 
+ */
 export default class ViewPanelService extends EventMitter {
   constructor() {
     super()
@@ -45,10 +47,10 @@ export default class ViewPanelService extends EventMitter {
   }
 
   remove() {
-    if (this.ViewPanel) {
+    if (this.viewPanel) {
       dispose(this._toDispose)
-      this.ViewPanel.dispose()
-      this.ViewPanel == null
+      this.viewPanel.dispose()
+      this.viewPanel == null
     }
   }
   dispose() {
@@ -56,9 +58,7 @@ export default class ViewPanelService extends EventMitter {
   }
   getViewPanelContainer() {
     if (!this.viewPanelContainer) {
-      this.viewPanelContainer = $('<div/>', {
-        class: 'cy-info-editor-service--cy-info-editor-container'
-      }).appendTo($(this.props.container)).get(0)
+      this.viewPanelContainer = $('<div/>').appendTo($(this.props.container)).get(0)
     }
     return this.viewPanelContainer
   }
@@ -95,5 +95,8 @@ export default class ViewPanelService extends EventMitter {
   updateLayout() {
     const currentLayoutService = this.context.services.currentLayoutService
     this.viewPanel.setLayout(currentLayoutService.getLayout())
+  }
+  updateProperty(datas, idName) {
+    this.viewPanel.updateProperty(datas, idName)
   }
 }

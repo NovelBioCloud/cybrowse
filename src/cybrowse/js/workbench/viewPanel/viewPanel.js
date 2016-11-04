@@ -1,5 +1,6 @@
 
 import $ from 'jquery'
+import _ from 'lodash'
 import { saveAs } from 'file-saver'
 import EventMitter from 'events'
 import Cytoscape from './cytoscape'
@@ -150,6 +151,20 @@ export default class ViewPanel extends EventMitter {
 
   setLayout(layout) {
     this.cy.layout(layout)
+  }
+  updateProperty(datas, idName) {
+    const elements = this.cy.elements('node')
+    _.each(elements, (element) => {
+      const data = _.find(datas, (data) => {
+        return element.data('name') === data.data[idName]
+      })
+      if (data && data.data) {
+        const keys = _.pull(_.keys(data.data), idName)
+        _.each(keys, key => {
+          element.data(key, data.data[key])
+        })
+      }
+    })
   }
   dispose() {
   }

@@ -1,5 +1,7 @@
 import $ from 'jquery'
 import _ from 'lodash'
+
+/** table 连线数据面板 */
 export default class TableEdgePanel {
 
   constructor() {

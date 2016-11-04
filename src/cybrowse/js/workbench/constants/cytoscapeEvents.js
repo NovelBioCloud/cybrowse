@@ -1,4 +1,8 @@
-let cytoscapeEvents = {
+
+/**
+ * cytoscape 的事件
+ */
+const cytoscapeEvents = {
   tapstart: 'tapstart',
   tapdrag: 'tapdrag',
   tapdragover: 'tapdragover',

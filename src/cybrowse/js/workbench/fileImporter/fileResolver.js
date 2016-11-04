@@ -4,11 +4,8 @@ import { Readable, Writable } from 'stream'
 import csv from 'csv'
 import Readline from 'readline'
 import through2 from 'through2'
-
+/** 文件解析类 */
 export default class FileResolver {
-  constructor() {
-
-  }
   init(props, context) {
     const fileModel = props.fileModel
     const file = fileModel.file
@@ -20,7 +17,7 @@ export default class FileResolver {
     }
   }
 }
-
+/** txt文件解析类 */
 class PlainFileResolver {
   constructor() {
   }
@@ -45,6 +42,7 @@ class PlainFileResolver {
   }
 
 }
+/**数据解析类 */
 class ContentResolver {
   init(props, context) {
     this.props = props
@@ -99,7 +97,7 @@ class ContentResolver {
           id: value,
           name: key
         },
-        position:{
+        position: {
           x: 0,
           y: 0
         }
@@ -131,6 +129,7 @@ function paraseBody(lines, sourceSeq, targetSeq, relationSeq) {
     return data[0] && data[1]
   })
 }
+/** excel文件解析类 */
 class XlsFileResolver {
   constructor() {
   }

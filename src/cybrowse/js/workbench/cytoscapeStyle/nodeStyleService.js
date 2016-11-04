@@ -2,7 +2,7 @@ import $ from 'jquery'
 import NodeStyle from '../../platform/cytoscapeStyle/nodeStyle'
 import { dispose } from '../../base/lifecycle/lifecycle'
 import Emitter from '../../base/emitter/emitter'
-
+/**节点样式服务 */
 export default class NodeStyleService {
   constructor() {
     this._toDispose = []

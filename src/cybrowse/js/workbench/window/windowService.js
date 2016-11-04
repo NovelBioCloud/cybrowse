@@ -21,6 +21,9 @@ import _ from 'lodash'
 import { dispose } from '../../base/lifecycle/lifecycle'
 import cytoscapeEvents from '../constants/cytoscapeEvents'
 
+/**
+ * 实际业务运行服务
+ */
 export default class WindowService extends EventEmitter {
   constructor(container) {
     super()

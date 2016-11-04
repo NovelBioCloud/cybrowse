@@ -2,19 +2,15 @@ import $ from 'jquery'
 import _ from 'lodash'
 import Color from 'color'
 import lifecycle from '../../../../base/lifecycle/lifecycle'
-let bypassInstance
+
 /**
- * id直接传值
+ * id传值类
  */
 export default class Bypass {
   constructor() {
     this._toDispose = []
   }
   init(props, context) {
-    if (bypassInstance) {
-      bypassInstance.dispose()
-    }
-    bypassInstance = this
     this.props = props
     this.context = context
     this._styleModel = props.styleModel
@@ -36,7 +32,7 @@ export default class Bypass {
     const eventName = 'tap'
     const listener = (event) => {
       try {
-        if (event.cyTarget && event.cyTarget[0] && event.cyTarget[0].isNode && event.cyTarget[0].isNode()) {
+        if (event.cyTarget && event.cyTarget[0] && event.cyTarget[0].isEdge && event.cyTarget[0].isEdge()) {
           const id = event.cyTarget[0].data('id')
           bypassViewModel.id = id
         } else {
@@ -61,9 +57,6 @@ export default class Bypass {
     this._toDispose = []
   }
 }
-/**
- * id直接传值视图模型类
- */
 class BypassViewModel {
   constructor() {
     this._bypassView = null
@@ -115,9 +108,6 @@ class BypassViewModel {
     this._bypassView.update()
   }
 }
-/**
- * id直接传值视图
- */
 class BypassView {
   constructor() {
     this._bypassViewModel
@@ -150,9 +140,6 @@ class BypassView {
 
   }
 }
-/**
- * 颜色选择组件
- */
 class ColorComponent {
   init({
     container,

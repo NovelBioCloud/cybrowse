@@ -4,6 +4,7 @@ import KeybindingService from '../keybinding/keybindingService'
 import FileSelector from '../../base/fileSelector/fileSelector'
 import { FileMenuCommands } from '../command/commands'
 
+/** 文件按钮 */
 export default class FileMenu {
 
   init(props, context) {
@@ -25,7 +26,8 @@ export default class FileMenu {
         <ul class='dropdown-menu' role='menu'>
           <li><a class='fn-new-file' href='javascript:void(0)'>新建文件</a></li>
           <li><a class='fn-open-file' href='javascript:void(0)'>打开文件</a></li>
-          <li><a class='fn-import-file' href='javascript:void(0)'>导入文件</a></li>
+          <li><a class='fn-import-file' href='javascript:void(0)'>导入网络文件</a></li>
+          <li><a class='fn-import-property' href='javascript:void(0)'>导入属性文件</a></li>
         </ul>
       </div>
     `)
@@ -210,6 +212,9 @@ export default class FileMenu {
     })
     $el.find('.fn-import-file').on('click', () => {
       commandService.runCommand(FileMenuCommands.importFile)
+    })
+    $el.find('.fn-import-property').on('click', () => {
+      commandService.runCommand(FileMenuCommands.importProperty)
     })
   }
   destroy() {

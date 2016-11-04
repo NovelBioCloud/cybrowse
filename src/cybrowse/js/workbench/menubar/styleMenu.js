@@ -3,6 +3,9 @@ import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
 import {StyleMenuCommands} from '../command/commands'
 
+/**
+ * 样式修改相关menu
+ */
 export default class StyleMenu {
 
   init(props, context) {
@@ -40,18 +43,27 @@ export default class StyleMenu {
   }
   registerCommand() {
     const commandService = this.services.commandService
+    /**
+     * 创建新的样式
+     */
     commandService.registerCommand(StyleMenuCommands.newStyle, {
       args: null,
       handle: () => {
         this.newStyle()
       }
     })
+    /**
+     * 导入样式
+     */
     commandService.registerCommand(StyleMenuCommands.importStyle, {
       args: null,
       handle: () => {
         this.importStyle()
       }
     })
+    /**
+     * 导出样式
+     */
     commandService.registerCommand(StyleMenuCommands.exportStyle, {
       args: null,
       handle: () => {
@@ -72,6 +84,9 @@ export default class StyleMenu {
     const $el = $(this.el)
     const commandService = this.services.commandService
     const keybindingService = this.services.keybindingService
+    /**
+     * 快捷键注册
+     */
     keybindingService.bind(['alt+t'], function (e) {
       $el.find('.fn-style-menu').trigger('click')
       return false

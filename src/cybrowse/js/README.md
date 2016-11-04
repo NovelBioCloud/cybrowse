@@ -1,11 +1,138 @@
-### 程序设计思路
-#### 思路1
-面向对象的设计思路中，对象是具有不同状态的，不同状态对应不同的方法（api=ispi+iapi），不同的方法会触发不同的事件(event)，每一个事件对应的应该是一个完整的业务功能（iapi/ispi)，而业务功能中的方法(infraService)则可以是非完整的。非完整的功能方法可以抽象为一个内部的基础设施对象(xxxInfraService)，辅助类对象，该对象根据类的状态变化而变化，可以是one2one，也可以是one2many。
-对象创建后是初始状态，对象内部的状态修改通过实例方法修改，对象与对象的交互通过事件触发，事件触发后执行的是一个业务方法，业务方法可以放到infra辅助类中，也可以放到实例中，放到实例中的时候需要注意，实例业务方法承担了俩个功能，外部接口的调用和内部业务方法的支撑。业务方法分俩类，ispi业务方法，iapi实例业务方法，ispi业务方法是主要完成类对象的相互组合，绑定事件展示视图，iapi业务方法是指完成某个功能；iapi和ispi的部分方法会被提取为api方法，为iapi和ispi提供服务的的方法类成为 xxxInfraService 。我们需要关注的是iapi和ispi和最外层类的接口。
-#### 思路2
-按照类的作用划分，可分为内模式类，模式类和外模式类；内模式类，具备计算特性和控制特性，控制特性对外提供接口，模式类具备计算特性和控制特性，计算特性通过对应的内模式类完成，控制特性通过内部实现控制，外模式类具备计算特性和控制特性，通过对应的模式类完成。
-#### 思路3
-对思路1和思路2进行整理，外模式类具备api，模式类具备spi和iapi，event（模式类可以分层，分别实现不同的功能），内模式类具备iapi，ispi，iapi和ispi通过infra类实现infra类是对其他依赖的外模式类的简单封装。
-对上面的内容分析，发现外模式只提供api，内模式只提供pure-spi的封装（普通意义的spi），模式类分层，每一层完成自己的功能
-#### 思路4
-外模式类只具备方法/发布事件和回调函数/监听事件,模式类具有不同的状态，模式类1层，切换各种状态，每个状态都匹配不同状态的实现，模式类2层，监听事件和发布事件接口，模式类3层，核心业务功能，组合各种第三方类、内模式类完成，内模式类调用第三方类和完成辅助功能
+## 准备知识
+
+* 语法
+  
+  项目中使用了 ES6 的语法， ES6 语法学习网站 http://es6.ruanyifeng.com/
+
+* 服务
+  
+  项目中经常被使用的单例对象被提取为服务
+
+* 事件
+  
+  程序中使用了事件注册机制，注册的事件需要通过注册方的 dispose 方法进行注销
+
+* 设计模式
+
+  http://www.cnblogs.com/guwei4037/p/5591183.html
+  
+  http://www.cnblogs.com/linzheng/archive/2011/03/12/1981960.html 
+  
+  主要关注 mvvm 模式，项目中多处使用该模式的简化版本，并使用了约定俗称的名称 (View, ViewModel)，详细说明如下：
+  
+  查看 propertyImporter.js 文件，该文件中包括三个类 PropertyImporter, View, ViewModel，PropertyImporter负责构造 View, ViewModel对象，View 对象通过ViewModel渲染视图，通过触发事件，修改ViewModel的数据
+
+* 编码习惯
+
+  类中一般不直接通过构造方法传递参数，一般手动调用 init 方法传递参数，并执行初始化
+  
+  init方法一般有 props 、 context 俩个参数。props 参数是该类使用的参数组成的对象， context 是用作传递全局服务用的对象
+  
+  dispose 方法是析构函数，通常在对象删除的时候，掉用该方法，注销该对象调用的事件
+
+## 业务需求
+
+  * 导入导出 cytoscape 数据、样式，调整 cytoscape 布局
+
+  * 绘制 cytoscape 图
+  
+  * 修改节点和连线的数据
+
+  * 展示被选择的节点连线数据信息
+
+## 程序设计文档
+
+  * 修改 cytoscape 样式，然后显示 cytoscape 的样式。
+    
+    修改 cytoscape 的样式数据通过 NodeStyleModel、 EdgeStyleModel 修改，然后主动出发 ViewPanelService 的 update 方法。
+  * 修改 cytoscape 样式的数据
+    
+    NodeStyleModel、 EdgeStyleModel 中通过 CurrentStyleService 获取数据信息，通过 StyleDetail 类解析数据格式，修改数据
+  * cytoscape 样式的数据格式
+    
+    请查看默认样式的数据，查看文件 BaseStyleService
+  * 术语
+
+    修改节点、连线样式有3大方式，默认传值，匹配传值和直接传值，其中匹配传值又分为间接匹配传值和直接匹配传值。
+    查看 lineColor.js 文件，文件中的 DefaultValue 类是默认传值实现，Mapping 是匹配传值，Bypass 是直接传值。Mapping 中分俩种类型，直接匹配(passthrough)和间接匹配(discrete) 。
+    其他文件中也有类似概念。
+
+### 基础服务
+
+* InstantiationService
+
+  实例服务，该服务的作用是启动一个实例，当前项目中该实例暂时未做任何实际功能，只是简单地初始化对象
+
+* CommandService
+
+  命令服务，注册命令，所有的功能都可以注册为一个命令，任何时候都可以通过命令服务执行一个命令。每一个命令都有特定的id，通过该id执行命令
+
+* KeybindingService
+
+  键盘服务，注册绑定键盘事件。通过该服务可以注册全局的键盘事件，通常可以通过注册键盘事件，触发方法，方法中调用命令
+
+* StorageService
+
+  存储服务，使用 localStorage 存储信息。封装 localStorage
+
+* NLService
+
+  国际化服务。当前项目中没有国际化的功能设置，此处只是预留接口
+
+### 核心服务
+
+* WindowService
+
+  界面服务，提供 document 对象。通过界面服务，渲染页面
+
+* ViewPanelService
+
+  cytoscape 对象包装类。
+
+* ToolbarService
+
+  工具栏服务。所有工具栏的功能通过该服务类接入
+
+* MenubarService
+
+  菜单栏服务。所有菜单栏的功能通过该服务类接入
+
+* TableDatasourceService
+
+  表格数据源服务。表格数据通过 ViewPanelService、CurrentDataService 服务获取，并通知 TablePanelService
+
+* TablePanelService
+
+  表格服务。 TableDatasourceService 数据发生变化以后，重新渲染页面
+
+* CurrentDataService
+
+  当前数据服务类。
+
+* CurrentStyleService
+
+  当前样式服务类。
+
+* CurrentLayoutService
+
+  cytoscape的布局类。
+
+* BaseStyleService
+
+  样式服务类，包括创建、删除、倒入、导出等服务
+
+### 核心类
+
+* StyleDetail
+
+  样式数据包装类，将样式数据分解为低层需要的数据结构
+
+* NodeStyleModel
+
+  节点样式数据操作相关类，所有节点样式的修改，必须通过修改该类的对象修改
+
+* EdgeStyleModel
+
+  连线样式数据操作相关类。所有连线样式的修改，必须通过修改该类的对象修改
+
+
