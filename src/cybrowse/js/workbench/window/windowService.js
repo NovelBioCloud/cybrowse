@@ -11,12 +11,10 @@ import ControlPanelService from '../controlPanel/controlPanelService'
 import TablePanelService from '../tablePanel/tablePanelService'
 import TableDatasourceService from '../tablePanel/tableDatasourceService'
 import MenubarService from '../menubar/menubarService'
-import BaseStyleService from '../cytoscapeStyle/baseStyleService'
-import CurrentDataService from '../cytoscapeData/currentDataService'
-import CurrentStyleService from '../cytoscapeStyle/currentStyleService'
-import NodeStyleService from '../cytoscapeStyle/nodeStyleService'
-import EdgeStyleService from '../cytoscapeStyle/edgeStyleService'
-import CurrentLayoutService from '../cytoscapeLayout/currentLayoutService'
+import CurrentBaseStyleService from '../cytoscapeDataModel/currentBaseStyleService'
+import CurrentDataService from '../cytoscapeDataModel/currentDataService'
+import CurrentStyleService from '../cytoscapeDataModel/currentStyleService'
+import CurrentLayoutService from '../cytoscapeDataModel/currentLayoutService'
 import _ from 'lodash'
 import { dispose } from '../../base/lifecycle/lifecycle'
 import cytoscapeEvents from '../../platform/constants/cytoscapeEvents'
@@ -48,28 +46,28 @@ export default class WindowService extends EventEmitter {
   }
   initServices() {
 
-    const currentDataService = new CurrentDataService()
+    const currentBaseStyleService = new CurrentBaseStyleService()
     const currentStyleService = new CurrentStyleService()
+    const currentDataService = new CurrentDataService()
     const currentLayoutService = new CurrentLayoutService()
     const windowPanel = new WindowPanel()
     const menubarService = new MenubarService()
     const toolbarService = new ToolbarService()
     const viewPanelService = new ViewPanelService()
-    const baseStyleService = new BaseStyleService()
     const controlPanelService = new ControlPanelService()
     const tablePanelService = new TablePanelService()
     const tableDatasourceService = new TableDatasourceService()
     const messageService = MessageService.instance()
     this.windowPanel = windowPanel
     this._toDispose.concat([menubarService, toolbarService,
-      viewPanelService, baseStyleService, controlPanelService, tablePanelService,
+      viewPanelService, currentBaseStyleService, controlPanelService, tablePanelService,
       tableDatasourceService, currentDataService, currentStyleService, currentLayoutService
     ])
     const services = Object.assign({
       currentDataService,
       currentStyleService,
       currentLayoutService,
-      baseStyleService,
+      currentBaseStyleService,
       menubarService,
       toolbarService,
       viewPanelService,
@@ -86,6 +84,14 @@ export default class WindowService extends EventEmitter {
     const container = $('<div/>').appendTo(document.body).get(0)
     windowPanel.init({ container: container }, context)
     windowPanel.ready()
+    currentDataService.init({
+    }, context)
+    currentBaseStyleService.init({
+      container: this.props.container
+    }, context)
+    currentStyleService.init({
+      currentBaseStyleService
+    }, context)
     menubarService.init({
       container: this.getContainer(WindowPanelContainer.menubar)
     }, context)
@@ -102,6 +108,7 @@ export default class WindowService extends EventEmitter {
     tablePanelService.init({
       container: this.getContainer(WindowPanelContainer.tablePanel)
     }, context)
+
     tableDatasourceService.ready()
     tablePanelService.ready()
     viewPanelService.ready()

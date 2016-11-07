@@ -137,10 +137,5 @@ export default class WindowPanel {
         break;
     }
   }
-  get onDidResize() {
-    return this._onDidResize.event
-  }
-  resize() {
-    this._onDidResize.emit()
-  }
+
 }

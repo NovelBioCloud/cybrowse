@@ -89,7 +89,6 @@ class BaseStyleView extends EventEmitter {
 export default class BaseStyle extends EventEmitter {
   constructor() {
     super()
-    this._toDispose = []
   }
   init(props, context) {
     this.model = new BaseStyleModel()
@@ -100,10 +99,7 @@ export default class BaseStyle extends EventEmitter {
       controller: this
     }, context)
     this.view.setModel(this.model)
-    this.registerListener()
-  }
-  registerListener() {
-
+    this.setEntries(props.entries)
   }
   setEntries(entries, index) {
     this.model.setEntries(entries, index)

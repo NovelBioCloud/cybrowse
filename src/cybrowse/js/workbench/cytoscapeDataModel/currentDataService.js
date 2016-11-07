@@ -1,6 +1,6 @@
 import Emitter from '../../base/emitter/emitter'
 import _ from 'lodash'
-
+import CytoscapeData from '../../platform/cytoscapeDataModel/cytoscapeData'
 /** 
  * 数据服务
  */
@@ -8,8 +8,7 @@ export default class CurrentDataService {
   constructor() {
     this._onChange = new Emitter()
     this._onUpdateProperty = new Emitter()
-    this._nodes = []
-    this._edges = []
+    this.cytoscapeData = new CytoscapeData()
   }
   get onChange() {
     return this._onChange.event
@@ -22,37 +21,22 @@ export default class CurrentDataService {
     this.context = context
   }
   getData() {
-    return [...this._nodes, ...this._edges]
+    return this.cytoscapeData.getData()
   }
   setData(elements) {
-    this._nodes = []
-    this._edges = []
-    elements.forEach((item) => {
-      if (item.data.target) {
-        this._edges.push(item)
-      } else {
-        this._nodes.push(item)
-      }
-    })
+    this.cytoscapeData.setData(elements)
     this._onChange.emit()
   }
   updateProperty(datas, idName) {
-    _.each(this._nodes, (node) => {
-      const data = _.find(datas, (data) => {
-        return node.data.name == data[idName]
-      })
-      if (data && data.data) {
-        _.extends(node.data, data.data)
-      }
-    })
+    this.cytoscapeData.updateProperty(datas,idName)
     const viewPanelService = this.context.services.viewPanelService
     viewPanelService.updateProperty(datas, idName)
     this._onUpdateProperty.emit()
   }
   getNodeData() {
-    return this._nodes
+    return this.cytoscapeData.getNodeData()
   }
   getEdgeData() {
-    return this._edges
+    return this.cytoscapeData.getEdgeData()
   }
 }

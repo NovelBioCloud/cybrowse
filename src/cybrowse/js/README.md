@@ -136,3 +136,60 @@
   连线样式数据操作相关类。所有连线样式的修改，必须通过修改该类的对象修改
 
 
+### 架构图
+
+      NLService//国际化服务
+      StorageService//存储
+      CommandService//命令行
+      KeybindingService//键盘
+      **InstantiationService**//实例
+        ConfigService//配置信息服务
+        **Instantiation**//实例
+          **WindowService**//视图对象
+            /**
+            * 布局
+            */
+            WindowPanel
+
+            /**
+            * 数据服务
+            **/
+            CurrentBaseStyleService
+              /**
+              * 包装CytoscapeBaseStyle
+              */
+                调用StyleDetail
+            CurrentStyleService//样式相关的数据服务
+            CurrentDataService//节点相关的数据服务
+            CurrentLayoutService//布局相关的数据服务
+            TableDatasourceService//table相关的数据服务
+            
+            /**
+            * 视图服务(依赖数据服务)
+            **/  
+            MenubarService
+              /**
+              * 工具类 FileImporter、PropertyImporter
+              */
+            ToolbarService//工具栏相关的服务
+            ViewPanelService//cytoscape图像相关的服务
+            TablePanelService//表格服务
+            MessageService//提示信息
+            ControlPanelService//编辑面板服务
+              ControlPanel//编辑面板布局
+              BaseStyleService//基本样式服务
+                BaseStyle//基本样式
+              NodeStyleService//节点样式服务
+                NodeStyle//节点样式
+                  background//背景色彩
+                  。。。
+                  。。。
+                  。。。
+              EdgeStyleService//连线服务
+                EdgeStyle//连线数据
+                  lineColor//连线样式
+                  。。。
+                  。。。
+                  。。。
+          
+

@@ -2,11 +2,9 @@ import $ from 'jquery'
 
 import { dispose } from '../../base/lifecycle/lifecycle'
 import ControlPanel from '../../platform/controlPanel/controlPanel'
-import BaseStyleService from '../cytoscapeStyle/baseStyleService'
-import CurrentDataService from '../cytoscapeData/currentDataService'
-import CurrentStyleService from '../cytoscapeStyle/currentStyleService'
-import NodeStyleService from '../cytoscapeStyle/nodeStyleService'
-import EdgeStyleService from '../cytoscapeStyle/edgeStyleService'
+import BaseStyleService from '../controlPanelPart/baseStyleService'
+import NodeStyleService from '../controlPanelPart/nodeStyleService'
+import EdgeStyleService from '../controlPanelPart/edgeStyleService'
 
 /**
  * 编辑框服务
@@ -18,25 +16,19 @@ export default class ControlPanelService {
   init(props, context) {
     this.props = props
     this.context = context
-    let baseStyleService = context.services.baseStyleService
-    baseStyleService.init({
-      container: this.props.container
-    }, context)
+    let currentBaseStyleService = context.services.currentBaseStyleService
     let currentDataService = context.services.currentDataService
     let currentStyleService = context.services.currentStyleService
+    let baseStyleService = new BaseStyleService()
     let nodeStyleService = new NodeStyleService()
     let edgeStyleService = new EdgeStyleService()
     let controlPanel = new ControlPanel()
-
-    currentDataService.init({
-
-    }, context)
-
     controlPanel.init({
       container: this.props.container,
     }, context)
-    currentStyleService.init({
-      baseStyleService
+    baseStyleService.init({
+      currentBaseStyleService,
+      container: controlPanel.getContainer('baseStyle')
     }, context)
     nodeStyleService.init({
       currentDataService,

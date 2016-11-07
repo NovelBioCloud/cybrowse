@@ -114,3 +114,14 @@ export class DelayEmitter {
     }, this._time)
   }
 }
+
+export function createListenerRegister(emitter, type) {
+  return (callback) => {
+    emitter.on(type, callback)
+    return {
+      dispose: () => {
+        emitter.off(type, callback)
+      }
+    }
+  }
+}

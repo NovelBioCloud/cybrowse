@@ -8,6 +8,7 @@ import TabPanel from '../../platform/tabPanel/tabPanel'
 const ControlPanelContainer = {
   node: 'node',
   edge: 'edge',
+  baseStyle: 'baseStyle',
   other: 'other'
 }
 /**
@@ -21,6 +22,8 @@ export default class ControlPanel {
     this._panels = new Map()
     this.container = props.container
     this.tabPanel = new TabPanel()
+    const $baseStyle = $('<div/>').appendTo($(props.container))
+    this._panels.set(ControlPanelContainer.baseStyle, $baseStyle.get(0))
     const panelEntries = [{
       id: 'tab-node',
       name: 'node',

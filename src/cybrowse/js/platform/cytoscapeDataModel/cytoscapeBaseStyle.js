@@ -1,4 +1,4 @@
-import BaseStyle from '../../platform/cytoscapeStyle/baseStyle'
+
 import Emitter from '../../base/emitter/emitter'
 import { StyleDetail } from '../../base/cytoscape/styles'
 import _ from 'lodash'
@@ -6,35 +6,20 @@ import _ from 'lodash'
 /**
  * 样式服务 
  */
-export default class BaseStyleService {
+export default class CytoscapeBaseStyle {
 
   constructor() {
-    this._onChange = new Emitter()
     this.activeEntryId = 'default'
+    this.initStyleEntries()
   }
 
-  get onChange() {
-    return this._onChange.event
-  }
 
   init(props, context) {
     this.props = props
     this.context = context
-    this.initStyleEntries()
-    const baseStyle = new BaseStyle()
-    baseStyle.init({
-      container: props.container
-    }, {
-        onChange: (value) => {
-          this.changeStyle(value)
-        }
-      })
-    baseStyle.setEntries(this.styleEntries)
-
   }
   changeStyle(styleId) {
     this.activeEntryId = styleId
-    this._onChange.emit(styleId)
   }
   initStyleEntries() {
     this.styleEntries = _.map([
@@ -132,6 +117,9 @@ export default class BaseStyleService {
     }
     new StyleDetail(style).build()
     this.styleEntries.push(style)
+  }
+  getStyleEntries() {
+    return this.styleEntries
   }
   renameStyle(styleName) {
 

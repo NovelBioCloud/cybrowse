@@ -1,9 +1,9 @@
 import $ from 'jquery'
-import EdgeStyle from '../../platform/cytoscapeStyle/edgeStyle'
+import NodeStyle from '../../platform/controlPanelPart/nodeStyle'
 import { dispose } from '../../base/lifecycle/lifecycle'
 import Emitter from '../../base/emitter/emitter'
-/**连线样式服务 */
-export default class EdgeStyleService {
+/**节点样式服务 */
+export default class NodeStyleService {
   constructor() {
     this._toDispose = []
   }
@@ -13,12 +13,12 @@ export default class EdgeStyleService {
     const currentStyleService = props.currentStyleService
     const currentDataService = props.currentDataService
     this.container = props.container
-    const edgeStyle = new EdgeStyle()
-    this.edgeStyle = edgeStyle
-    edgeStyle.init({
+    const nodeStyle = new NodeStyle()
+    this.nodeStyle = nodeStyle
+    nodeStyle.init({
       container: this.container
     }, context)
-    edgeStyle.ready()
+    nodeStyle.ready()
     this._toDispose.push(currentStyleService.onChange(() => {
       this.updateStyle()
     }))
@@ -28,7 +28,7 @@ export default class EdgeStyleService {
   }
 
   updateStyle() {
-    this.edgeStyle.updateStyle()
+    this.nodeStyle.updateStyle()
   }
   dispose() {
     dispose(this._toDispose)
