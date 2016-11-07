@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { dispose } from '../../base/lifecycle/lifecycle'
 import Emitter from '../../base/emitter/emitter'
-import cytoscapeEvents from '../constants/cytoscapeEvents'
+import cytoscapeEvents from '../../platform/constants/cytoscapeEvents'
 
 /**table 显示数据的方式 */
 const DatasourceStrategy = {
@@ -62,13 +62,6 @@ export default class TableDataSourceService {
       })
     })
   }
-  getNodeData() {
-
-  }
-  getEdgeData() {
-
-  }
-
   registerViewPanelListener(eventName, event) {
     setTimeout(() => {
       this.updateData(event.cy)

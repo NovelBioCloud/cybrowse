@@ -1,7 +1,6 @@
 import { dispose } from '../../base/lifecycle/lifecycle'
-import TableNodePanel from './tableNodePanel'
-import TableEdgePanel from './tableEdgePanel'
-import TableTabPanelService from './tableTabPanelService'
+import TablePanel from '../../platform/tablePanel/tablePanel'
+
 
 /** table面板服务 */
 export default class TablePanelService {
@@ -13,23 +12,12 @@ export default class TablePanelService {
     this.services = this.context.services
   }
   ready() {
-    this.initServices()
+    const tablePanel = new TablePanel()
+    this.tablePanel = tablePanel
+    this.tablePanel.init(this.props, this.context)
     this.registerListener()
   }
-  initServices() {
-    const tableTabPanelService = new TableTabPanelService()
-    tableTabPanelService.init({
-      container: this.props.container
-    }, this.context)
-    this.tableNodePanel = new TableNodePanel()
-    this.tableNodePanel.init({
-      container: tableTabPanelService.getContainer('node')
-    }, this.context)
-    this.tableEdgePanel = new TableEdgePanel()
-    this.tableEdgePanel.init({
-      container: tableTabPanelService.getContainer('edge')
-    }, this.context)
-  }
+
 
   registerListener() {
     const tableDatasourceService = this.services.tableDatasourceService
@@ -41,10 +29,10 @@ export default class TablePanelService {
     }))
   }
   setNodeData(nodeDatas) {
-    this.tableNodePanel.update(nodeDatas)
+    this.tablePanel.setNodeData(nodeDatas)
   }
   setEdgeData(edgeDatas) {
-    this.tableEdgePanel.update(edgeDatas)
+    this.tablePanel.setEdgeData(edgeDatas)
   }
   dispose() {
     dispose(this._toDispose)

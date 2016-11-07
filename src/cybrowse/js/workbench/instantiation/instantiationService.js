@@ -3,7 +3,7 @@ import {
 } from 'events'
 import $ from 'jquery'
 
-import Instantiation from './instantiation'
+import Instantiation from '../../platform/instantiation/instantiation'
 
 /**运行实例服务 */
 export default class InstantiationService {

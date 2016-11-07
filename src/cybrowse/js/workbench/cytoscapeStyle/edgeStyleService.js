@@ -12,12 +12,6 @@ export default class EdgeStyleService {
     this.context = context
     const currentStyleService = props.currentStyleService
     const currentDataService = props.currentDataService
-    this._toDispose.push(currentStyleService.onChange(() => {
-      this.updateStyle()
-    }))
-    this._toDispose.push(currentDataService.onChange(() => {
-      this.updateStyle()
-    }))
     this.container = props.container
     const edgeStyle = new EdgeStyle()
     this.edgeStyle = edgeStyle
@@ -25,6 +19,12 @@ export default class EdgeStyleService {
       container: this.container
     }, context)
     edgeStyle.ready()
+    this._toDispose.push(currentStyleService.onChange(() => {
+      this.updateStyle()
+    }))
+    this._toDispose.push(currentDataService.onChange(() => {
+      this.updateStyle()
+    }))
   }
 
   updateStyle() {

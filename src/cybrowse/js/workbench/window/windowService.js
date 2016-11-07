@@ -3,7 +3,7 @@ import {
 } from 'events'
 import Emitter from '../../base/emitter/emitter'
 import $ from 'jquery'
-import WindowLayoutService, { WindowLayoutServiceContainer } from './windowLayoutService'
+import WindowPanel, { WindowPanelContainer } from '../../platform/window/windowPanel'
 import MessageService from '../messageService/messageService'
 import ToolbarService from '../toolbar/toolbarService'
 import ViewPanelService from '../viewPanel/viewPanelService'
@@ -19,7 +19,7 @@ import EdgeStyleService from '../cytoscapeStyle/edgeStyleService'
 import CurrentLayoutService from '../cytoscapeLayout/currentLayoutService'
 import _ from 'lodash'
 import { dispose } from '../../base/lifecycle/lifecycle'
-import cytoscapeEvents from '../constants/cytoscapeEvents'
+import cytoscapeEvents from '../../platform/constants/cytoscapeEvents'
 
 /**
  * 实际业务运行服务
@@ -51,7 +51,7 @@ export default class WindowService extends EventEmitter {
     const currentDataService = new CurrentDataService()
     const currentStyleService = new CurrentStyleService()
     const currentLayoutService = new CurrentLayoutService()
-    const windowLayoutService = new WindowLayoutService()
+    const windowPanel = new WindowPanel()
     const menubarService = new MenubarService()
     const toolbarService = new ToolbarService()
     const viewPanelService = new ViewPanelService()
@@ -60,7 +60,8 @@ export default class WindowService extends EventEmitter {
     const tablePanelService = new TablePanelService()
     const tableDatasourceService = new TableDatasourceService()
     const messageService = MessageService.instance()
-    this._toDispose.concat([windowLayoutService, menubarService, toolbarService,
+    this.windowPanel = windowPanel
+    this._toDispose.concat([menubarService, toolbarService,
       viewPanelService, baseStyleService, controlPanelService, tablePanelService,
       tableDatasourceService, currentDataService, currentStyleService, currentLayoutService
     ])
@@ -69,7 +70,6 @@ export default class WindowService extends EventEmitter {
       currentStyleService,
       currentLayoutService,
       baseStyleService,
-      windowLayoutService,
       menubarService,
       toolbarService,
       viewPanelService,
@@ -84,30 +84,30 @@ export default class WindowService extends EventEmitter {
     }
 
     const container = $('<div/>').appendTo(document.body).get(0)
-    windowLayoutService.init({ container: container }, context)
-    windowLayoutService.ready()
+    windowPanel.init({ container: container }, context)
+    windowPanel.ready()
     menubarService.init({
-      container: this.getContainer(WindowLayoutServiceContainer.menubar)
+      container: this.getContainer(WindowPanelContainer.menubar)
     }, context)
     toolbarService.init({
-      container: this.getContainer(WindowLayoutServiceContainer.toolbar)
+      container: this.getContainer(WindowPanelContainer.toolbar)
     }, context)
     controlPanelService.init({
-      container: this.getContainer(WindowLayoutServiceContainer.controlPanel)
+      container: this.getContainer(WindowPanelContainer.controlPanel)
     }, context)
     tableDatasourceService.init({}, context)
     viewPanelService.init({
-      container: this.getContainer(WindowLayoutServiceContainer.viewPanel)
+      container: this.getContainer(WindowPanelContainer.viewPanel)
     }, context)
     tablePanelService.init({
-      container: this.getContainer(WindowLayoutServiceContainer.tablePanel)
+      container: this.getContainer(WindowPanelContainer.tablePanel)
     }, context)
     tableDatasourceService.ready()
     tablePanelService.ready()
     viewPanelService.ready()
   }
   getContainer(containerName) {
-    return this.services.windowLayoutService.getContainer(containerName)
+    return this.windowPanel.getContainer(containerName)
   }
   registerCommand() {
 

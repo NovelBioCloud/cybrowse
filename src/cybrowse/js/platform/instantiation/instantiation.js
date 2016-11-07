@@ -1,5 +1,5 @@
 
-import WindowService from '../window/windowService'
+import WindowService from '../../workbench/window/windowService'
 import $ from 'jquery'
 
 /** 

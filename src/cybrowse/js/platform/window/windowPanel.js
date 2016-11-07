@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import Emitter from '../../base/emitter/emitter'
 
-export const WindowLayoutServiceContainer = {
+export const WindowPanelContainer = {
   menubar: 'menubar',
   toolbar: 'toolbar',
   controlPanel: 'controlPanel',
@@ -9,16 +9,16 @@ export const WindowLayoutServiceContainer = {
   tablePanel: 'tablePanel'
 }
 
-export const WindowLayoutServiceCommand = {
+export const WindowPanelCommand = {
   showTable: 'command:window.layout.table.show',
   hideTable: 'command:window.layout.table.hide'
 }
-export const WindowLayoutServiceLayout = {
+export const WindowPanelLayout = {
   default: 'default',
   custom: 'custom'
 }
 
-export default class WindowLayoutService {
+export default class WindowPanel {
   init(props, context) {
     this.props = props
     this.context = context
@@ -36,13 +36,13 @@ export default class WindowLayoutService {
   }
   registerCommand() {
     const commandService = this.services.commandService
-    commandService.registerCommand(WindowLayoutServiceCommand.showTable, {
+    commandService.registerCommand(WindowPanelCommand.showTable, {
       args: null,
       handle: () => {
         this.showTable()
       }
     })
-    commandService.registerCommand(WindowLayoutServiceCommand.hideTable, {
+    commandService.registerCommand(WindowPanelCommand.hideTable, {
       args: null,
       handle: () => {
         this.hideTable()
@@ -59,30 +59,30 @@ export default class WindowLayoutService {
     const commandService = this.services.commandService
     const keybindingService = this.services.keybindingService
     keybindingService.bind(['alt+up'], function (e) {
-      commandService.runCommand(WindowLayoutServiceCommand.showTable)
+      commandService.runCommand(WindowPanelCommand.showTable)
       return false
     });
     keybindingService.bind(['alt+down'], function (e) {
-      commandService.runCommand(WindowLayoutServiceCommand.hideTable)
+      commandService.runCommand(WindowPanelCommand.hideTable)
       return false
     });
   }
   render() {
     const $menubarContainer = $(`<div class='fn-menubar-container'/>`)
     this.menubarContainer = $menubarContainer.get(0)
-    this.eleContainer.set(WindowLayoutServiceContainer.menubar, $menubarContainer.get(0))
+    this.eleContainer.set(WindowPanelContainer.menubar, $menubarContainer.get(0))
 
     const $toolbarContainer = $(`<div class='fn-toolbar-container'/>`)
     this.toolbarContainer = $toolbarContainer.get(0)
-    this.eleContainer.set(WindowLayoutServiceContainer.toolbar, $toolbarContainer.get(0))
+    this.eleContainer.set(WindowPanelContainer.toolbar, $toolbarContainer.get(0))
 
     const $controlPanelContainer = $(`<div class='fn-control-panel-container'/>`)
     this.controlPanelContainer = $controlPanelContainer.get(0)
-    this.eleContainer.set(WindowLayoutServiceContainer.controlPanel, $controlPanelContainer.get(0))
+    this.eleContainer.set(WindowPanelContainer.controlPanel, $controlPanelContainer.get(0))
 
     const $viewPanelContainer = $(`<div 'class=fn-view-panel-container'/>`)
     this.viewPanelContainer = $viewPanelContainer.get(0)
-    this.eleContainer.set(WindowLayoutServiceContainer.viewPanel, $viewPanelContainer.get(0))
+    this.eleContainer.set(WindowPanelContainer.viewPanel, $viewPanelContainer.get(0))
 
     const $tablePanelContainer = $(`<div class='fn-table-panel-container'/>`).css({
       position: 'absolute',
@@ -95,7 +95,7 @@ export default class WindowLayoutService {
       'border-top': '1px solid #e0e0e0',
     })
     this.tablePanelContainer = $tablePanelContainer.get(0)
-    this.eleContainer.set(WindowLayoutServiceContainer.tablePanel, $tablePanelContainer.get(0))
+    this.eleContainer.set(WindowPanelContainer.tablePanel, $tablePanelContainer.get(0))
 
   }
 
@@ -109,9 +109,9 @@ export default class WindowLayoutService {
     if (this.layoutName && this.layoutName === layoutName) {
       return
     }
-    this.layoutName = layoutName || WindowLayoutServiceLayout.default
+    this.layoutName = layoutName || WindowPanelLayout.default
     switch (this.layoutName) {
-      case WindowLayoutServiceLayout.default:
+      case WindowPanelLayout.default:
         const $el = $(`
           <div class='container-fluid window-layout'>
             <div class='fn-menubar'></div>
@@ -132,7 +132,7 @@ export default class WindowLayoutService {
         $el.show()
         this.el = $el.get(0)
         break;
-      case WindowLayoutServiceLayout.custom:
+      case WindowPanelLayout.custom:
         console.log('change layout custom')
         break;
     }

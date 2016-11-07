@@ -1,6 +1,6 @@
 import $ from 'jquery'
-import CommandService from '../command/commandService'
-import KeybindingService from '../keybinding/keybindingService'
+import CommandService from '../../workbench/command/commandService'
+import KeybindingService from '../../workbench/keybinding/keybindingService'
 import {StyleMenuCommands} from '../command/commands'
 
 /**

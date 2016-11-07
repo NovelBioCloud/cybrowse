@@ -1,7 +1,7 @@
-import Menubar from './menubar'
-import { FileMenuCommands } from '../command/commands'
-import FileImporter from '../fileImporter/fileImporter'
-import PropertyImporter from '../propertyImporter/propertyImporter'
+import Menubar from '../../platform/menubar/menubar'
+import { FileMenuCommands } from '../../platform/command/commands'
+import FileImporter from '../../platform/fileImporter/fileImporter'
+import PropertyImporter from '../../platform/propertyImporter/propertyImporter'
 
 /**
  * 菜单服务

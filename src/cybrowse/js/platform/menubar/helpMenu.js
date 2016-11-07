@@ -1,6 +1,4 @@
 import $ from 'jquery'
-import CommandService from '../command/commandService'
-import KeybindingService from '../keybinding/keybindingService'
 import HelpSelector from '../../base/helpSelector/helpSelector'
 import { HelpMenuCommands } from '../command/commands'
 

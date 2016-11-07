@@ -1,6 +1,4 @@
 import $ from 'jquery'
-import CommandService from '../command/commandService'
-import KeybindingService from '../keybinding/keybindingService'
 import FileSelector from '../../base/fileSelector/fileSelector'
 import { FileMenuCommands } from '../command/commands'
 

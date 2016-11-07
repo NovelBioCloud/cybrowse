@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 import { dispose } from '../../base/lifecycle/lifecycle'
-import TabPanelService from './tabPanelService'
+import ControlPanel from '../../platform/controlPanel/controlPanel'
 import BaseStyleService from '../cytoscapeStyle/baseStyleService'
 import CurrentDataService from '../cytoscapeData/currentDataService'
 import CurrentStyleService from '../cytoscapeStyle/currentStyleService'
@@ -26,13 +26,13 @@ export default class ControlPanelService {
     let currentStyleService = context.services.currentStyleService
     let nodeStyleService = new NodeStyleService()
     let edgeStyleService = new EdgeStyleService()
-    let tabPanelService = new TabPanelService()
+    let controlPanel = new ControlPanel()
 
     currentDataService.init({
 
     }, context)
 
-    tabPanelService.init({
+    controlPanel.init({
       container: this.props.container,
     }, context)
     currentStyleService.init({
@@ -41,12 +41,12 @@ export default class ControlPanelService {
     nodeStyleService.init({
       currentDataService,
       currentStyleService,
-      container: tabPanelService.getContainer('node')
+      container: controlPanel.getContainer('node')
     }, context)
     edgeStyleService.init({
       currentDataService,
       currentStyleService,
-      container: tabPanelService.getContainer('edge')
+      container: controlPanel.getContainer('edge')
     }, context)
 
   }

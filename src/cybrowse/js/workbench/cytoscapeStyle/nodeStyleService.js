@@ -12,12 +12,6 @@ export default class NodeStyleService {
     this.context = context
     const currentStyleService = props.currentStyleService
     const currentDataService = props.currentDataService
-    this._toDispose.push(currentStyleService.onChange(() => {
-      this.updateStyle()
-    }))
-    this._toDispose.push(currentDataService.onChange(() => {
-      this.updateStyle()
-    }))
     this.container = props.container
     const nodeStyle = new NodeStyle()
     this.nodeStyle = nodeStyle
@@ -25,6 +19,12 @@ export default class NodeStyleService {
       container: this.container
     }, context)
     nodeStyle.ready()
+    this._toDispose.push(currentStyleService.onChange(() => {
+      this.updateStyle()
+    }))
+    this._toDispose.push(currentDataService.onChange(() => {
+      this.updateStyle()
+    }))
   }
 
   updateStyle() {

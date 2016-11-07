@@ -2,13 +2,13 @@
 import $ from 'jquery'
 import { saveAs } from 'file-saver'
 import EventMitter from 'events'
-import Cytoscape from './cytoscape'
+import Cytoscape from '../../platform/viewPanel/cytoscape'
 import { dispose } from '../../base/lifecycle/lifecycle'
 import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
-import { SaveMenuCommand, ViewPanelCommand } from '../command/commands'
-import cytoscapeEvents from '../constants/cytoscapeEvents'
-import ViewPanel from './viewPanel'
+import { SaveMenuCommand, ViewPanelCommand } from '../../platform/command/commands'
+import cytoscapeEvents from '../../platform/constants/cytoscapeEvents'
+import ViewPanel from '../../platform//viewPanel/viewPanel'
 
 /**
  * cytoscape 视图服务 
