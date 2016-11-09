@@ -1,6 +1,5 @@
-import { dispose } from '../../base/lifecycle/lifecycle'
+import { dispose } from '../../base/lifecycle'
 import TablePanel from '../../platform/tablePanel/tablePanel'
-
 
 /** table面板服务 */
 export default class TablePanelService {
@@ -18,7 +17,7 @@ export default class TablePanelService {
     this.registerListener()
   }
 
-
+  /** 注册事件 */
   registerListener() {
     const tableDatasourceService = this.services.tableDatasourceService
     this._toDispose.push(tableDatasourceService.onNodeChange((nodeDatas) => {
@@ -28,9 +27,11 @@ export default class TablePanelService {
       this.setEdgeData(edgeDatas)
     }))
   }
+  /** 设置节点数据 */
   setNodeData(nodeDatas) {
     this.tablePanel.setNodeData(nodeDatas)
   }
+  /** 设置连线数据 */
   setEdgeData(edgeDatas) {
     this.tablePanel.setEdgeData(edgeDatas)
   }

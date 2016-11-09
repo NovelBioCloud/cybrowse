@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import HelpSelector from '../../base/helpSelector/helpSelector'
 import { HelpMenuCommands } from '../command/commands'
 
 /** 帮助按钮 */
@@ -37,13 +36,7 @@ export default class HelpMenu {
     }
   }
   registerCommand() {
-    const commandService = this.services.commandService
-    // commandService.registerCommand(HelpMenuCommands.newHelp, {
-    //   args: null,
-    //   handle: () => {
-    //     this.newHelp()
-    //   }
-    // })
+
   }
   registerListener() {
     const $el = $(this.el)

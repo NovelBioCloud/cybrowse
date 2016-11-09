@@ -6,7 +6,7 @@ import { EdgeStyleName, EdgeStyleModel } from '../../../../base/cytoscape/styles
 import DataModel from '../../../../base/cytoscape/datas'
 
 /**
- * 匹配传值
+ * 匹配传值主类
  */
 export default class Mapping {
   /**
@@ -34,8 +34,8 @@ export default class Mapping {
       context
     } = this
     const {
-      mappingContainer,
-      contentContainer,
+      mappingContainer,//小图标样式
+      contentContainer,//匹配内容面板框
       dataModel,
       styleModel
     } = props
@@ -109,6 +109,7 @@ class MappingViewModel extends EventEmitter {
     }
   }
   
+  /** 是否显示内容 */
   get showContentInfo() {
     return this._showContentInfo
   }
@@ -123,6 +124,7 @@ class MappingViewModel extends EventEmitter {
     }
     return _briefInfoType
   }
+  /** 更新小图表，如果样式中未设置匹配数据，小图表样式是默认状态，如果修改了匹配数据，小图表是激活样式 */
   updateBriefInfoType() {
     this._briefInfo.update()
   }
@@ -131,6 +133,7 @@ class MappingViewModel extends EventEmitter {
     this._briefInfo.update()
   }
 }
+/** 前台界面 lineColor 选择栏目中，显示为一个图标，点击以后展示匹配框，再次点击，隐藏匹配框 */
 class BriefInfo {
   init(props, context) {
     this.props = props
@@ -139,10 +142,7 @@ class BriefInfo {
   }
   setViewModel(viewModel) {
     this._viewModel = viewModel
-    this.render()
     this.update()
-  }
-  render() {
   }
   update() {
     this.$container.empty()
@@ -161,6 +161,7 @@ class BriefInfo {
     })
   }
 }
+/** 前台界面 lineColor 选择栏目中，实际内容的匹配框 */
 class ContentInfo {
   init(props, context) {
     this.props = props
@@ -168,6 +169,7 @@ class ContentInfo {
     this._mappingViewModel = props.mappingViewModel
     this.$container = $(props.container)
   }
+  /** 设置视图模型，然后渲染视图 */
   setViewModel(viewModel) {
     this._viewModel = viewModel
     this.render()
@@ -183,10 +185,14 @@ class ContentInfo {
       style: 'line-height:30px'
     }).appendTo(this.$container)
     const $attrInfo = $('<div/>').appendTo(this.$container)
+    /** 内容视图模型 */
     const contentInfoViewModel = new ContentInfoViewModel()
     this.contentInfoViewModel = contentInfoViewModel
+    /** 匹配类型 */
     const mappingType = new MappingType()
+    /** 属性名 */
     const attrName = new AttrName()
+    /** 属性信息 */
     const attrInfo = new AttrInfo()
     mappingType.init({
       container: $mappingType.get(0),
@@ -333,7 +339,7 @@ class ContentInfoViewModel {
 }
 
 /**
- * 间接传值类型选择
+ * 间接传值类型选择，直接匹配和间接匹配
  */
 class MappingType extends EventEmitter {
   constructor() {
@@ -454,6 +460,9 @@ class AttrInfo extends EventEmitter {
             'height': '30px',
             'line-height': '30px'
           }).appendTo($el)
+          /**
+           * 属性修改元素视图模型
+           */
           const attrItemViewModel = new AttrItemViewModel()
           const attrItem = new AttrItem()
           attrItem.init({
@@ -533,12 +542,9 @@ class AttrItem extends EventEmitter {
   }
   setViewModel(viewModel) {
     this._viewModel = viewModel
-    this.render()
     this.update()
   }
-  render() {
 
-  }
   update() {
     this.$container.empty()
     $('<label/>', {

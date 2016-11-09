@@ -1,4 +1,6 @@
-
+/**
+ * cytoscape.js 中用到的各种布局默认数据
+ */
 const configs = [{
       name: 'random',
       fit: true, // whether to fit to viewport

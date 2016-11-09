@@ -10,6 +10,7 @@ import Bypass from './bypass'
 
 /**
  * 节点背景颜色修改
+ * @see src/js/platform/controlPanelPart/edge/lineColor/background.js
  */
 export default class Background {
   constructor() {

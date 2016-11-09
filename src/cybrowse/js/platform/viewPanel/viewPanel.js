@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { saveAs } from 'file-saver'
 import EventMitter from 'events'
 import Cytoscape from './cytoscape'
-import { dispose } from '../../base/lifecycle/lifecycle'
+import { dispose } from '../../base/lifecycle'
 import CommandService from '../../workbench/command/commandService'
 import KeybindingService from '../../workbench/keybinding/keybindingService'
 import { SaveMenuCommand, ViewPanelCommand } from '../command/commands'
@@ -124,6 +124,7 @@ export default class ViewPanel extends EventMitter {
       return false
     });
   }
+  /** 将 dataurl 数据修改为Blob */
   dataURLtoBlob(dataurl) {
     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
       bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -132,6 +133,7 @@ export default class ViewPanel extends EventMitter {
     }
     return new Blob([u8arr], { type: mime });
   }
+  /** 设置节点和连线数据 */
   setElements(elements) {
     try {
       this.cytoscape.cy.remove(this.cytoscape.cy.elements())
@@ -140,6 +142,7 @@ export default class ViewPanel extends EventMitter {
       this.context.services.messageService.error('数据加载错误')
     }
   }
+  /** 设置样式 */
   setStyles(style) {
     try {
       this.cy.style().resetToDefault()
@@ -148,10 +151,11 @@ export default class ViewPanel extends EventMitter {
       this.context.services.messageService.error('数据加载错误')
     }
   }
-
+  /** 设置布局 */
   setLayout(layout) {
     this.cy.layout(layout)
   }
+  /** 更新属性 */
   updateProperty(datas, idName) {
     const elements = this.cy.elements('node')
     _.each(elements, (element) => {

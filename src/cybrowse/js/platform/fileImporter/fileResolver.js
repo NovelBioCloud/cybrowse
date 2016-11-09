@@ -55,6 +55,9 @@ class ContentResolver {
     const fileModel = this.props.fileModel
     let sourceSeq, targetSeq, relationSeq
     const sourceName = fileModel.source, targetName = fileModel.target, relationName = fileModel.relation
+    /**
+     * 获取数据使用的列名
+     */
     if (fileModel.type === 'seq') {
       sourceSeq = parseInt(sourceName)
       targetSeq = parseInt(targetName)
@@ -74,14 +77,21 @@ class ContentResolver {
         }
       })
     }
+    /**
+     * 根据需要过滤第一行数据
+     */
     if (fileModel.filterFirstLine) {
       lines.shift()
     }
+    /**
+     * 解析数据
+     */
     const datas = paraseBody(lines, sourceSeq, targetSeq, relationSeq)
     const nodeMap = new Map()
     const nodes = []
     const edges = []
     let nodeId = 1
+    /** 将当前数据解析为cytoscape需要的节点数据类型 */
     _.each(datas, (data) => {
       _.each([data[0], data[1]], (item) => {
         let nodeName = item
@@ -103,6 +113,7 @@ class ContentResolver {
         }
       })
     }
+    /** 将当前数据解析为cytoscape需要的连线数据类型 */
     let edgeId = 1
     _.each(datas, (data) => {
       let source = nodeMap.get(data[0])
@@ -117,10 +128,14 @@ class ContentResolver {
       })
       edgeId++
     })
+    /** 使用回调方法，处理cytoscape类型的数据 */
     this.props.callback && this.props.callback(nodes, edges)
   }
 }
 
+/**
+ * 将文本数据中需要的数据提取出来（提取source,target,relation）
+ */
 function paraseBody(lines, sourceSeq, targetSeq, relationSeq) {
   return _.filter(_.map(lines, (line) => {
     const columns = line.split('\t')
@@ -129,7 +144,10 @@ function paraseBody(lines, sourceSeq, targetSeq, relationSeq) {
     return data[0] && data[1]
   })
 }
-/** excel文件解析类 */
+/**
+ * excel文件解析类
+ * 该文件解析暂时没有实现
+ */
 class XlsFileResolver {
   constructor() {
   }

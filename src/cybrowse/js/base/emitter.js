@@ -8,11 +8,14 @@ import $ from 'jquery'
  * 
  * 例:
  * const emitter = new Emitter()
- * const disposable emitter.event((data)=>{
- *  console.log('listener')
+ * //注册监听事件
+ * const disposable = emitter.event((data)=>{
+ *  console.log(data)//打印123
  * })
- * emitter.emit(data)
- * 
+ * //发布事件
+ * emitter.emit(123)//发布数据
+ * //销毁监听事件
+ * disposable.dispose（)
  */
 export default class Emitter {
 
@@ -26,7 +29,7 @@ export default class Emitter {
   /**
    * 获取事件，通过获取的事件可以注册回调方法，并且返回注销事件方法
    * 
-   * @return disposable
+   * @return disposable 调用对象的dispose方法可以销毁已注册的监听事件
    */
   get event() {
     return (listener) => {

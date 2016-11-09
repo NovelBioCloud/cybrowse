@@ -1,6 +1,5 @@
 import CytoscapeBaseStyle from '../../platform/cytoscapeDataModel/cytoscapeBaseStyle'
-import Emitter from '../../base/emitter/emitter'
-import { StyleDetail } from '../../base/cytoscape/styles'
+import Emitter from '../../base/emitter'
 import _ from 'lodash'
 
 /**
@@ -21,6 +20,10 @@ export default class CurrentBaseStyleService {
     this.props = props
     this.context = context
   }
+  
+  /**
+   * 修改样式并触发事件
+   */
   changeStyle(styleId) {
     this.cytoscapeBaseStyle.changeStyle(styleId)
     this._onChange.emit(styleId)
@@ -38,9 +41,11 @@ export default class CurrentBaseStyleService {
   renameStyle(styleName) {
 
   }
+  
   copyStyle() {
 
   }
+
   makeCurrentDefault() {
 
   }

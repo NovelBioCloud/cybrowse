@@ -28,6 +28,7 @@ export default class MenubarService {
       }
     })
   }
+  /** 导入文件，设置数据 */
   importFile() {
     new FileImporter().init({
       callback: (nodes, edges) => {
@@ -36,6 +37,7 @@ export default class MenubarService {
       }
     }, this.context)
   }
+  /** 导入属性，更新属性 */
   importProperty() {
     new PropertyImporter().init({
       callback: (datas, idName) => {

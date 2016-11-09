@@ -2,7 +2,6 @@ import $ from 'jquery'
 import saveAs from 'file-saver'
 import CommandService from '../../workbench/command/commandService'
 import KeybindingService from '../../workbench/keybinding/keybindingService'
-import FileSelector from '../../base/fileSelector/fileSelector'
 import { SaveMenuCommand } from '../command/commands'
 
 /**

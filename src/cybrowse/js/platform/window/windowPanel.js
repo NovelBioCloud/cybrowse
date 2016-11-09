@@ -1,6 +1,9 @@
 import $ from 'jquery'
-import Emitter from '../../base/emitter/emitter'
+import Emitter from '../../base/emitter'
 
+/**
+ * WindowPanel中的特殊面板
+ */
 export const WindowPanelContainer = {
   menubar: 'menubar',
   toolbar: 'toolbar',
@@ -9,16 +12,27 @@ export const WindowPanelContainer = {
   tablePanel: 'tablePanel'
 }
 
+/**
+ * WindowPanel中使用的命令
+ */
 export const WindowPanelCommand = {
   showTable: 'command:window.layout.table.show',
   hideTable: 'command:window.layout.table.hide'
 }
+
+/**
+ * WindowPanel中的布局类型,当前项目只实现了default
+ */
 export const WindowPanelLayout = {
   default: 'default',
   custom: 'custom'
 }
 
+/**
+ * WindowPanel面板，完成了界面的所有展示功能
+ */
 export default class WindowPanel {
+  
   init(props, context) {
     this.props = props
     this.context = context
@@ -34,6 +48,9 @@ export default class WindowPanel {
     this.registerCommand()
     this.registerEvent()
   }
+  /**
+   * 注册命令
+   */
   registerCommand() {
     const commandService = this.services.commandService
     commandService.registerCommand(WindowPanelCommand.showTable, {
@@ -49,12 +66,15 @@ export default class WindowPanel {
       }
     })
   }
+  /** 现实表格 */
   showTable() {
     $(this.tablePanelContainer).show()
   }
+  /** 隐藏表格 */
   hideTable() {
     $(this.tablePanelContainer).hide()
   }
+  /** 注册键盘事件 */
   registerEvent() {
     const commandService = this.services.commandService
     const keybindingService = this.services.keybindingService
@@ -67,6 +87,7 @@ export default class WindowPanel {
       return false
     });
   }
+  /** 渲染视图 */
   render() {
     const $menubarContainer = $(`<div class='fn-menubar-container'/>`)
     this.menubarContainer = $menubarContainer.get(0)
@@ -105,6 +126,7 @@ export default class WindowPanel {
   getContainer(containerName) {
     return this.eleContainer.get(containerName)
   }
+  /** 设置布局 */
   layout(layoutName) {
     if (this.layoutName && this.layoutName === layoutName) {
       return

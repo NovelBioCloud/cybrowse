@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import FileSelector from '../../base/fileSelector/fileSelector'
 import { EditMenuCommands } from '../command/commands'
 
 /**编辑按钮 */

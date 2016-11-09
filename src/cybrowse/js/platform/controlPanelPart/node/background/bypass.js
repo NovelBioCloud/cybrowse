@@ -1,11 +1,13 @@
 import $ from 'jquery'
 import _ from 'lodash'
 import Color from 'color'
-import lifecycle from '../../../../base/lifecycle/lifecycle'
+import lifecycle from '../../../../base/lifecycle'
 let bypassInstance
 /**
  * id直接传值
+ * @see src/js/platform/controlPanelPart/edge/lineColor/bypass.js
  */
+
 export default class Bypass {
   constructor() {
     this._toDispose = []

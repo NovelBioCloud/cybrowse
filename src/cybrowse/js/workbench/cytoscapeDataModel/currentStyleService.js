@@ -1,8 +1,8 @@
-import { dispose } from '../../base/lifecycle/lifecycle'
-import Emitter from '../../base/emitter/emitter'
+import { dispose } from '../../base/lifecycle'
+import Emitter from '../../base/emitter'
 import CytoscapeStyle from '../../platform/cytoscapeDataModel/cytoscapeStyle'
 
-/**当前样式服务 */
+/**当前样式服务，包含了所有的样式数据，当样式数据被修改以后，触发相应的事件 */
 export default class CurrentStyleService {
   constructor() {
     this._onChange = new Emitter()

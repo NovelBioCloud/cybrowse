@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import FileSelector from '../../base/fileSelector/fileSelector'
 import { LayoutMenuCommands } from '../command/commands'
 /**
  * 布局按钮类
@@ -47,13 +46,8 @@ export default class LayoutMenu {
     this.changeActiveLayout(currentLayoutService.getLayout())
   }
   changeActiveLayout(layout) {
-    // const $el = this.$el
-    // $el.find('[layoutname]').css({
-    //   color: 'initial'
-    // })
-    // $el.find(`[layoutname=${layout.name}]`).css({
-    //   color: 'blue'
-    // })
+
+
   }
   initServices() {
     const services = Object.assign({}, this.context.services)

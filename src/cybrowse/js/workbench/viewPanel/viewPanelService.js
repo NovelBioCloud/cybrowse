@@ -3,7 +3,7 @@ import $ from 'jquery'
 import { saveAs } from 'file-saver'
 import EventMitter from 'events'
 import Cytoscape from '../../platform/viewPanel/cytoscape'
-import { dispose } from '../../base/lifecycle/lifecycle'
+import { dispose } from '../../base/lifecycle'
 import CommandService from '../command/commandService'
 import KeybindingService from '../keybinding/keybindingService'
 import { SaveMenuCommand, ViewPanelCommand } from '../../platform/command/commands'
@@ -30,7 +30,6 @@ export default class ViewPanelService extends EventMitter {
   }
   initServices() {
     this.services = this.context.services
-
   }
   render() {
     if (!this.viewPanel) {
@@ -64,6 +63,9 @@ export default class ViewPanelService extends EventMitter {
   }
 
   registerListener() {
+    /**
+     * 注册cytoscape的各种事件
+     */
     Object.keys(cytoscapeEvents).forEach((eventName) => {
       this._toDispose.push((() => {
         let callback = (event) => {
@@ -78,24 +80,29 @@ export default class ViewPanelService extends EventMitter {
       })())
     })
   }
+  /** 更新 cytoscape 视图 */
   update() {
     const currentDataService = this.context.services.currentDataService
     const currentStyleService = this.context.services.currentStyleService
     this.viewPanel.setElements(currentDataService.getData())
     this.viewPanel.setStyles(currentStyleService.getStyle())
   }
+  /** 更新数据 */
   updateData() {
     const currentDataService = this.context.services.currentDataService
     this.viewPanel.setElements(currentDataService.getData())
   }
+  /** 更新样式 */
   updateStyle() {
     const currentStyleService = this.context.services.currentStyleService
     this.viewPanel.setStyles(currentStyleService.getStyle())
   }
+  /** 更新布局 */
   updateLayout() {
     const currentLayoutService = this.context.services.currentLayoutService
     this.viewPanel.setLayout(currentLayoutService.getLayout())
   }
+  /** 更新属性值 */
   updateProperty(datas, idName) {
     this.viewPanel.updateProperty(datas, idName)
   }

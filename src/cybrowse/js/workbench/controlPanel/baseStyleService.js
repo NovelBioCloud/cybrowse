@@ -1,10 +1,10 @@
 import BaseStyle from '../../platform/controlPanelPart/baseStyle'
-import Emitter from '../../base/emitter/emitter'
+import Emitter from '../../base/emitter'
 import {StyleDetail} from '../../base/cytoscape/styles'
 import _ from 'lodash'
 
 /**
- * 样式服务
+ * 样式服务，修改基础的功能，通过该服务实现
  */
 export default class BaseStyleService {
 

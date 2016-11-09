@@ -1,7 +1,7 @@
 import {
   EventEmitter
 } from 'events'
-import Emitter from '../../base/emitter/emitter'
+import Emitter from '../../base/emitter'
 import $ from 'jquery'
 import WindowPanel, { WindowPanelContainer } from '../../platform/window/windowPanel'
 import MessageService from '../messageService/messageService'
@@ -16,7 +16,7 @@ import CurrentDataService from '../cytoscapeDataModel/currentDataService'
 import CurrentStyleService from '../cytoscapeDataModel/currentStyleService'
 import CurrentLayoutService from '../cytoscapeDataModel/currentLayoutService'
 import _ from 'lodash'
-import { dispose } from '../../base/lifecycle/lifecycle'
+import { dispose } from '../../base/lifecycle'
 import cytoscapeEvents from '../../platform/constants/cytoscapeEvents'
 
 /**

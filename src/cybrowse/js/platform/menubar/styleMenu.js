@@ -80,6 +80,7 @@ export default class StyleMenu {
   exportStyle() {
     console.log('exportStyle')
   }
+  /** 注册监听函数 */
   registerListener() {
     const $el = $(this.el)
     const commandService = this.services.commandService

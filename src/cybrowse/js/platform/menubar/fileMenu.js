@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import FileSelector from '../../base/fileSelector/fileSelector'
+import FileSelector from '../../base/fileSelector'
 import { FileMenuCommands } from '../command/commands'
 
 /** 文件按钮 */
@@ -68,6 +68,7 @@ export default class FileMenu {
         console.log(files)
       }
     })
+    // 此处是添加模拟数据
     currentDataService.setData([{
       "data": {
         "id": "68",

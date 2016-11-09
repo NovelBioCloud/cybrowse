@@ -34,7 +34,9 @@ export default class LineColor {
     })
     const currentStyleService = this.context.services.currentStyleService
     const viewPanelService = this.context.services.viewPanelService
+    /** 当前样式操作模型类 */
     const styleModel = new EdgeStyleModel(EdgeStyleName.lineColor, currentStyleService)
+    /** 当前数据模型类 */
     const dataModel = new DataModel(currentStyleService)
 
     /**
@@ -72,7 +74,9 @@ export default class LineColor {
       styleModel: styleModel,
       dataModel: dataModel,
       valueType: '',
+      /** 小图标 */
       mappingContainer: view.getContainer('mappingContainer'),
+      /** 内容 */
       contentContainer: view.getContainer('contentContainer')
     }, context)
 
@@ -92,7 +96,7 @@ export default class LineColor {
   }
 }
 /**
- * LineColor 对应的视图布局
+ * LineColor 对应的视图
  */
 class View {
   init(props, context) {

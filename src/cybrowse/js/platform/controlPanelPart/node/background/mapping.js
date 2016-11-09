@@ -7,6 +7,7 @@ import DataModel from '../../../../base/cytoscape/datas'
 
 /**
  * 匹配传值
+ * @see src/js/platform/controlPanelPart/edge/lineColor/mapping.js
  */
 export default class Mapping {
   constructor() {

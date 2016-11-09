@@ -1,6 +1,6 @@
 import _ from 'lodash'
-import { dispose } from '../../base/lifecycle/lifecycle'
-import Emitter from '../../base/emitter/emitter'
+import { dispose } from '../../base/lifecycle'
+import Emitter from '../../base/emitter'
 import cytoscapeEvents from '../../platform/constants/cytoscapeEvents'
 
 /**table 显示数据的方式 */
@@ -20,6 +20,7 @@ export default class TableDataSourceService {
     this._onEdgeChange = new Emitter()
     this._datasourceStrategy = DatasourceStrategy.auto
   }
+  /** 获取数据获取类型 */
   get datasourceStrategy() {
     return this._datasourceStrategy
   }

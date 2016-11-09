@@ -90,7 +90,9 @@ export default class Workbench extends EventEmitter {
     })
   }
 }
-
+/**
+ * 工作台管理类
+ */
 export class WorkbenchManager extends EventEmitter {
   constructor() {
     super()

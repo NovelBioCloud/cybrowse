@@ -5,6 +5,7 @@ import $ from 'jquery'
 import _ from 'lodash'
 
 import Instantiation from '../../platform/instantiation/instantiation'
+import ConfigService from '../config/configService'
 
 /**运行实例服务 */
 export default class InstantiationService {

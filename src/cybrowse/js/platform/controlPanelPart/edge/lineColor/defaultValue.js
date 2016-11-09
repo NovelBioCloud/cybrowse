@@ -41,7 +41,7 @@ export default class DefaultValue {
     })
   }
 }
-
+/** 内部的颜色选择框组件 */
 class ColorComponent {
   init({
     container,

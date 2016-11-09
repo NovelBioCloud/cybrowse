@@ -17,7 +17,7 @@ export default class TableEdgePanel {
       return item.data
     })
     let $el = this.$el
-
+    /** 创建表格 */
     let $table = $('<table/>', { class: 'table' })
     let keys = []
     _.each(edgeDatas, (data) => {
@@ -25,12 +25,18 @@ export default class TableEdgePanel {
     })
     keys = _.concat(...keys)
     keys = _.uniq(keys)
+    /**
+     * 添加表头
+     */
     let $title = $('<thead/>').appendTo($table)
     let $thead = $('<tr/>').appendTo($title)
     _.each(keys, (key) => {
       $('<td/>').appendTo($thead).html(key)
     })
 
+    /**
+     * 添加表内容
+     */
     let $content = $('<tbody/>').appendTo($table)
     _.each(edgeDatas, (data) => {
       let $row = $('<tr/>').appendTo($content)

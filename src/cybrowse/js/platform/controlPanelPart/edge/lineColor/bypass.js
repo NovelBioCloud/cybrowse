@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import _ from 'lodash'
 import Color from 'color'
-import lifecycle from '../../../../base/lifecycle/lifecycle'
+import lifecycle from '../../../../base/lifecycle'
 
 /**
  * id传值类
@@ -13,9 +13,13 @@ export default class Bypass {
   init(props, context) {
     this.props = props
     this.context = context
+    /** 样式数据模型 */
     this._styleModel = props.styleModel
+    /** 节点连线数据模型 */
     this._dataModel = props.dataModel
+    /** 视图模型 */
     const bypassViewModel = new BypassViewModel()
+    /** 视图 */
     const bypassView = new BypassView()
     bypassView.init({
       container: props.container,
@@ -28,6 +32,11 @@ export default class Bypass {
     }, context)
     bypassViewModel.ready()
     this.bypassViewModel = bypassViewModel
+    this.registerListener()
+  }
+  /** 注册 tap 事件 */
+  registerListener() {
+    const bypassViewModel = this.bypassViewModel
     const viewPanelService = this.context.services.viewPanelService
     const eventName = 'tap'
     const listener = (event) => {
@@ -49,6 +58,7 @@ export default class Bypass {
       }
     })
   }
+  /** 更新数据视图 */
   update() {
     this.bypassViewModel.update()
   }
@@ -57,16 +67,21 @@ export default class Bypass {
     this._toDispose = []
   }
 }
+/**
+ * Bypass 类中使用的ViewModel类
+ */
 class BypassViewModel {
   constructor() {
+    // viewModel的视图类
     this._bypassView = null
     this._styleValue = null
-    this._id
+    this._id//连线的id
   }
   init(props, context) {
     this.props = props
     this.context = context
     this._bypassView = props.bypassView
+    /** 样式数据模型 */
     this._styleModel = props.styleModel
     this._dataModel = props.dataModel
   }
@@ -84,6 +99,7 @@ class BypassViewModel {
     this._updateStyleValue()
     this._bypassView.update()
   }
+  /** 内部方法，如果this.id为空，修正样式数据this._styleValue */
   _updateStyleValue() {
     if (this._id) {
       this._styleValue = this._styleModel.getBypass(this._id)
@@ -108,6 +124,7 @@ class BypassViewModel {
     this._bypassView.update()
   }
 }
+/** Bypass的视图类 */
 class BypassView {
   constructor() {
     this._bypassViewModel
@@ -126,27 +143,31 @@ class BypassView {
   }
   update() {
     this.$container.empty()
+    // 调用颜色选择框组件
     new ColorComponent().init({
       container: $('<div/>').css('text-align', 'center').appendTo(this.props.container).get(0),
       styleValue: this._bypassViewModel.styleValue,
       id: this._bypassViewModel.id,
       onChange: (event) => {
+        // 修改数据模型的颜色值
         this._bypassViewModel.styleValue = event.target.value
       },
       onRemove: (event) => {
+        // 修改数据模型的颜色值
         this._bypassViewModel.styleValue = null
       },
     })
 
   }
 }
+/** 内部颜色选择框组件 */
 class ColorComponent {
   init({
-    container,
-    onChange,
-    onRemove,
-    styleValue,
-    id
+    container,//渲染用的htmlElement
+    onChange,//数据修改事件
+    onRemove,//数据删除事件
+    styleValue,//默认样式数据
+    id//连线的id，如果id为空，说明当前页面没有选中的连线，不进行渲染
   }) {
     const $container = $(container)
     const $el = $('<div/>').css('line-height', '30px').appendTo($container)

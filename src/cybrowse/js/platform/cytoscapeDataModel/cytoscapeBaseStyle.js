@@ -1,26 +1,32 @@
 
-import Emitter from '../../base/emitter/emitter'
+import Emitter from '../../base/emitter'
 import { StyleDetail } from '../../base/cytoscape/styles'
 import _ from 'lodash'
 
 /**
- * 样式服务 
+ * 基本样式数据模型
+ * @see currentBaseStyleService
  */
 export default class CytoscapeBaseStyle {
 
   constructor() {
+    /** 默认激活的样式数据id */
     this.activeEntryId = 'default'
     this.initStyleEntries()
   }
-
-
   init(props, context) {
     this.props = props
     this.context = context
   }
+  /**
+   * 修改激活的样式数据
+   */
   changeStyle(styleId) {
     this.activeEntryId = styleId
   }
+  /**
+   * 默认样式数据
+   */
   initStyleEntries() {
     this.styleEntries = _.map([
       {
@@ -76,16 +82,21 @@ export default class CytoscapeBaseStyle {
         }]
       }
     ], (style) => {
+      /** 对样式数据进行解析，返回格式化以后的样式数据 */
       new StyleDetail(style).build()
       return style
     })
   }
-  getStyle(styleName) {
-    styleName = styleName || this.activeEntryId
+  /**
+   * 根据样式id获取样式数据
+   */
+  getStyle(styleId) {
+    styleId = styleId || this.activeEntryId
     return this.styleEntries.find((item) => {
-      return item.id === styleName
+      return item.id === styleId
     })
   }
+  /** 删除样式styleId */
   removeStyle(styleId) {
     if (styleId === 'default') {
       return
@@ -108,6 +119,7 @@ export default class CytoscapeBaseStyle {
       }
     }
   }
+  /** 添加样式 */
   addStyle(style) {
     const temp = _.find(this.styleEntries, (style) => {
       return _style.id === style.id
@@ -118,17 +130,9 @@ export default class CytoscapeBaseStyle {
     new StyleDetail(style).build()
     this.styleEntries.push(style)
   }
+  /** 获取样式数据 */
   getStyleEntries() {
     return this.styleEntries
-  }
-  renameStyle(styleName) {
-
-  }
-  copyStyle() {
-
-  }
-  makeCurrentDefault() {
-
   }
 
 }

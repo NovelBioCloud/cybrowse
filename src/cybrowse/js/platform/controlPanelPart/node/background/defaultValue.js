@@ -6,6 +6,7 @@ import { NodeStyleName, EdgeStyleName, NodeStyleModel, EdgeStyleModel } from '..
 
 /**
  * 默认值修改
+ * @see src/js/platform/controlPanelPart/edge/lineColor/defaultValue.js
  */
 export default class DefaultValue {
   init(props, context) {

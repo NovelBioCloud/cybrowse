@@ -2,11 +2,14 @@ import $ from 'jquery'
 
 import TabPanel from '../../platform/tabPanel/tabPanel'
 
+/**
+ * 表格面板中的特殊面板
+ */
 const TableTabPanelContainer = {
   node: 'node',
   edge: 'edge'
 }
-/**table 的布局服务 */
+/**table 的布局 */
 export default class TableTabPanel {
   constructor() {
   }

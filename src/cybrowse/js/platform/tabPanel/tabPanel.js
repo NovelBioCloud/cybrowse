@@ -3,7 +3,7 @@ import _ from 'lodash'
 import EventMitter from 'events'
 
 /**
- * tab面板视图模型
+ * tab 面板视图模型
  */
 export class TabPanelModel extends EventMitter {
   constructor() {

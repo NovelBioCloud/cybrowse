@@ -3,7 +3,7 @@ import $ from 'jquery'
 import TabPanel from '../../platform/tabPanel/tabPanel'
 
 /**
- * 切换面板中的特殊面板名
+ * 控制面板中的特定面板名
  */
 const ControlPanelContainer = {
   node: 'node',
@@ -12,7 +12,7 @@ const ControlPanelContainer = {
   other: 'other'
 }
 /**
- * 切换面板服务
+ * 控制面板，主要创建前台视图
  */
 export default class ControlPanel {
   constructor() {

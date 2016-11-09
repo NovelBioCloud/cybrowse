@@ -7,9 +7,7 @@ import FileResolver from './fileResolver'
  * 文件导入类 
  */
 export default class FileImporter {
-  constructor() {
 
-  }
   init(props, context) {
     this.props = props
     this.context = context
