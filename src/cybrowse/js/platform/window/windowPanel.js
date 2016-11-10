@@ -33,6 +33,7 @@ export const WindowPanelLayout = {
  */
 export default class WindowPanel {
   
+  /** 手动初始化 */
   init(props, context) {
     this.props = props
     this.context = context
@@ -42,6 +43,9 @@ export default class WindowPanel {
     this.eleContainer = new Map()
 
   }
+  /**
+   * 依赖服务准备好以后，调用该方法
+   */
   ready() {
     this.render()
     this.layout()
@@ -66,7 +70,7 @@ export default class WindowPanel {
       }
     })
   }
-  /** 现实表格 */
+  /** 显示表格 */
   showTable() {
     $(this.tablePanelContainer).show()
   }
@@ -119,10 +123,13 @@ export default class WindowPanel {
     this.eleContainer.set(WindowPanelContainer.tablePanel, $tablePanelContainer.get(0))
 
   }
-
+  /**
+   * 析构方法，当前对象需要被删除的时候，外部手动调用方法
+   */
   dispose() {
     $(this.el).remove()
   }
+  /** 获取视图中制定名称的面板 */
   getContainer(containerName) {
     return this.eleContainer.get(containerName)
   }

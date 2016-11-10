@@ -138,6 +138,8 @@
 
 ### 架构图
 
+####  代码依赖关系
+
       NLService//国际化服务
       StorageService//存储
       CommandService//命令行
@@ -192,4 +194,54 @@
                   。。。
                   。。。
           
+#### 代码类分类
 
+    第一层：基础服务层：
+      国际化服务(NationLanguageService)、
+      命令服务(CommandService)、
+      快捷键服务(KeybindingService)、
+      存储服务(StorageService)、
+    第二层：数据服务层：
+      配置文件服务(ConfigService)、
+      当前样式数据服务(CurrentStyleService)、
+      当前节点连线数据服务(CurrentDataService)、
+      当前布局数据服务(CurrentLayoutService)、
+      基础布局数据(CurrentBaseStyleService)、
+      表格数据服务（TableDatasourceService)
+    第三层：视图服务层
+      菜单栏服务(MenubarService)
+      工具栏服务(ToolbarService)
+      控制面板服务(ControlPanel)
+      视图面板服务(ViewPanelService)
+      表格面板服务(TablePanelService)
+    第四层：视图对象层
+      NodeStyleService
+      EdgeStyleService
+      NodeStyle
+      EdgeStyle
+      ...
+      对服务进行操作的对象
+    第五层：数据操作封装操作类
+      StyleDetail
+      NodeStyleModel
+      EdgeStyleModel
+
+#### 设计约定
+    服务之间通过事件进行交互
+    一般手动调用init进行初始化
+    init方法一般有俩个参数 props,context
+      props： 直接依赖的参数
+      context: 全局的服务容器
+
+#### 当前设计问题
+    有些服务直接可能不是通过事件驱动的方式，应该进行修改
+    有些类其实不是Service，比如 nodeStyleService ， edgeStyleService 等，只是设计初期，按照service进行了设计，完成功能后发现该命名不合适
+    第二层的数据服务进行数据维护的入口缺乏统一管理
+    CurrentLayoutService的功能设计不清晰
+    // 这些问题是后期需要调整的
+
+#### 业务熟悉
+
+下载桌面版本，打开网络版
+进行测试操作
+对比功能

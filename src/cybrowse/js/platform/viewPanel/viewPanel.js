@@ -17,13 +17,15 @@ export default class ViewPanel extends EventMitter {
     super()
   }
 
-  init(props, context, options) {
+  /** 初始化方法 */
+  init(props, context) {
     this.container = props.container
     this.props = props
     this.context = context
     this.render()
     this.initEvent()
   }
+  /** 渲染视图 */
   render() {
     const $el = $('<div/>').appendTo($(this.container))
     this.el = $el.get(0)
@@ -35,6 +37,7 @@ export default class ViewPanel extends EventMitter {
     this.cy = this.cytoscape.get()
     this.cy.center()
   }
+  /** 初始化个viewPanel相关的命令和键盘事件 */
   initEvent() {
     Object.keys(cytoscapeEvents).forEach((eventName) => {
       this.cy.on(eventName, (event) => {
@@ -170,6 +173,5 @@ export default class ViewPanel extends EventMitter {
       }
     })
   }
-  dispose() {
-  }
+
 }
