@@ -1,5 +1,6 @@
 /**
- * 命令model类
+ * 命令model类,
+ * @see commandControl.js
  */
 export default class Command {
 

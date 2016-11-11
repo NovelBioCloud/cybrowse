@@ -158,18 +158,18 @@ export class NodeStyleModel {
   /**
    * 构造方法
    * @param styleName 样式文件名
-   * @param currentStyleService 当前样式服务
+   * @param currentStyleControl 当前样式服务
    */
-  constructor(styleName, currentStyleService) {
+  constructor(styleName, currentStyleControl) {
     this._styleName = styleName
-    this._currentStyleService = currentStyleService
+    this._currentStyleControl = currentStyleControl
   }
   /**
    * 获取默认数据
    * @return
    */
   getDefaultValue() {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     return styleDetail._nodeDefaultValue[0].style[this._styleName]
   }
   /**
@@ -177,7 +177,7 @@ export class NodeStyleModel {
    * @param value
    */
   setDefaultValue(value) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     styleDetail._nodeDefaultValue[0].style[this._styleName] = value
     styleDetail.build()
   }
@@ -185,7 +185,7 @@ export class NodeStyleModel {
    * 删除默认样式
    */
   removeDefaultValue() {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     delete (styleDetail._nodeDefaultValue[0].style)[this._styleName]
     styleDetail.build()
   }
@@ -195,7 +195,7 @@ export class NodeStyleModel {
    * @return 样式数据
    */
   getBypass(id) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let bypassStyle = _.find(styleDetail._nodeBypass, (item) => {
       return item.selector == `node[ id = '${id}' ]`
     })
@@ -215,7 +215,7 @@ export class NodeStyleModel {
    * @param value 节点的数据
    */
   setBypass(id, value) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let bypassStyle = _.find(styleDetail._nodeBypass, (item) => {
       return item.selector == `node[ id = '${id}' ]`
     })
@@ -234,7 +234,7 @@ export class NodeStyleModel {
    * @param id 节点的id值
    */
   removeBypass(id) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let bypassStyle = _.find(styleDetail._nodeBypass, (item) => {
       return item.selector == `node[ id = '${id}' ]`
     })
@@ -250,7 +250,7 @@ export class NodeStyleModel {
    * @return 
    */
   getDiscreteMapping(attrName, attrValue) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let mappingStyle = _.find(styleDetail._nodeBypass, (item) => {
       return item.selector == `node[${attrName} = '${attrValue}' ]` && item.style[this._styleName]
     })
@@ -271,7 +271,7 @@ export class NodeStyleModel {
    * @param 新值
    */
   setDiscreteMapping(attrName, attrValue, value) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let mappingStyle = _.find(styleDetail._nodeDiscreteMapping, (item) => {
       return item.selector == `node[${attrName} = '${attrValue}' ]` && item.style[this._styleName]
     })
@@ -291,7 +291,7 @@ export class NodeStyleModel {
    * @param attrValue 属性值
    */
   removeDiscreteMapping(attrName, attrValue) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let mappingStyle = _.find(styleDetail._nodeDiscreteMapping, (item) => {
       return item.selector == `node[${attrName} = '${attrValue}' ]` && item.style[this._styleName]
     })
@@ -305,7 +305,7 @@ export class NodeStyleModel {
    * @param attrName 属性名
    */
   removeDiscreteMappings(attrName) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     _.remove(styleDetail._nodeDiscreteMapping, (item) => {
       return new RegExp(`node\\[${attrName} = '(.*)' \\]`).test(item.selector) && item.style[this._styleName]
     })
@@ -316,7 +316,7 @@ export class NodeStyleModel {
    * @param attrName 属性名
    */
   setPassthroughMapping(attrName) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     styleDetail._nodePassthroughMapping[0].style[this._styleName] = `data(${attrName})`
     styleDetail.build()
   }
@@ -325,7 +325,7 @@ export class NodeStyleModel {
    * @param attrName 属性名
    */
   removePassthroughMapping() {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     if (styleDetail._nodePassthroughMapping[0].style[this._styleName]) {
       delete styleDetail._nodePassthroughMapping[0].style[this._styleName]
     }
@@ -338,7 +338,7 @@ export class NodeStyleModel {
   getMappingInfo() {
     const passthrough = MappingTypeConstant.passthrough
     const discrete = MappingTypeConstant.discrete
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let passthroughMapping = styleDetail._nodePassthroughMapping[0]
     let discreteMapping = styleDetail._nodeDiscreteMapping
     let mappingType = null
@@ -379,17 +379,17 @@ export class EdgeStyleModel {
   /**
    *  构造函数
    * @param styleName 样式类型
-   * @param currentStyleService 当前样式服务
+   * @param currentStyleControl 当前样式服务
    */
-  constructor(styleName, currentStyleService) {
+  constructor(styleName, currentStyleControl) {
     this._styleName = styleName
-    this._currentStyleService = currentStyleService
+    this._currentStyleControl = currentStyleControl
   }
   /**
    * 获取默认样式数据 
    */
   getDefaultValue() {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     return styleDetail._edgeDefaultValue[0].style[this._styleName]
   }
   /**
@@ -397,7 +397,7 @@ export class EdgeStyleModel {
    * @param value
    */
   setDefaultValue(value) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     styleDetail._edgeDefaultValue[0].style[this._styleName] = value
     styleDetail.build()
   }
@@ -406,7 +406,7 @@ export class EdgeStyleModel {
    * @param value
    */
   removeDefaultValue(value) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     delete (styleDetail._edgeDefaultValue[0].style)[this._styleName]
     styleDetail.build()
   }
@@ -416,7 +416,7 @@ export class EdgeStyleModel {
    * @return 
    */
   getBypass(id) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let bypassStyle = _.find(styleDetail._edgeBypass, (item) => {
       return item.selector == `edge[ id = '${id}' ]`
     })
@@ -436,7 +436,7 @@ export class EdgeStyleModel {
    * @param value 设置连线数据
    */
   setBypass(id, value) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let bypassStyle = _.find(styleDetail._edgeBypass, (item) => {
       return item.selector == `edge[ id = '${id}' ]`
     })
@@ -455,7 +455,7 @@ export class EdgeStyleModel {
    * @param id 连线id
    */
   removeBypass(id) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let bypassStyle = _.find(styleDetail._edgeBypass, (item) => {
       return item.selector == `edge[ id = '${id}' ]`
     })
@@ -470,7 +470,7 @@ export class EdgeStyleModel {
    * @param attrValue 属性值
    */
   getDiscreteMapping(attrName, attrValue) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let mappingStyle = _.find(styleDetail._edgeBypass, (item) => {
       return item.selector == `edge[${attrName} = '${attrValue}' ]` && item.style[this._styleName]
     })
@@ -491,7 +491,7 @@ export class EdgeStyleModel {
    * @param value 新值
    */
   setDiscreteMapping(attrName, attrValue, value) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let mappingStyle = _.find(styleDetail._edgeDiscreteMapping, (item) => {
       return item.selector == `edge[${attrName} = '${attrValue}' ]` && item.style[this._styleName]
     })
@@ -511,7 +511,7 @@ export class EdgeStyleModel {
    * @param attrValue 属性值
    */
   removeDiscreteMapping(attrName, attrValue) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let mappingStyle = _.find(styleDetail._edgeDiscreteMapping, (item) => {
       return item.selector == `edge[${attrName} = '${attrValue}' ]` && item.style[this._styleName]
     })
@@ -525,7 +525,7 @@ export class EdgeStyleModel {
    * @param attrName 属性名
    */
   removeDiscreteMappings(attrName) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     _.remove(styleDetail._edgeDiscreteMapping, (item) => {
       return new RegExp(`edge\\[${attrName} = '(.*)' \\]`).test(item.selector) && item.style[this._styleName]
     })
@@ -537,7 +537,7 @@ export class EdgeStyleModel {
    * @param attrValue 属性值
    */
   setPassthroughMapping(attrName) {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     styleDetail._edgePassthroughMapping[0].style[this._styleName] = `data(${attrName})`
     styleDetail.build()
   }
@@ -546,7 +546,7 @@ export class EdgeStyleModel {
    * 删除直接匹配数据
    */
   removePassthroughMapping() {
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     if (styleDetail._edgePassthroughMapping[0].style[this._styleName]) {
       delete styleDetail._edgePassthroughMapping[0].style[this._styleName]
     }
@@ -560,7 +560,7 @@ export class EdgeStyleModel {
   getMappingInfo() {
     const passthrough = MappingTypeConstant.passthrough
     const discrete = MappingTypeConstant.discrete
-    let styleDetail = new StyleDetail(this._currentStyleService.getStyle())
+    let styleDetail = new StyleDetail(this._currentStyleControl.getStyle())
     let passthroughMapping = styleDetail._edgePassthroughMapping[0]
     let discreteMapping = styleDetail._edgeDiscreteMapping
     let mappingType = null

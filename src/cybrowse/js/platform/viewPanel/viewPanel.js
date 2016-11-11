@@ -5,12 +5,14 @@ import { saveAs } from 'file-saver'
 import EventMitter from 'events'
 import Cytoscape from './cytoscape'
 import { dispose } from '../../base/lifecycle'
-import CommandService from '../../workbench/command/commandService'
-import KeybindingService from '../../workbench/keybinding/keybindingService'
+import CommandControl from '../../workbench/command/commandControl'
+import KeybindingControl from '../../workbench/keybinding/keybindingControl'
 import { SaveMenuCommand, ViewPanelCommand } from '../command/commands'
 import cytoscapeEvents from '../constants/cytoscapeEvents'
 
-/**cytoscape 图像视图 */
+/**
+ * cytoscape 图像视图，现实图像提供事件注册的入口
+ */
 export default class ViewPanel extends EventMitter {
 
   constructor() {
@@ -44,21 +46,21 @@ export default class ViewPanel extends EventMitter {
         this.emit(eventName, event)
       });
     })
-    const commandService = this.context.services.commandService
-    commandService.registerCommand(ViewPanelCommand.center, {
+    const commandControl = this.context.controls.commandControl
+    commandControl.registerCommand(ViewPanelCommand.center, {
       args: null,
       handle: () => {
         this.cy.center()
       }
     })
-    commandService.registerCommand(ViewPanelCommand.zoomIn, {
+    commandControl.registerCommand(ViewPanelCommand.zoomIn, {
       args: null,
       handle: () => {
         const zoom = this.cy.zoom() + 0.1
         this.cy.zoom(zoom)
       }
     })
-    commandService.registerCommand(ViewPanelCommand.zoomOut, {
+    commandControl.registerCommand(ViewPanelCommand.zoomOut, {
       args: null,
       handle: () => {
         const zoom = this.cy.zoom() - 0.1
@@ -73,57 +75,57 @@ export default class ViewPanel extends EventMitter {
       }
       return new Blob([u8arr], { type: mime });
     }
-    commandService.registerCommand(SaveMenuCommand.savePng, {
+    commandControl.registerCommand(SaveMenuCommand.savePng, {
       args: null,
       handle: () => {
         const pngData = this.cy.png()
         saveAs(this.dataURLtoBlob(pngData))
       }
     })
-    commandService.registerCommand(SaveMenuCommand.saveJpg, {
+    commandControl.registerCommand(SaveMenuCommand.saveJpg, {
       args: null,
       handle: () => {
         const jpgData = this.cy.jpg()
         saveAs(this.dataURLtoBlob(jpgData))
       }
     })
-    commandService.registerCommand(SaveMenuCommand.saveNetwork, {
+    commandControl.registerCommand(SaveMenuCommand.saveNetwork, {
       args: null,
       handle: () => {
         console.log(todo)
       }
     })
-    commandService.registerCommand(SaveMenuCommand.saveNetworkAndView, {
+    commandControl.registerCommand(SaveMenuCommand.saveNetworkAndView, {
       args: null,
       handle: () => {
         console.log(todo)
       }
     })
-    commandService.registerCommand(SaveMenuCommand.saveStyle, {
+    commandControl.registerCommand(SaveMenuCommand.saveStyle, {
       args: null,
       handle: () => {
         console.log(todo)
       }
     })
-    commandService.registerCommand(SaveMenuCommand.saveCvs, {
+    commandControl.registerCommand(SaveMenuCommand.saveCvs, {
       args: null,
       handle: () => {
         console.log(todo)
       }
     })
-    const keybindingService = this.context.services.keybindingService
-    keybindingService.bind(['ctrl+shift+c'], function (e) {
-      commandService.runCommand(ViewPanelCommand.center)
+    const keybindingControl = this.context.controls.keybindingControl
+    keybindingControl.bind(['ctrl+shift+c'], function (e) {
+      commandControl.runCommand(ViewPanelCommand.center)
       return false
     });
 
-    keybindingService.bind(['ctrl+shift++'], function (e) {
-      commandService.runCommand(ViewPanelCommand.zoomIn)
+    keybindingControl.bind(['ctrl+shift++'], function (e) {
+      commandControl.runCommand(ViewPanelCommand.zoomIn)
       return false
     });
 
-    keybindingService.bind(['ctrl+shift+-'], function (e) {
-      commandService.runCommand(ViewPanelCommand.zoomOut)
+    keybindingControl.bind(['ctrl+shift+-'], function (e) {
+      commandControl.runCommand(ViewPanelCommand.zoomOut)
       return false
     });
   }
@@ -142,7 +144,7 @@ export default class ViewPanel extends EventMitter {
       this.cytoscape.cy.remove(this.cytoscape.cy.elements())
       this.cytoscape.cy.add(elements)
     } catch (e) {
-      this.context.services.messageService.error('数据加载错误')
+      this.context.controls.messageControl.error('数据加载错误')
     }
   }
   /** 设置样式 */
@@ -151,7 +153,7 @@ export default class ViewPanel extends EventMitter {
       this.cy.style().resetToDefault()
       this.cy.style(style.style)
     } catch (e) {
-      this.context.services.messageService.error('数据加载错误')
+      this.context.controls.messageControl.error('数据加载错误')
     }
   }
   /** 设置布局 */

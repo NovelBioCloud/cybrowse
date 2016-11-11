@@ -44,13 +44,13 @@
 
   * 修改 cytoscape 样式，然后显示 cytoscape 的样式。
     
-    修改 cytoscape 的样式数据通过 NodeStyleModel、 EdgeStyleModel 修改，然后主动出发 ViewPanelService 的 update 方法。
+    修改 cytoscape 的样式数据通过 NodeStyleModel、 EdgeStyleModel 修改，然后主动出发 ViewPanelControl 的 update 方法。
   * 修改 cytoscape 样式的数据
     
-    NodeStyleModel、 EdgeStyleModel 中通过 CurrentStyleService 获取数据信息，通过 StyleDetail 类解析数据格式，修改数据
+    NodeStyleModel、 EdgeStyleModel 中通过 CurrentStyleControl 获取数据信息，通过 StyleDetail 类解析数据格式，修改数据
   * cytoscape 样式的数据格式
     
-    请查看默认样式的数据，查看文件 BaseStyleService
+    请查看默认样式的数据，查看文件 BaseStyleControl
   * 术语
 
     修改节点、连线样式有3大方式，默认传值，匹配传值和直接传值，其中匹配传值又分为间接匹配传值和直接匹配传值。
@@ -59,65 +59,65 @@
 
 ### 基础服务
 
-* InstantiationService
+* InstantiationControl
 
   实例服务，该服务的作用是启动一个实例，当前项目中该实例暂时未做任何实际功能，只是简单地初始化对象
 
-* CommandService
+* CommandControl
 
   命令服务，注册命令，所有的功能都可以注册为一个命令，任何时候都可以通过命令服务执行一个命令。每一个命令都有特定的id，通过该id执行命令
 
-* KeybindingService
+* KeybindingControl
 
   键盘服务，注册绑定键盘事件。通过该服务可以注册全局的键盘事件，通常可以通过注册键盘事件，触发方法，方法中调用命令
 
-* StorageService
+* StorageControl
 
   存储服务，使用 localStorage 存储信息。封装 localStorage
 
-* NLService
+* NLControl
 
   国际化服务。当前项目中没有国际化的功能设置，此处只是预留接口
 
 ### 核心服务
 
-* WindowService
+* WindowControl
 
   界面服务，提供 document 对象。通过界面服务，渲染页面
 
-* ViewPanelService
+* ViewPanelControl
 
   cytoscape 对象包装类。
 
-* ToolbarService
+* ToolbarControl
 
   工具栏服务。所有工具栏的功能通过该服务类接入
 
-* MenubarService
+* MenubarControl
 
   菜单栏服务。所有菜单栏的功能通过该服务类接入
 
-* TableDatasourceService
+* TableDatasourceControl
 
-  表格数据源服务。表格数据通过 ViewPanelService、CurrentDataService 服务获取，并通知 TablePanelService
+  表格数据源服务。表格数据通过 ViewPanelControl、CurrentDataControl 服务获取，并通知 TablePanelControl
 
-* TablePanelService
+* TablePanelControl
 
-  表格服务。 TableDatasourceService 数据发生变化以后，重新渲染页面
+  表格服务。 TableDatasourceControl 数据发生变化以后，重新渲染页面
 
-* CurrentDataService
+* CurrentDataControl
 
   当前数据服务类。
 
-* CurrentStyleService
+* CurrentStyleControl
 
   当前样式服务类。
 
-* CurrentLayoutService
+* CurrentLayoutControl
 
   cytoscape的布局类。
 
-* BaseStyleService
+* BaseStyleControl
 
   样式服务类，包括创建、删除、倒入、导出等服务
 
@@ -140,14 +140,14 @@
 
 ####  代码依赖关系
 
-      NLService//国际化服务
-      StorageService//存储
-      CommandService//命令行
-      KeybindingService//键盘
-      **InstantiationService**//实例
-        ConfigService//配置信息服务
+      NLControl//国际化服务
+      StorageControl//存储
+      CommandControl//命令行
+      KeybindingControl//键盘
+      **InstantiationControl**//实例
+        ConfigControl//配置信息服务
         **Instantiation**//实例
-          **WindowService**//视图对象
+          **WindowControl**//视图对象
             /**
             * 布局
             */
@@ -156,38 +156,38 @@
             /**
             * 数据服务
             **/
-            CurrentBaseStyleService
+            CurrentBaseStyleControl
               /**
               * 包装CytoscapeBaseStyle
               */
                 调用StyleDetail
-            CurrentStyleService//样式相关的数据服务
-            CurrentDataService//节点相关的数据服务
-            CurrentLayoutService//布局相关的数据服务
-            TableDatasourceService//table相关的数据服务
+            CurrentStyleControl//样式相关的数据服务
+            CurrentDataControl//节点相关的数据服务
+            CurrentLayoutControl//布局相关的数据服务
+            TableDatasourceControl//table相关的数据服务
             
             /**
             * 视图服务(依赖数据服务)
             **/  
-            MenubarService
+            MenubarControl
               /**
               * 工具类 FileImporter、PropertyImporter
               */
-            ToolbarService//工具栏相关的服务
-            ViewPanelService//cytoscape图像相关的服务
-            TablePanelService//表格服务
-            MessageService//提示信息
-            ControlPanelService//编辑面板服务
+            ToolbarControl//工具栏相关的服务
+            ViewPanelControl//cytoscape图像相关的服务
+            TablePanelControl//表格服务
+            MessageControl//提示信息
+            ControlPanelControl//编辑面板服务
               ControlPanel//编辑面板布局
-              BaseStyleService//基本样式服务
+              BaseStyleControl//基本样式服务
                 BaseStyle//基本样式
-              NodeStyleService//节点样式服务
+              NodeStyleControl//节点样式服务
                 NodeStyle//节点样式
                   background//背景色彩
                   。。。
                   。。。
                   。。。
-              EdgeStyleService//连线服务
+              EdgeStyleControl//连线服务
                 EdgeStyle//连线数据
                   lineColor//连线样式
                   。。。
@@ -197,26 +197,26 @@
 #### 代码类分类
 
     第一层：基础服务层：
-      国际化服务(NationLanguageService)、
-      命令服务(CommandService)、
-      快捷键服务(KeybindingService)、
-      存储服务(StorageService)、
+      国际化服务(NationLanguageControl)、
+      命令服务(CommandControl)、
+      快捷键服务(KeybindingControl)、
+      存储服务(StorageControl)、
     第二层：数据服务层：
-      配置文件服务(ConfigService)、
-      当前样式数据服务(CurrentStyleService)、
-      当前节点连线数据服务(CurrentDataService)、
-      当前布局数据服务(CurrentLayoutService)、
-      基础布局数据(CurrentBaseStyleService)、
-      表格数据服务（TableDatasourceService)
+      配置文件服务(ConfigControl)、
+      当前样式数据服务(CurrentStyleControl)、
+      当前节点连线数据服务(CurrentDataControl)、
+      当前布局数据服务(CurrentLayoutControl)、
+      基础布局数据(CurrentBaseStyleControl)、
+      表格数据服务（TableDatasourceControl)
     第三层：视图服务层
-      菜单栏服务(MenubarService)
-      工具栏服务(ToolbarService)
+      菜单栏服务(MenubarControl)
+      工具栏服务(ToolbarControl)
       控制面板服务(ControlPanel)
-      视图面板服务(ViewPanelService)
-      表格面板服务(TablePanelService)
+      视图面板服务(ViewPanelControl)
+      表格面板服务(TablePanelControl)
     第四层：视图对象层
-      NodeStyleService
-      EdgeStyleService
+      NodeStyleControl
+      EdgeStyleControl
       NodeStyle
       EdgeStyle
       ...
@@ -230,18 +230,20 @@
     服务之间通过事件进行交互
     一般手动调用init进行初始化
     init方法一般有俩个参数 props,context
-      props： 直接依赖的参数
+      props： 直接依赖的参数对象
       context: 全局的服务容器
+    dispose 析构函数
+      对象需要被删除之前，需要手动调用方法，service对象注册了其他service的事件，
+      需要在该对象销毁前，注销已经注册的方法，
+      该注销方法的业务需要在析构函数 dispose 中执行。
 
 #### 当前设计问题
     有些服务直接可能不是通过事件驱动的方式，应该进行修改
-    有些类其实不是Service，比如 nodeStyleService ， edgeStyleService 等，只是设计初期，按照service进行了设计，完成功能后发现该命名不合适
+    有些类其实不是Control，比如 nodeStyleControl ， edgeStyleControl 等，只是设计初期，按照service进行了设计，完成功能后发现该命名不合适
     第二层的数据服务进行数据维护的入口缺乏统一管理
-    CurrentLayoutService的功能设计不清晰
+    CurrentLayoutControl的功能设计不清晰
     // 这些问题是后期需要调整的
 
 #### 业务熟悉
 
-下载桌面版本，打开网络版
-进行测试操作
-对比功能
+    下载桌面版本，打开网络版。进行测试操作。对比功能

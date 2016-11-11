@@ -3,9 +3,9 @@ import Emitter from '../../base/emitter'
 import _ from 'lodash'
 
 /**
- * 样式服务 
+ * 样式服务，维护了系统中所有的样式数据
  */
-export default class CurrentBaseStyleService {
+export default class CurrentBaseStyleControl {
 
   constructor() {
     this._onChange = new Emitter()

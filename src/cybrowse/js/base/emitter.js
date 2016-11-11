@@ -2,9 +2,9 @@ import $ from 'jquery'
 
 /**
  * 事件工具类
- * @see currentDataService.js
- * @see baseStyleService.js
- * @see currentStyleService.js
+ * @see currentDataControl.js
+ * @see baseStyleControl.js
+ * @see currentStyleControl.js
  * 
  * 例:
  * const emitter = new Emitter()

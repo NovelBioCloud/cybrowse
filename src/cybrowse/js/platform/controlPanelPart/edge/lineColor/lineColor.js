@@ -9,7 +9,7 @@ import Mapping from './mapping'
 import Bypass from './bypass'
 
 /**
- * 连线颜色设置
+ * lineColor 连线颜色设置面板
  */
 export default class LineColor {
 
@@ -32,12 +32,12 @@ export default class LineColor {
     view.init({
       container: this.props.container
     })
-    const currentStyleService = this.context.services.currentStyleService
-    const viewPanelService = this.context.services.viewPanelService
+    const currentStyleControl = this.context.controls.currentStyleControl
+    const viewPanelControl = this.context.controls.viewPanelControl
     /** 当前样式操作模型类 */
-    const styleModel = new EdgeStyleModel(EdgeStyleName.lineColor, currentStyleService)
+    const styleModel = new EdgeStyleModel(EdgeStyleName.lineColor, currentStyleControl)
     /** 当前数据模型类 */
-    const dataModel = new DataModel(currentStyleService)
+    const dataModel = new DataModel(currentStyleControl)
 
     /**
      * 默认值
@@ -52,15 +52,15 @@ export default class LineColor {
       callbacks: {
         onChange: (value) => {
           styleModel.setDefaultValue(value)
-          viewPanelService.update()
+          viewPanelControl.update()
         },
         onRemove: () => {
           styleModel.removeDefaultValue()
-          viewPanelService.update()
+          viewPanelControl.update()
         },
         onReset: () => {
           styleModel.setDefaultValue("#FF0000")
-          viewPanelService.update()
+          viewPanelControl.update()
         }
       }
     }, context)

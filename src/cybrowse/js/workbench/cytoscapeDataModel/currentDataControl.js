@@ -2,9 +2,9 @@ import Emitter from '../../base/emitter'
 import _ from 'lodash'
 import CytoscapeData from '../../platform/cytoscapeDataModel/cytoscapeData'
 /** 
- * 数据服务，当前页面中 cytoscape 节点的维护类
+ * 数据服务，当前页面中 cytoscape 的节点和连线数据的维护类
  */
-export default class CurrentDataService {
+export default class CurrentDataControl {
   constructor() {
     this._onChange = new Emitter()
     this._onUpdateProperty = new Emitter()
@@ -30,8 +30,8 @@ export default class CurrentDataService {
   /** 修改属性 */
   updateProperty(datas, idName) {
     this.cytoscapeData.updateProperty(datas,idName)
-    const viewPanelService = this.context.services.viewPanelService
-    viewPanelService.updateProperty(datas, idName)
+    const viewPanelControl = this.context.controls.viewPanelControl
+    viewPanelControl.updateProperty(datas, idName)
     this._onUpdateProperty.emit()
   }
   /** 获取节点数据 */

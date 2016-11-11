@@ -216,14 +216,14 @@ class ContentInfoViewModel {
   init(props, context) {
     this.props = props
     this.context = context
-    this.services = context.services
+    this.controls = context.controls
     this._styleModel = props.styleModel
     this._attrName = props.attrName
     this._mappingType = props.mappingType
     this._attrInfo = props.attrInfo
     this._mappingViewModel = props.mappingViewModel
-    const currentDataService = this.services.currentDataService
-    this.nodeDataModel = new DataModel(currentDataService).newNodeDataModel()
+    const currentDataControl = this.controls.currentDataControl
+    this.nodeDataModel = new DataModel(currentDataControl).newNodeDataModel()
     this._initProperties()
     this._attrInfo.setViewModel(this)
     this._attrName.setViewModel(this)
@@ -260,7 +260,7 @@ class ContentInfoViewModel {
         }
       }
     }
-    this.context.services.viewPanelService.update()
+    this.context.controls.viewPanelControl.update()
     this._attrInfo.update()
     this.updateBriefInfoType()
   }
@@ -284,7 +284,7 @@ class ContentInfoViewModel {
         this._styleModel.setPassthroughMapping(this._selectedAttrName)
       }
     }
-    this.context.services.viewPanelService.update()
+    this.context.controls.viewPanelControl.update()
     this._attrInfo.update()
     this.updateBriefInfoType()
   }
@@ -493,7 +493,7 @@ class AttrItemViewModel {
     } else {
       this._styleModel.removeDiscreteMapping(this._attrName, this._attrValue)
     }
-    this.context.services.viewPanelService.update()
+    this.context.controls.viewPanelControl.update()
     this._styleValue = value
     this._attrItem.update()
     this._contentInfoViewModel.updateBriefInfoType()

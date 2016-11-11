@@ -5,7 +5,7 @@ import _ from 'lodash'
 
 /**
  * 基本样式数据模型
- * @see currentBaseStyleService
+ * @see currentBaseStyleControl
  */
 export default class CytoscapeBaseStyle {
 

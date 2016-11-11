@@ -2,7 +2,7 @@ import $ from 'jquery'
 import Emitter from '../../base/emitter'
 
 /**
- * WindowPanel中的特殊面板
+ * WindowPanel中的特点面板名称
  */
 export const WindowPanelContainer = {
   menubar: 'menubar',
@@ -37,7 +37,7 @@ export default class WindowPanel {
   init(props, context) {
     this.props = props
     this.context = context
-    this.services = context.services
+    this.controls = context.controls
     this.container = props.container
     this._onDidResize = new Emitter()
     this.eleContainer = new Map()
@@ -56,14 +56,14 @@ export default class WindowPanel {
    * 注册命令
    */
   registerCommand() {
-    const commandService = this.services.commandService
-    commandService.registerCommand(WindowPanelCommand.showTable, {
+    const commandControl = this.controls.commandControl
+    commandControl.registerCommand(WindowPanelCommand.showTable, {
       args: null,
       handle: () => {
         this.showTable()
       }
     })
-    commandService.registerCommand(WindowPanelCommand.hideTable, {
+    commandControl.registerCommand(WindowPanelCommand.hideTable, {
       args: null,
       handle: () => {
         this.hideTable()
@@ -80,14 +80,14 @@ export default class WindowPanel {
   }
   /** 注册键盘事件 */
   registerEvent() {
-    const commandService = this.services.commandService
-    const keybindingService = this.services.keybindingService
-    keybindingService.bind(['alt+up'], function (e) {
-      commandService.runCommand(WindowPanelCommand.showTable)
+    const commandControl = this.controls.commandControl
+    const keybindingControl = this.controls.keybindingControl
+    keybindingControl.bind(['alt+up'], function (e) {
+      commandControl.runCommand(WindowPanelCommand.showTable)
       return false
     });
-    keybindingService.bind(['alt+down'], function (e) {
-      commandService.runCommand(WindowPanelCommand.hideTable)
+    keybindingControl.bind(['alt+down'], function (e) {
+      commandControl.runCommand(WindowPanelCommand.hideTable)
       return false
     });
   }

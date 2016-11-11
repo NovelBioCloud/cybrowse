@@ -1,15 +1,15 @@
 import {createListenerRegister} from '../../base/emitter'
-import StorageService from '../../workbench/storage/storageService'
+import StorageControl from '../../workbench/storage/storageControl'
 
 /**
  * 数据存储对象
  */
-const localStorage = StorageService.instance()
+const localStorage = StorageControl.instance()
 
 /**
  * 配置文件服务
  */
-class ConfigStorageService {
+class ConfigStorageControl {
   constructor(configName) {
     if(!configName || configName === '') {
       throw new Error('configName can not be null')
@@ -44,16 +44,16 @@ export default class ConfigModel {
    * @param configName 配置文件的唯一标识
    */
   constructor(configName) {
-    const localStorageService = new ConfigStorageService(configName)
-    this.localStorageService = localStorageService
+    const localStorageControl = new ConfigStorageControl(configName)
+    this.localStorageControl = localStorageControl
     this.init()
     this.save()
   }
   init() {
-    let data = this.localStorageService.load()
+    let data = this.localStorageControl.load()
     if (!data) {
       data = {}
-      this.localStorageService.save(this.data)
+      this.localStorageControl.save(this.data)
     }
     this.data = data
   }
@@ -84,6 +84,6 @@ export default class ConfigModel {
    * 保存为持久文件
    */
   save() {
-    this.localStorageService.save(this.data)
+    this.localStorageControl.save(this.data)
   }
 }

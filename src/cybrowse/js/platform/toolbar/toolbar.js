@@ -1,7 +1,9 @@
 import $ from 'jquery'
 import { ViewPanelCommand } from '../command/commands'
 
-/**工具栏 */
+/**
+ * 工具栏面板，菜单栏下面
+ */
 export default class Toolbar {
 
   constructor() { }
@@ -9,7 +11,7 @@ export default class Toolbar {
   init(props, context) {
     this.props = props
     this.context = context
-    this.services = context.services
+    this.controls = context.controls
     this.container = props.container
     this.render()
   }
@@ -26,15 +28,15 @@ export default class Toolbar {
       </div>
     `).appendTo($(this.props.container))
 
-    const commandService = this.services.commandService
+    const commandControl = this.controls.commandControl
     $el.find('.fn-center').click(() => {
-      commandService.runCommand(ViewPanelCommand.center)
+      commandControl.runCommand(ViewPanelCommand.center)
     })
     $el.find('.fn-zoom-out').click(() => {
-      commandService.runCommand(ViewPanelCommand.zoomOut)
+      commandControl.runCommand(ViewPanelCommand.zoomOut)
     })
     $el.find('.fn-zoom-in').click(() => {
-      commandService.runCommand(ViewPanelCommand.zoomIn)
+      commandControl.runCommand(ViewPanelCommand.zoomIn)
     })
   }
   destroy() {

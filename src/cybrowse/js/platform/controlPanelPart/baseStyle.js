@@ -2,7 +2,34 @@ import $ from 'jquery'
 import _ from 'lodash'
 import EventEmitter from 'events'
 
-
+/**
+ * BaseStyle，修改基本样式的面板，左侧编辑框的下拉菜单
+ */
+export default class BaseStyle extends EventEmitter {
+  constructor() {
+    super()
+  }
+  init(props, context) {
+    this.model = new BaseStyleModel()
+    this.model.init(props, context)
+    this.view = new BaseStyleView()
+    this.view.init({
+      container: props.container,
+      controller: this
+    }, context)
+    this.view.setModel(this.model)
+    this.setEntries(props.entries)
+  }
+  setEntries(entries, index) {
+    this.model.setEntries(entries, index)
+  }
+  add(entry) {
+    this.model.add(entry)
+  }
+  remove(entry) {
+    this.model.remove(entry)
+  }
+}
 /** 基础样式管理类数据模型 */
 class BaseStyleModel extends EventMitter {
   /**
@@ -151,7 +178,7 @@ class BaseStyleView extends EventEmitter {
       </select>
     `)({ entries: this.model.getEntries() }))
     this.$el.find('select').on('change', (e) => {
-      this.context.onChange && this.context.onChange(e.target.value)
+      this.props.onChange && this.props.onChange(e.target.value)
     })
   }
   add(...data) {
@@ -165,33 +192,5 @@ class BaseStyleView extends EventEmitter {
       disposable.dispose()
     })
     this.$el && this.$el.remove()
-  }
-}
-/**
- * BaseStyle，修改基本样式
- */
-export default class BaseStyle extends EventEmitter {
-  constructor() {
-    super()
-  }
-  init(props, context) {
-    this.model = new BaseStyleModel()
-    this.model.init(props, context)
-    this.view = new BaseStyleView()
-    this.view.init({
-      container: props.container,
-      controller: this
-    }, context)
-    this.view.setModel(this.model)
-    this.setEntries(props.entries)
-  }
-  setEntries(entries, index) {
-    this.model.setEntries(entries, index)
-  }
-  add(entry) {
-    this.model.add(entry)
-  }
-  remove(entry) {
-    this.model.remove(entry)
   }
 }

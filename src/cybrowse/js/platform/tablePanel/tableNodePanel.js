@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import _ from 'lodash'
 
-/** table 节点数据面板 */
+/** 界面下边的表格面板里节点数据面板 */
 export default class TableNodePanel {
 
   constructor() {

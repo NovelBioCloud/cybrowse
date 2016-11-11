@@ -4,7 +4,8 @@ import BootstrapDialog from 'bootstrap-dialog'
 import FileResolver from './fileResolver'
 
 /**
- * 文件导入类 
+ * 文件导入类
+ * 点击菜单栏中的文件导入，触发导入文件事件，调用该类实现文件导入
  */
 export default class FileImporter {
 
@@ -185,7 +186,7 @@ class View {
             }, 0)
             dialog.close()
           } else {
-            this.context.services.messageService.error(this.viewModel.message)
+            this.context.controls.messageControl.error(this.viewModel.message)
           }
         }
       }, {

@@ -6,24 +6,24 @@ export default class DataModel {
 
   /**
    * 构造函数
-   * @param currentDataService 当前数据样式服务
+   * @param currentDataControl 当前数据样式服务
    */
-  constructor(currentDataService) {
-    this._currentDataService = currentDataService
+  constructor(currentDataControl) {
+    this._currentDataControl = currentDataControl
   }
   /**
    * 创建节点模型
    * @return 节点数据模型
    */
   newNodeDataModel() {
-    return new NodeDataModel(this._currentDataService)
+    return new NodeDataModel(this._currentDataControl)
   }
   /**
    * 创建连线模型
    * @return 样式数据模型
    */
   newEdgeDataModel() {
-    return new EdgeDataModel(this._currentDataService)
+    return new EdgeDataModel(this._currentDataControl)
   }
 }
 /**
@@ -33,10 +33,10 @@ export default class DataModel {
 class BaseModel {
   /**
    * 构造函数
-   * @param currentDataService 当前数据样式服务
+   * @param currentDataControl 当前数据样式服务
    */
-  constructor(currentDataService) {
-    this._currentDataService = currentDataService
+  constructor(currentDataControl) {
+    this._currentDataControl = currentDataControl
   }
   /**
    * 获取属性名 
@@ -69,17 +69,17 @@ class BaseModel {
 class NodeDataModel extends BaseModel {
   /**
    * 构造函数
-   * @param currentDataService 当前数据样式服务
+   * @param currentDataControl 当前数据样式服务
    */
-  constructor(currentDataService) {
-    super(currentDataService)
+  constructor(currentDataControl) {
+    super(currentDataControl)
   }
   /**
    * 获取节点数据
    * @return 获取当前节点数据
    */
   getData() {
-    return this._currentDataService.getNodeData()
+    return this._currentDataControl.getNodeData()
   }
 }
 /**
@@ -89,16 +89,16 @@ class NodeDataModel extends BaseModel {
 class EdgeDataModel extends BaseModel {
    /**
    * 构造函数
-   * @param currentDataService 当前数据样式服务
+   * @param currentDataControl 当前数据样式服务
    */
-  constructor(currentDataService) {
-    super(currentDataService)
+  constructor(currentDataControl) {
+    super(currentDataControl)
   }
   /**
    * 获取节点数据
    * @return 获取当前连线数据
    */
   getData() {
-    return this._currentDataService.getEdgeData()
+    return this._currentDataControl.getEdgeData()
   }
 }

@@ -13,6 +13,7 @@ const ControlPanelContainer = {
 }
 /**
  * 控制面板，主要创建前台视图
+ * 前台左侧的编辑面板，包括设置样式选择，节点和连线的数据编辑
  */
 export default class ControlPanel {
   constructor() {

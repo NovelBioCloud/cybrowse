@@ -3,7 +3,10 @@ import _ from 'lodash'
 import BootstrapDialog from 'bootstrap-dialog'
 import PropertyResolver from './propertyResolver'
 
-/**文件导入类 */
+/**
+ * 属性文件导入类
+ * 数据导入后，只有连线，起始点和结束点，通过该类添加节点的属性
+ */
 export default class PropertyImporter {
   constructor() {
 
@@ -145,7 +148,7 @@ class View {
             }, 0)
             dialog.close()
           } else {
-            this.context.services.messageService.error(this.viewModel.message)
+            this.context.controls.messageControl.error(this.viewModel.message)
           }
         }
       }, {

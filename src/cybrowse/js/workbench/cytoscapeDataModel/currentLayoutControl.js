@@ -6,7 +6,7 @@ import CytoscapeLayout from '../../platform/cytoscapeDataModel/cytoscapeLayout'
 /**
  * 布局服务，包括了当前布局数据，以及修改布局数据的功能
  */
-export default class CurrentLayoutService {
+export default class CurrentLayoutControl {
   constructor() {
     this._onChange = new Emitter()
     this.cytoscapeLayout = new CytoscapeLayout()

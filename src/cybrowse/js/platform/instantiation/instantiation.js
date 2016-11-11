@@ -1,10 +1,10 @@
 
-import WindowService from '../../workbench/window/windowService'
+import WindowControl from '../../workbench/window/windowControl'
 import $ from 'jquery'
 
 /** 
  * 项目实例
- * 该类暂时没有特别的功能，未来有扩展可以在此处扩展，例如扩展多个WindowService，可以实现多个网络图的展示
+ * 该类暂时没有特别的功能，未来有扩展可以在此处扩展，例如扩展多个WindowControl，可以实现多个网络图的展示
  */
 export default class Instantiation {
 
@@ -14,16 +14,16 @@ export default class Instantiation {
     this.props = props
     this.context = context
     this.onClose = props.onClose
-    this.initServices()
+    this.initControls()
 
   }
-  initServices() {
-    this.services = this.context.services
-    const windowService = new WindowService()
-    this.services.windowService = windowService
-    windowService.init({ onClose: this.onClose }, this.context)
-    windowService.ready()
-    windowService.show()
+  initControls() {
+    this.controls = this.context.controls
+    const windowControl = new WindowControl()
+    this.controls.windowControl = windowControl
+    windowControl.init({ onClose: this.onClose }, this.context)
+    windowControl.ready()
+    windowControl.show()
   }
 
 }

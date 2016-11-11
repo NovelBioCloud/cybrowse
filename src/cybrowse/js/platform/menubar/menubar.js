@@ -6,7 +6,7 @@ import SaveMenu from './saveMenu'
 import StyleMenu from './styleMenu'
 
 /**
- * 菜单类
+ * 菜单栏中的菜单面板，包括了各种子面板
  */
 export default class Menubar {
 

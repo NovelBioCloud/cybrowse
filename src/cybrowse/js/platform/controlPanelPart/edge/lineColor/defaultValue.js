@@ -4,7 +4,7 @@ import EventEmitter from 'events'
 import Color from 'color'
 import { NodeStyleName, EdgeStyleName, NodeStyleModel, EdgeStyleModel } from '../../../../base/cytoscape/styles'
 /**
- * 默认值修改类
+ * lineColor 的默认值修改面板
  */
 export default class DefaultValue {
   init(props, context) {

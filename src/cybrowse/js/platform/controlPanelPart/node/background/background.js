@@ -29,10 +29,10 @@ export default class Background {
     backgroundView.init({
       container: this.props.container
     })
-    const currentStyleService = this.context.services.currentStyleService
-    const viewPanelService = this.context.services.viewPanelService
-    const styleModel = new NodeStyleModel(NodeStyleName.backgroundColor, currentStyleService)
-    const dataModel = new DataModel(currentStyleService)
+    const currentStyleControl = this.context.controls.currentStyleControl
+    const viewPanelControl = this.context.controls.viewPanelControl
+    const styleModel = new NodeStyleModel(NodeStyleName.backgroundColor, currentStyleControl)
+    const dataModel = new DataModel(currentStyleControl)
     const defaultValue = new DefaultValue()
     this.defaultValue = defaultValue
     defaultValue.init({
@@ -43,15 +43,15 @@ export default class Background {
       callbacks: {
         onChange: (value) => {
           styleModel.setDefaultValue(value)
-          viewPanelService.update()
+          viewPanelControl.update()
         },
         onRemove: () => {
           styleModel.removeDefaultValue()
-          viewPanelService.update()
+          viewPanelControl.update()
         },
         onReset: () => {
           styleModel.setDefaultValue("#FF0000")
-          viewPanelService.update()
+          viewPanelControl.update()
         }
       }
     }, context)

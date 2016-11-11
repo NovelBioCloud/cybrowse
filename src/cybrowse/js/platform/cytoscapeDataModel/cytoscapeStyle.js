@@ -1,19 +1,19 @@
 /**
  * 当前样式数据服务的定义
- * @see currentStyleService
+ * @see currentStyleControl
  */
 export default class CytoscapeStyle {
   init(props, context) {
     this.props = props
     this.context = context
-    const currentBaseStyleService = context.services.currentBaseStyleService
-    this.currentBaseStyleService = currentBaseStyleService
-    this._style = this.currentBaseStyleService.getStyle()
+    const currentBaseStyleControl = context.controls.currentBaseStyleControl
+    this.currentBaseStyleControl = currentBaseStyleControl
+    this._style = this.currentBaseStyleControl.getStyle()
   }
 
   /** 更新当前的样式数据 */
   updateBaseStyle() {
-    this._style = this.currentBaseStyleService.getStyle()
+    this._style = this.currentBaseStyleControl.getStyle()
   }
   /**
    * 获取当前样式数据

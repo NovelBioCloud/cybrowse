@@ -34,7 +34,7 @@ export default class Bypass {
     }, context)
     bypassViewModel.ready()
     this.bypassViewModel = bypassViewModel
-    const viewPanelService = this.context.services.viewPanelService
+    const viewPanelControl = this.context.controls.viewPanelControl
     const eventName = 'tap'
     const listener = (event) => {
       try {
@@ -48,10 +48,10 @@ export default class Bypass {
         bypassViewModel.id = null
       }
     }
-    viewPanelService.on(eventName, listener)
+    viewPanelControl.on(eventName, listener)
     this._toDispose.push({
       dispose: () => {
-        viewPanelService.removeListener(eventName, listener)
+        viewPanelControl.removeListener(eventName, listener)
       }
     })
   }
@@ -112,7 +112,7 @@ class BypassViewModel {
       } else {
         this._styleModel.removeBypass(this._id)
       }
-      this.context.services.viewPanelService.update()
+      this.context.controls.viewPanelControl.update()
     }
     this._bypassView.update()
   }

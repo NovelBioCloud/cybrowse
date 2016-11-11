@@ -1,6 +1,8 @@
 import createCytoscape from 'cytoscape'
 import $ from 'jquery'
-/**cytoscape包装类 */
+/**
+ * cytoscape包装类，cytoscape数据图的展示类
+ */
 export default class Cytoscape {
 
   init(props, context) {

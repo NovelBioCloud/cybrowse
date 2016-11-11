@@ -1,10 +1,14 @@
 import $ from 'jquery'
-import CommandService from '../../workbench/command/commandService'
-import KeybindingService from '../../workbench/keybinding/keybindingService'
+import CommandControl from '../../workbench/command/commandControl'
+import KeybindingControl from '../../workbench/keybinding/keybindingControl'
 import {StyleMenuCommands} from '../command/commands'
 
 /**
- * 样式修改相关menu
+ * 菜单栏中样式修改相关的菜单
+ * 功能：
+ *  新建
+ *  导入
+ *  导出
  */
 export default class StyleMenu {
 
@@ -13,7 +17,7 @@ export default class StyleMenu {
     this.context = context
     let container = props.container
     this.container = container
-    this.initServices()
+    this.initControls()
     this.render()
     this.registerCommand()
     this.registerListener()
@@ -34,19 +38,19 @@ export default class StyleMenu {
     $el.appendTo($(this.container))
     this.el = $el.get(0)
   }
-  initServices() {
-    const services = Object.assign({}, this.context.services)
-    this.services = services
+  initControls() {
+    const controls = Object.assign({}, this.context.controls)
+    this.controls = controls
     const context = {
-      services: services
+      controls: controls
     }
   }
   registerCommand() {
-    const commandService = this.services.commandService
+    const commandControl = this.controls.commandControl
     /**
      * 创建新的样式
      */
-    commandService.registerCommand(StyleMenuCommands.newStyle, {
+    commandControl.registerCommand(StyleMenuCommands.newStyle, {
       args: null,
       handle: () => {
         this.newStyle()
@@ -55,7 +59,7 @@ export default class StyleMenu {
     /**
      * 导入样式
      */
-    commandService.registerCommand(StyleMenuCommands.importStyle, {
+    commandControl.registerCommand(StyleMenuCommands.importStyle, {
       args: null,
       handle: () => {
         this.importStyle()
@@ -64,7 +68,7 @@ export default class StyleMenu {
     /**
      * 导出样式
      */
-    commandService.registerCommand(StyleMenuCommands.exportStyle, {
+    commandControl.registerCommand(StyleMenuCommands.exportStyle, {
       args: null,
       handle: () => {
         this.exportStyle()
@@ -83,23 +87,23 @@ export default class StyleMenu {
   /** 注册监听函数 */
   registerListener() {
     const $el = $(this.el)
-    const commandService = this.services.commandService
-    const keybindingService = this.services.keybindingService
+    const commandControl = this.controls.commandControl
+    const keybindingControl = this.controls.keybindingControl
     /**
      * 快捷键注册
      */
-    keybindingService.bind(['alt+t'], function (e) {
+    keybindingControl.bind(['alt+t'], function (e) {
       $el.find('.fn-style-menu').trigger('click')
       return false
     });
     $el.find('.fn-new-style').on('click', () => {
-      commandService.runCommand(StyleMenuCommands.newStyle)
+      commandControl.runCommand(StyleMenuCommands.newStyle)
     })
     $el.find('.fn-import-style').on('click', () => {
-      commandService.runCommand(StyleMenuCommands.importStyle)
+      commandControl.runCommand(StyleMenuCommands.importStyle)
     })
     $el.find('.fn-export-style').on('click', () => {
-      commandService.runCommand(StyleMenuCommands.exportStyle)
+      commandControl.runCommand(StyleMenuCommands.exportStyle)
     })
   }
   destroy() {

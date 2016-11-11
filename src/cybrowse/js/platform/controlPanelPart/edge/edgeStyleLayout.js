@@ -6,7 +6,7 @@ export const EdgeStyleLayoutContainer = {
   lineColor: 'lineColor'
 }
 /**
- * 连线样式视图
+ * 连线样式视图面板
  */
 export default class EdgeStyleLayout {
   constructor() {

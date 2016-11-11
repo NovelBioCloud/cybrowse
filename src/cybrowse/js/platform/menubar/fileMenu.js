@@ -2,7 +2,13 @@ import $ from 'jquery'
 import FileSelector from '../../base/fileSelector'
 import { FileMenuCommands } from '../command/commands'
 
-/** 文件按钮 */
+/** 
+ * 菜单栏中的文件按钮
+ * 包括 新建文件
+ * 打开文件
+ * 导入网络文件
+ * 导入属性文件等功能
+ */
 export default class FileMenu {
 
   init(props, context) {
@@ -10,7 +16,7 @@ export default class FileMenu {
     this.context = context
     let container = props.container
     this.container = container
-    this.initServices()
+    this.initControls()
     this.render()
     this.registerCommand()
     this.registerListener()
@@ -32,22 +38,22 @@ export default class FileMenu {
     $el.appendTo($(this.container))
     this.el = $el.get(0)
   }
-  initServices() {
-    const services = Object.assign({}, this.context.services)
-    this.services = services
+  initControls() {
+    const controls = Object.assign({}, this.context.controls)
+    this.controls = controls
     const context = {
-      services: services
+      controls: controls
     }
   }
   registerCommand() {
-    const commandService = this.services.commandService
-    commandService.registerCommand(FileMenuCommands.newFile, {
+    const commandControl = this.controls.commandControl
+    commandControl.registerCommand(FileMenuCommands.newFile, {
       args: null,
       handle: () => {
         this.newFile()
       }
     })
-    commandService.registerCommand(FileMenuCommands.openFile, {
+    commandControl.registerCommand(FileMenuCommands.openFile, {
       args: null,
       handle: () => {
         this.openFile()
@@ -61,7 +67,7 @@ export default class FileMenu {
 
   }
   openFile() {
-    const currentDataService = this.services.currentDataService
+    const currentDataControl = this.controls.currentDataControl
     FileSelector.show({
       accept: ".jpg, .png, .jpeg, .tiff|images/*",
       onChange: (files) => {
@@ -69,7 +75,7 @@ export default class FileMenu {
       }
     })
     // 此处是添加模拟数据
-    currentDataService.setData([{
+    currentDataControl.setData([{
       "data": {
         "id": "68",
         "activityRatio": 0.0,
@@ -196,24 +202,24 @@ export default class FileMenu {
   }
   registerListener() {
     const $el = $(this.el)
-    const commandService = this.services.commandService
-    const keybindingService = this.services.keybindingService
-    keybindingService.bind(['alt+f'], function (e) {
+    const commandControl = this.controls.commandControl
+    const keybindingControl = this.controls.keybindingControl
+    keybindingControl.bind(['alt+f'], function (e) {
       $el.find('.fn-file-menu').trigger('click')
       return false
     });
 
     $el.find('.fn-new-file').on('click', () => {
-      commandService.runCommand(FileMenuCommands.newFile)
+      commandControl.runCommand(FileMenuCommands.newFile)
     })
     $el.find('.fn-open-file').on('click', () => {
-      commandService.runCommand(FileMenuCommands.openFile)
+      commandControl.runCommand(FileMenuCommands.openFile)
     })
     $el.find('.fn-import-file').on('click', () => {
-      commandService.runCommand(FileMenuCommands.importFile)
+      commandControl.runCommand(FileMenuCommands.importFile)
     })
     $el.find('.fn-import-property').on('click', () => {
-      commandService.runCommand(FileMenuCommands.importProperty)
+      commandControl.runCommand(FileMenuCommands.importProperty)
     })
   }
   destroy() {

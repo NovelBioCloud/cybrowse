@@ -4,7 +4,10 @@ import { Readable, Writable } from 'stream'
 import csv from 'csv'
 import Readline from 'readline'
 import through2 from 'through2'
-/** 文件解析类 */
+/** 
+ * 文件解析类
+ * 将excel、txt等文件解析为 cytoscape需要的数据 
+ */
 export default class FileResolver {
   init(props, context) {
     const fileModel = props.fileModel

@@ -12,8 +12,8 @@ const DatasourceStrategy = {
   /**总是只显示选择的数据 */
   select: 'select'
 }
-/**table数据源 */
-export default class TableDataSourceService {
+/** table数据源，依赖当前节点数据和样式数据 */
+export default class TableDataSourceControl {
   constructor() {
     this._toDispose = []
     this._onNodeChange = new Emitter()
@@ -24,6 +24,7 @@ export default class TableDataSourceService {
   get datasourceStrategy() {
     return this._datasourceStrategy
   }
+  /** 表格数据的显示策略 */
   set datasourceStrategy(value) {
     this._datasourceStrategy = value
     this.updateData()
@@ -42,23 +43,23 @@ export default class TableDataSourceService {
   }
   ready() {
     const context = this.context
-    this.currentDataService = context.services.currentDataService
-    this._toDispose.push(this.currentDataService.onChange(() => {
+    this.currentDataControl = context.controls.currentDataControl
+    this._toDispose.push(this.currentDataControl.onChange(() => {
       this.updateData()
     }))
-    this._toDispose.push(this.currentDataService.onUpdateProperty(() => {
+    this._toDispose.push(this.currentDataControl.onUpdateProperty(() => {
       this.updateData()
     }))
-    this.viewPanelService = context.services.viewPanelService
+    this.viewPanelControl = context.controls.viewPanelControl
 
     _.each(['tapend'], (eventName) => {
       const listener = (event) => {
         this.registerViewPanelListener(eventName, event)
       }
-      this.viewPanelService.on(eventName, listener)
+      this.viewPanelControl.on(eventName, listener)
       this._toDispose.push({
         dispose: () => {
-          this.viewPanelService.off(eventName, listener)
+          this.viewPanelControl.off(eventName, listener)
         }
       })
     })
@@ -72,8 +73,8 @@ export default class TableDataSourceService {
     dispose(this._toDispose)
   }
   updateData(cy) {
-    let nodeData = this.currentDataService.getNodeData()
-    let edgeData = this.currentDataService.getEdgeData()
+    let nodeData = this.currentDataControl.getNodeData()
+    let edgeData = this.currentDataControl.getEdgeData()
     if (cy) {
       /**获取node数据 */
       const selectedNode = cy.elements("node:selected")

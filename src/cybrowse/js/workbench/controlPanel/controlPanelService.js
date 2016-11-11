@@ -2,9 +2,9 @@ import $ from 'jquery'
 
 import { dispose } from '../../base/lifecycle'
 import ControlPanel from '../../platform/controlPanel/controlPanel'
-import BaseStyleService from './baseStyleService'
-import NodeStyleService from './nodeStyleService'
-import EdgeStyleService from './edgeStyleService'
+import BaseStylePanel from './baseStylePanel'
+import NodeStylePanel from './nodeStylePanel'
+import EdgeStylePanel from './edgeStylePanel'
 
 /**
  * 控制面板服务（controlPanel的封装类）
@@ -15,35 +15,35 @@ import EdgeStyleService from './edgeStyleService'
  *  viewPanel-cytoscape数据视图面板
  *  tablePanel-表格数据显示面板
  */
-export default class ControlPanelService {
+export default class ControlPanelControl {
   constructor() {
     this._toDispose = []
   }
   init(props, context) {
     this.props = props
     this.context = context
-    let currentBaseStyleService = context.services.currentBaseStyleService
-    let currentDataService = context.services.currentDataService
-    let currentStyleService = context.services.currentStyleService
-    let baseStyleService = new BaseStyleService()
-    let nodeStyleService = new NodeStyleService()
-    let edgeStyleService = new EdgeStyleService()
+    let currentBaseStyleControl = context.controls.currentBaseStyleControl
+    let currentDataControl = context.controls.currentDataControl
+    let currentStyleControl = context.controls.currentStyleControl
+    let baseStylePanel = new BaseStylePanel()
+    let nodeStylePanel = new NodeStylePanel()
+    let edgeStylePanel = new EdgeStylePanel()
     let controlPanel = new ControlPanel()
     controlPanel.init({
       container: this.props.container,
     }, context)
-    baseStyleService.init({
-      currentBaseStyleService,
+    baseStylePanel.init({
+      currentBaseStyleControl,
       container: controlPanel.getContainer('baseStyle')
     }, context)
-    nodeStyleService.init({
-      currentDataService,
-      currentStyleService,
+    nodeStylePanel.init({
+      currentDataControl,
+      currentStyleControl,
       container: controlPanel.getContainer('node')
     }, context)
-    edgeStyleService.init({
-      currentDataService,
-      currentStyleService,
+    edgeStylePanel.init({
+      currentDataControl,
+      currentStyleControl,
       container: controlPanel.getContainer('edge')
     }, context)
 

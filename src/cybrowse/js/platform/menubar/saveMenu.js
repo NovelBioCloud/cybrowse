@@ -1,11 +1,11 @@
 import $ from 'jquery'
 import saveAs from 'file-saver'
-import CommandService from '../../workbench/command/commandService'
-import KeybindingService from '../../workbench/keybinding/keybindingService'
+import CommandControl from '../../workbench/command/commandControl'
+import KeybindingControl from '../../workbench/keybinding/keybindingControl'
 import { SaveMenuCommand } from '../command/commands'
 
 /**
- * 保存图片、样式相关的按钮
+ * 菜单栏中的保存图片、样式相关的菜单
  */
 export default class SaveMenu {
 
@@ -14,7 +14,7 @@ export default class SaveMenu {
     this.context = context
     let container = props.container
     this.container = container
-    this.initServices()
+    this.initControls()
     this.render()
     this.registerCommand()
     this.registerListener()
@@ -38,11 +38,11 @@ export default class SaveMenu {
     $el.appendTo($(this.container))
     this.el = $el.get(0)
   }
-  initServices() {
-    const services = Object.assign({}, this.context.services)
-    this.services = services
+  initControls() {
+    const controls = Object.assign({}, this.context.controls)
+    this.controls = controls
     const context = {
-      services: services
+      controls: controls
     }
   }
   registerCommand() {
@@ -51,29 +51,29 @@ export default class SaveMenu {
 
   registerListener() {
     const $el = $(this.el)
-    const commandService = this.services.commandService
-    const keybindingService = this.services.keybindingService
-    keybindingService.bind(['alt+s'], function (e) {
+    const commandControl = this.controls.commandControl
+    const keybindingControl = this.controls.keybindingControl
+    keybindingControl.bind(['alt+s'], function (e) {
       $el.find('.fn-file-menu').trigger('click')
       return false
     });
     $el.find('.fn-save-png').on('click', () => {
-      commandService.runCommand(SaveMenuCommand.savePng)
+      commandControl.runCommand(SaveMenuCommand.savePng)
     })
     $el.find('.fn-save-jpg').on('click', () => {
-      commandService.runCommand(SaveMenuCommand.saveJpg)
+      commandControl.runCommand(SaveMenuCommand.saveJpg)
     })
     $el.find('.fn-save-network-view').on('click', () => {
-      commandService.runCommand(SaveMenuCommand.saveNetworkAndView)
+      commandControl.runCommand(SaveMenuCommand.saveNetworkAndView)
     })
     $el.find('.fn-save-network').on('click', () => {
-      commandService.runCommand(SaveMenuCommand.saveNetwork)
+      commandControl.runCommand(SaveMenuCommand.saveNetwork)
     })
     $el.find('.fn-save-style').on('click', () => {
-      commandService.runCommand(SaveMenuCommand.saveStyle)
+      commandControl.runCommand(SaveMenuCommand.saveStyle)
     })
     $el.find('.fn-save-csv').on('click', () => {
-      commandService.runCommand(SaveMenuCommand.saveCsv)
+      commandControl.runCommand(SaveMenuCommand.saveCsv)
     })
   }
   destroy() {

@@ -4,7 +4,7 @@ import LineColor from './edge/lineColor/lineColor'
 import EdgeStyleLayout, { EdgeStyleLayoutContainer } from './edge/edgeStyleLayout'
 
 /**
- * 连线的样式管理类 
+ * 连线的样式管理类 ，左侧编辑框的edge切换面板的内容
  */
 export default class EdgeStyle {
   constructor() {

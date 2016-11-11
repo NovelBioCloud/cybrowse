@@ -6,7 +6,7 @@ import EventEmitter from 'events'
 const configModel = new ConfigModel('cybrowse')
 
 /** 配置文件服务 */
-export default class ConfigService {
+export default class ConfigControl {
   constructor() {
     this._emitter = new EventEmitter()
 

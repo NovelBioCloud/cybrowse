@@ -1,7 +1,9 @@
 import $ from 'jquery'
 import { HelpMenuCommands } from '../command/commands'
 
-/** 帮助按钮 */
+/** 
+ * 菜单栏中的帮助按钮
+ */
 export default class HelpMenu {
 
   init(props, context) {
@@ -9,7 +11,7 @@ export default class HelpMenu {
     this.context = context
     let container = props.container
     this.container = container
-    this.initServices()
+    this.initControls()
     this.render()
     this.registerCommand()
     this.registerListener()
@@ -28,11 +30,11 @@ export default class HelpMenu {
     $el.appendTo($(this.container))
     this.el = $el.get(0)
   }
-  initServices() {
-    const services = Object.assign({}, this.context.services)
-    this.services = services
+  initControls() {
+    const controls = Object.assign({}, this.context.controls)
+    this.controls = controls
     const context = {
-      services: services
+      controls: controls
     }
   }
   registerCommand() {
@@ -40,14 +42,14 @@ export default class HelpMenu {
   }
   registerListener() {
     const $el = $(this.el)
-    const commandService = this.services.commandService
-    const keybindingService = this.services.keybindingService
-    keybindingService.bind(['alt+f'], function (e) {
+    const commandControl = this.controls.commandControl
+    const keybindingControl = this.controls.keybindingControl
+    keybindingControl.bind(['alt+f'], function (e) {
       $el.find('.fn-help-menu').trigger('click')
       return false
     });
     $el.find('.fn-new-help').on('click', () => {
-      commandService.runCommand(HelpMenuCommands.newHelp)
+      commandControl.runCommand(HelpMenuCommands.newHelp)
     })
 
   }

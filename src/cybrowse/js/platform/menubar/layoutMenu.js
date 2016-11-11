@@ -1,7 +1,9 @@
 import $ from 'jquery'
 import { LayoutMenuCommands } from '../command/commands'
 /**
- * 布局按钮类
+ * 菜单栏中的布局按钮类
+ * 包括功能：
+ *  变换各种布局
  */
 export default class LayoutMenu {
 
@@ -10,7 +12,7 @@ export default class LayoutMenu {
     this.context = context
     let container = props.container
     this.container = container
-    this.initServices()
+    this.initControls()
     this.render()
     this.registerCommand()
     this.registerListener()
@@ -26,8 +28,8 @@ export default class LayoutMenu {
       </div>
     `)
     $el.appendTo($(this.container))
-    const currentLayoutService = this.services.currentLayoutService
-    const layoutEntries = currentLayoutService.getLayoutEntries()
+    const currentLayoutControl = this.controls.currentLayoutControl
+    const layoutEntries = currentLayoutControl.getLayoutEntries()
     layoutEntries.forEach((layout) => {
       const $menu = $(`
         <li>
@@ -38,22 +40,22 @@ export default class LayoutMenu {
        `
       ).appendTo($el.find('.fn-menu-items'))
       $menu.find('a').click(() => {
-        currentLayoutService.changeLayout(layout.name)
+        currentLayoutControl.changeLayout(layout.name)
         this.changeActiveLayout(layout)
       })
     })
     this.$el = $el
-    this.changeActiveLayout(currentLayoutService.getLayout())
+    this.changeActiveLayout(currentLayoutControl.getLayout())
   }
   changeActiveLayout(layout) {
 
 
   }
-  initServices() {
-    const services = Object.assign({}, this.context.services)
-    this.services = services
+  initControls() {
+    const controls = Object.assign({}, this.context.controls)
+    this.controls = controls
     const context = {
-      services: services
+      controls: controls
     }
   }
   registerCommand() {
@@ -63,8 +65,8 @@ export default class LayoutMenu {
   registerListener() {
 
     const $el = this.$el
-    const keybindingService = this.services.keybindingService
-    keybindingService.bind(['alt+l'], function (e) {
+    const keybindingControl = this.controls.keybindingControl
+    keybindingControl.bind(['alt+l'], function (e) {
       $el.find('.fn-layout-menu').trigger('click')
 
       return false

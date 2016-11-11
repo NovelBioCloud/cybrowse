@@ -2,11 +2,11 @@ import $ from 'jquery'
 import _ from 'lodash'
 import Lifecycle from '../base/lifecycle'
 
-import InstantiationService from './instantiation/instantiationService'
-import CommandService from './command/commandService'
-import KeybindingService from './keybinding/keybindingService'
-import NationalLanguageService from './nationalLanguage/nationalLanguageService'
-import StorageService from './storage/storageService'
+import InstantiationControl from './instantiation/instantiationControl'
+import CommandControl from './command/commandControl'
+import KeybindingControl from './keybinding/keybindingControl'
+import NationalLanguageControl from './nationalLanguage/nationalLanguageControl'
+import StorageControl from './storage/storageControl'
 
 /**
  * 启动方法
@@ -14,24 +14,24 @@ import StorageService from './storage/storageService'
 export default function start() {
 
 
-  let instantiationService = new InstantiationService()
-  let commandService = new CommandService()
-  let keybindingService = KeybindingService.instance()
-  let storageService = StorageService.instance()
-  let nationalLanguageService = new NationalLanguageService()
+  let instantiationControl = new InstantiationControl()
+  let commandControl = new CommandControl()
+  let keybindingControl = KeybindingControl.instance()
+  let storageControl = StorageControl.instance()
+  let nationalLanguageControl = new NationalLanguageControl()
   
   /** 析构函数，销毁服务 */
-  let disposeService = () => {
-    Lifecycle.dispose([commandService, keybindingService, storageService, nationalLanguageService])
+  let disposeControl = () => {
+    Lifecycle.dispose([commandControl, keybindingControl, storageControl, nationalLanguageControl])
   }
-  instantiationService.init({
-    onClose: disposeService
+  instantiationControl.init({
+    onClose: disposeControl
   }, {
-      services: {
-        commandService,
-        keybindingService,
-        nationalLanguageService,
-        storageService
+      controls: {
+        commandControl,
+        keybindingControl,
+        nationalLanguageControl,
+        storageControl
       }
     })
 

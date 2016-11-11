@@ -3,13 +3,13 @@ import TableNodePanel from './tableNodePanel'
 import TableEdgePanel from './tableEdgePanel'
 import TableTabPanel from './tableTabPanel'
 
-/** table面板 */
+/** 界面下边的表格面板 */
 export default class TablePane {
 
   init(props, context) {
     this.props = props
     this.context = context
-    this.services = this.context.services
+    this.controls = this.context.controls
     /** 创建一个 tab */
     const tableTabPanel = new TableTabPanel()
     tableTabPanel.init({

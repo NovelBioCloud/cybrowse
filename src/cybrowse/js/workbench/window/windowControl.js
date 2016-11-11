@@ -4,25 +4,26 @@ import {
 import Emitter from '../../base/emitter'
 import $ from 'jquery'
 import WindowPanel, { WindowPanelContainer } from '../../platform/window/windowPanel'
-import MessageService from '../messageService/messageService'
-import ToolbarService from '../toolbar/toolbarService'
-import ViewPanelService from '../viewPanel/viewPanelService'
-import ControlPanelService from '../controlPanel/controlPanelService'
-import TablePanelService from '../tablePanel/tablePanelService'
-import TableDatasourceService from '../tablePanel/tableDatasourceService'
-import MenubarService from '../menubar/menubarService'
-import CurrentBaseStyleService from '../cytoscapeDataModel/currentBaseStyleService'
-import CurrentDataService from '../cytoscapeDataModel/currentDataService'
-import CurrentStyleService from '../cytoscapeDataModel/currentStyleService'
-import CurrentLayoutService from '../cytoscapeDataModel/currentLayoutService'
+import MessageControl from '../messageControl/messageControl'
+import ToolbarControl from '../toolbar/toolbarControl'
+import ViewPanelControl from '../viewPanel/viewPanelControl'
+import ControlPanelControl from '../controlPanel/controlPanelControl'
+import TablePanelControl from '../tablePanel/tablePanelControl'
+import TableDatasourceControl from '../tablePanel/tableDatasourceControl'
+import MenubarControl from '../menubar/menubarControl'
+import CurrentBaseStyleControl from '../cytoscapeDataModel/currentBaseStyleControl'
+import CurrentDataControl from '../cytoscapeDataModel/currentDataControl'
+import CurrentStyleControl from '../cytoscapeDataModel/currentStyleControl'
+import CurrentLayoutControl from '../cytoscapeDataModel/currentLayoutControl'
 import _ from 'lodash'
 import { dispose } from '../../base/lifecycle'
 import cytoscapeEvents from '../../platform/constants/cytoscapeEvents'
 
 /**
- * 实际业务运行服务
+ * 实际业务运行服务，
+ * 构造数据服务和视图服务，组装视图服务的功能
  */
-export default class WindowService extends EventEmitter {
+export default class WindowControl extends EventEmitter {
   constructor(container) {
     super()
     this._toDispose = []
@@ -37,81 +38,81 @@ export default class WindowService extends EventEmitter {
 
   }
   ready() {
-    this.initServices()
+    this.initControls()
     this.registerCommand()
     this.registerListener()
   }
   get onDidResize() {
     return this._onResize.event
   }
-  initServices() {
+  initControls() {
 
-    const currentBaseStyleService = new CurrentBaseStyleService()
-    const currentStyleService = new CurrentStyleService()
-    const currentDataService = new CurrentDataService()
-    const currentLayoutService = new CurrentLayoutService()
+    const currentBaseStyleControl = new CurrentBaseStyleControl()
+    const currentStyleControl = new CurrentStyleControl()
+    const currentDataControl = new CurrentDataControl()
+    const currentLayoutControl = new CurrentLayoutControl()
     const windowPanel = new WindowPanel()
-    const menubarService = new MenubarService()
-    const toolbarService = new ToolbarService()
-    const viewPanelService = new ViewPanelService()
-    const controlPanelService = new ControlPanelService()
-    const tablePanelService = new TablePanelService()
-    const tableDatasourceService = new TableDatasourceService()
-    const messageService = MessageService.instance()
+    const menubarControl = new MenubarControl()
+    const toolbarControl = new ToolbarControl()
+    const viewPanelControl = new ViewPanelControl()
+    const controlPanelControl = new ControlPanelControl()
+    const tablePanelControl = new TablePanelControl()
+    const tableDatasourceControl = new TableDatasourceControl()
+    const messageControl = MessageControl.instance()
     this.windowPanel = windowPanel
-    this._toDispose.concat([menubarService, toolbarService,
-      viewPanelService, currentBaseStyleService, controlPanelService, tablePanelService,
-      tableDatasourceService, currentDataService, currentStyleService, currentLayoutService
+    this._toDispose.concat([menubarControl, toolbarControl,
+      viewPanelControl, currentBaseStyleControl, controlPanelControl, tablePanelControl,
+      tableDatasourceControl, currentDataControl, currentStyleControl, currentLayoutControl
     ])
-    const services = Object.assign({
-      currentDataService,
-      currentStyleService,
-      currentLayoutService,
-      currentBaseStyleService,
-      menubarService,
-      toolbarService,
-      viewPanelService,
-      controlPanelService,
-      tablePanelService,
-      tableDatasourceService,
-      messageService
-    }, this.context.services)
-    this.services = services
+    const controls = Object.assign({
+      currentDataControl,
+      currentStyleControl,
+      currentLayoutControl,
+      currentBaseStyleControl,
+      menubarControl,
+      toolbarControl,
+      viewPanelControl,
+      controlPanelControl,
+      tablePanelControl,
+      tableDatasourceControl,
+      messageControl
+    }, this.context.controls)
+    this.controls = controls
     const context = {
-      services: services
+      controls: controls
     }
 
     const container = $('<div/>').appendTo(document.body).get(0)
     windowPanel.init({ container: container }, context)
     windowPanel.ready()
-    currentDataService.init({
+    currentDataControl.init({
     }, context)
-    currentBaseStyleService.init({
+    currentBaseStyleControl.init({
       container: this.props.container
     }, context)
-    currentStyleService.init({
-      currentBaseStyleService
+    currentStyleControl.init({
+      currentBaseStyleControl
     }, context)
-    menubarService.init({
+    menubarControl.init({
       container: this.getContainer(WindowPanelContainer.menubar)
     }, context)
-    toolbarService.init({
+    toolbarControl.init({
       container: this.getContainer(WindowPanelContainer.toolbar)
     }, context)
-    controlPanelService.init({
+    controlPanelControl.init({
       container: this.getContainer(WindowPanelContainer.controlPanel)
     }, context)
-    tableDatasourceService.init({}, context)
-    viewPanelService.init({
+    tableDatasourceControl.init({}, context)
+    viewPanelControl.init({
       container: this.getContainer(WindowPanelContainer.viewPanel)
     }, context)
-    tablePanelService.init({
+    tablePanelControl.init({
       container: this.getContainer(WindowPanelContainer.tablePanel)
     }, context)
 
-    tableDatasourceService.ready()
-    tablePanelService.ready()
-    viewPanelService.ready()
+    tableDatasourceControl.ready()
+    tablePanelControl.ready()
+    viewPanelControl.ready()
   }
   getContainer(containerName) {
     return this.windowPanel.getContainer(containerName)
@@ -120,26 +121,13 @@ export default class WindowService extends EventEmitter {
 
   }
   registerListener() {
-    const viewPanelService = this.services.viewPanelService
-    const currentDataService = this.services.currentDataService
-    const currentStyleService = this.services.currentStyleService
-    const currentLayoutService = this.services.currentLayoutService
-    const tableDatasourceService = this.services.tableDatasourceService
-    this._toDispose.push(currentDataService.onChange(() => {
-      viewPanelService.updateData()
-    }))
-    this._toDispose.push(currentStyleService.onChange(() => {
-      viewPanelService.updateStyle()
-    }))
-    this._toDispose.push(currentLayoutService.onChange(() => {
-      viewPanelService.updateLayout()
-    }))
+
   }
 
   show() {
-    const currentDataService = this.services.currentDataService
+    const currentDataControl = this.controls.currentDataControl
     setTimeout(() => {
-      currentDataService.setData([{
+      currentDataControl.setData([{
         "data": {
           "id": "68",
           "activityRatio": '0.0',

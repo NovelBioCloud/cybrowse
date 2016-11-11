@@ -1,7 +1,9 @@
 /**
- * 命令服务
+ * 命令服务，全局服务
+ * 通过 registerCommand 注册服务，通过 runCommand 可以全局调用服务，
+ * 相同id的服务会被覆盖
  */
-export default class CommandService {
+export default class CommandControl {
   constructor() {
     this._command = new Map()
   }

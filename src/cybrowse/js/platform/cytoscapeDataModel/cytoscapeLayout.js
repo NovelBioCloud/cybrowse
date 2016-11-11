@@ -4,7 +4,7 @@ import _ from 'lodash'
 import configs from './defaultLayoutConfigs'
 /**
  * 布局数据服务
- * @see currentLayoutService
+ * @see currentLayoutControl
  */
 export default class CytoscapeLayout {
   constructor() {

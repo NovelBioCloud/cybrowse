@@ -2,6 +2,56 @@ import $ from 'jquery'
 import _ from 'lodash'
 import EventMitter from 'events'
 
+
+/**
+ * tab 面板组件，帮助创建一个简单的可切换面板
+ * setEntries 方法中的对象结构如下
+ * const panelEntries = [{
+      id: 'table-tab-node',
+      name: 'node',
+      callback: (container) => {
+        。。。
+      }
+    }, {
+        id: 'table-tab-edge',
+        name: 'edge',
+        callback: (container) => {
+          。。。
+        }
+      }]
+ */
+export default class TabPanel {
+
+  init(props, context, options) {
+    this.context = context
+    this.model = new TabPanelModel()
+    this.model.setEntries(props.entries)
+    this.view = new TabPanelView()
+    this.view.init({ container: props.container })
+    this.view.setModel(this.model)
+  }
+
+  setEntries(tabPanelEntries) {
+    this.model.setEntries(tabPanelEntries)
+  }
+
+  addPanel(tabPanelEntry) {
+    this.model.add(tabPanelEntry)
+  }
+
+  removePanel(tabPanelEntry) {
+    this.model.remove(tabPanelEntry)
+  }
+
+  focus(tabPanelEntry) {
+    this.model.focus(tabPanelEntry)
+  }
+  dispose() {
+    this.view.dispose()
+  }
+}
+
+
 /**
  * tab 面板视图模型
  */
@@ -160,38 +210,5 @@ export class TabPanelView extends EventMitter {
       this._toDispose = []
     }
     this.$el && this.$el.remove()
-  }
-}
-/**
- * tab 面板
- */
-export default class TabPanel {
-
-  init(props, context, options) {
-    this.context = context
-    this.model = new TabPanelModel()
-    this.model.setEntries(props.entries)
-    this.view = new TabPanelView()
-    this.view.init({ container: props.container })
-    this.view.setModel(this.model)
-  }
-
-  setEntries(tabPanelEntries) {
-    this.model.setEntries(tabPanelEntries)
-  }
-
-  addPanel(tabPanelEntry) {
-    this.model.add(tabPanelEntry)
-  }
-
-  removePanel(tabPanelEntry) {
-    this.model.remove(tabPanelEntry)
-  }
-
-  focus(tabPanelEntry) {
-    this.model.focus(tabPanelEntry)
-  }
-  dispose() {
-    this.view.dispose()
   }
 }

@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 /** 
  * 数据服务，包括了节点数据和连线数据
- * @see currentDataService
+ * @see currentDataControl
  */
 export default class CytoscapeData {
   constructor() {

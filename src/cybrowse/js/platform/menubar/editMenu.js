@@ -1,18 +1,21 @@
 import $ from 'jquery'
 import { EditMenuCommands } from '../command/commands'
 
-/**编辑按钮 */
+/** 菜单栏中的编辑按钮button */
 export default class EditMenu {
 
   init(props, context) {
     let container = props.container
     this.container = container
     this.context = context
-    this.initServices()
+    this.initControls()
     this.render()
     this.registerCommand()
     this.registerListener()
   }
+  /**
+   * 渲染视图
+   */
   render() {
     const $el = $(`
       <div class='btn-group'>
@@ -28,47 +31,60 @@ export default class EditMenu {
     $el.appendTo($(this.container))
     this.el = $el.get(0)
   }
+  /**
+   * 注册命令
+   */
   registerCommand() {
-    const commandService = this.services.commandService
-    commandService.registerCommand(EditMenuCommands.undo, {
+    const commandControl = this.controls.commandControl
+    commandControl.registerCommand(EditMenuCommands.undo, {
       args: null,
       handle: () => {
         this.undo()
       }
     })
-    commandService.registerCommand(EditMenuCommands.redo, {
+    commandControl.registerCommand(EditMenuCommands.redo, {
       args: null,
       handle: () => {
         this.redo()
       }
     })
   }
+  /**
+   * 撤销操作
+   */
   undo() {
     console.log('todo undo')
   }
+  /**
+   * 取消撤销操作
+   */
   redo() {
     console.log('todo redo')
   }
-  initServices() {
-    const services = Object.assign({}, this.context.services)
-    this.services = services
+  /**
+   * 初始化服务
+   */
+  initControls() {
+    const controls = Object.assign({}, this.context.controls)
+    this.controls = controls
     const context = {
-      services: services
+      controls: controls
     }
   }
+  /** 注册事件 */
   registerListener() {
     const $el = $(this.el)
-    const commandService = this.services.commandService
-    const keybindingService = this.services.keybindingService
-    keybindingService.bind(['alt+e'], function (e) {
+    const commandControl = this.controls.commandControl
+    const keybindingControl = this.controls.keybindingControl
+    keybindingControl.bind(['alt+e'], function (e) {
       $el.find('.fn-edit-menu').trigger('click')
       return false
     });
     $el.find('.fn-undo').on('click', () => {
-      commandService.runCommand(EditMenuCommands.undo)
+      commandControl.runCommand(EditMenuCommands.undo)
     })
     $el.find('.fn-redo').on('click', () => {
-      commandService.runCommand(EditMenuCommands.redo)
+      commandControl.runCommand(EditMenuCommands.redo)
     })
   }
   destroy() {

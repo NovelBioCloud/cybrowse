@@ -1,14 +1,14 @@
 import { dispose } from '../../base/lifecycle'
 import TablePanel from '../../platform/tablePanel/tablePanel'
 
-/** table面板服务 */
-export default class TablePanelService {
+/** 前台下部表格数据面板服务 */
+export default class TablePanelControl {
 
   init(props, context) {
     this._toDispose = []
     this.props = props
     this.context = context
-    this.services = this.context.services
+    this.controls = this.context.controls
   }
   ready() {
     const tablePanel = new TablePanel()
@@ -19,11 +19,11 @@ export default class TablePanelService {
 
   /** 注册事件 */
   registerListener() {
-    const tableDatasourceService = this.services.tableDatasourceService
-    this._toDispose.push(tableDatasourceService.onNodeChange((nodeDatas) => {
+    const tableDatasourceControl = this.controls.tableDatasourceControl
+    this._toDispose.push(tableDatasourceControl.onNodeChange((nodeDatas) => {
       this.setNodeData(nodeDatas)
     }))
-    this._toDispose.push(tableDatasourceService.onEdgeChange((edgeDatas) => {
+    this._toDispose.push(tableDatasourceControl.onEdgeChange((edgeDatas) => {
       this.setEdgeData(edgeDatas)
     }))
   }
