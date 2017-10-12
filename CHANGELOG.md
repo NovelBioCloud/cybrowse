@@ -12,3 +12,10 @@
 ### Major changes
 
 - ** 完成一个demo的开发
+
+# 0.3 (2017-10-12)
+## CyBrowse
+
+### Major changes
+
+- ** 删除旧代码，重新设计
