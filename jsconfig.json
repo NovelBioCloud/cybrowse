@@ -3,8 +3,10 @@
 	// 参阅有关 jsconfig.json 格式的文档
 	"compilerOptions": {
 		"target": "es6",
-		"module": "commonjs",
-		"allowSyntheticDefaultImports": true
+		"module": "es2015",
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
+		"diagnostics": true
 	},
 	"exclude": [
 		"node_modules",

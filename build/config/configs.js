@@ -2,9 +2,9 @@ module.exports = [{
 	name: 'cybrowse',
 	path: 'src/cybrowse/config.js',
 }, {
-	name: 'redux',
-	path: 'src/redux/config.js',
+	name: 'taskInput',
+	path: 'src/taskInput/config.js',
 }, {
-	name: 'react-redux',
-	path: 'src/react-redux/config.js',
+	name: 'server',
+	path: 'src/server/config.js',
 }];

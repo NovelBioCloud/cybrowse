@@ -1,0 +1,50 @@
+
+.class-app{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+}
+.class-mainViewComponent{
+  display: flex;
+  height: 100%;
+  .view-paramEditorContainer{
+    width: 50%;
+  }
+  .view-taskSelectorContainer{
+    width: 50%;
+  }
+}
+.class-paramEditorComponent{
+  background: lightgoldenrodyellow;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .view-paramEditorComponent-title{
+    flex:none;
+  }
+  .view-paramEditorComponent-content{
+    flex: auto;  
+    display: flex;
+    flex-direction: column;
+    .view-fileParamEditorContainer{
+      height: 100%;
+      overflow: auto;
+    }
+    .view-normalParamEditorContainer{
+      height: 100%;
+      overflow: auto;
+    }
+  }
+}
+.class-normalParamEditorComponent{
+  position: relative;
+}
+.class-normalParamEditorUnitComponent{
+  height: 50px;
+  background: lightcyan;
+  margin-bottom: 5px;
+  &.normalParamEditorUnitComponent-active{
+    border: 1px solid red;
+  }
+}

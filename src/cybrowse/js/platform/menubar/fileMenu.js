@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import FileSelector from '../../base/fileSelector'
+// import FileSelector from '../../../base/fileSelector'
 import { FileMenuCommands } from '../command/commands'
 
 /** 
@@ -68,12 +68,12 @@ export default class FileMenu {
   }
   openFile() {
     const currentDataControl = this.controls.currentDataControl
-    FileSelector.show({
-      accept: ".jpg, .png, .jpeg, .tiff|images/*",
-      onChange: (files) => {
-        console.log(files)
-      }
-    })
+    // FileSelector.show({
+    //   accept: ".jpg, .png, .jpeg, .tiff|images/*",
+    //   onChange: (files) => {
+    //     console.log(files)
+    //   }
+    // })
     // 此处是添加模拟数据
     currentDataControl.setData([{
       "data": {

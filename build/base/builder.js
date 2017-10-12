@@ -105,7 +105,7 @@ function fnBrowserify0(entryJs, target, bundleName) {
 		bb //
 		// .external('jquery') //
 			.transform("babelify", {
-				presets: ["es2015", "stage-0", "stage-3", "react"],
+				presets: ["es2015", "stage-3", "react"],
 			}) //
 			.bundle() //
 			.pipe(source(bundleName || 'bundle.js')) //

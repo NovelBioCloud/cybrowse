@@ -15,7 +15,6 @@ if (action === 'clean') {
 		builderWrap.cleanOne(module);
 	}
 } else if (action === 'release') {
-	process.env.NODE_ENV = 'production';
 	if (module === 'all') {
 		builderWrap.buildAll();
 	} else {
