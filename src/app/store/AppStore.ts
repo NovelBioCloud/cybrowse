@@ -28,7 +28,6 @@ export class AppStore extends Emitter {
     @Inject()
     private keyboardStore: KeyboardStore
 
-
     public async initEditersStore() {
         const cy = this.cyStore.getCy()
         this.editorStore.setCy(cy)

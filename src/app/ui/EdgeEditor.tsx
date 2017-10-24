@@ -69,13 +69,13 @@ export class EdgeEditorSupport extends Component<EdgeEditorProps, any> {
                     }
                 </FormItem>
                 <FormItem label='color'>
-                    <Input defaultValue={color} type='color' onChange={(e: any) => {
+                    <Input key={data.id || ''}  defaultValue={color} type='color' onChange={(e: any) => {
                         const value = e.target.value
                         element.data('color', value)
                     }} />
                 </FormItem>
                 <FormItem label='lineColor'>
-                    <Input defaultValue={lineColor} type='color' onChange={(e: any) => {
+                    <Input key={data.id || ''} defaultValue={lineColor} type='color' onChange={(e: any) => {
                         const value = e.target.value
                         element.data('lineColor', value)
                     }} />
@@ -91,7 +91,7 @@ export class EdgeEditorSupport extends Component<EdgeEditorProps, any> {
                     }
                 </FormItem>
                 <FormItem label='curveStyle'>
-                    <Radio.Group defaultValue={curveStyle} onChange={(e: any) => {
+                    <Radio.Group key={data.id || ''} defaultValue={curveStyle} onChange={(e: any) => {
                         const value = e.target.value
                         element.data('curveStyle', value)
                     }}>

@@ -6,7 +6,8 @@ import * as $ from 'jquery'
 import { CommandStore } from './CommandStore';
 import { NodeShapes } from '../../lib/nodeShapes';
 @Service()
-export class CyStore extends Emitter {
+export class CyStore extends
+    Emitter {
     @Inject()
     private commandStore: CommandStore
     private _isReady: Promise<boolean>
@@ -155,8 +156,14 @@ export class CyStore extends Emitter {
         })
         this.cy.on('cxttap', (e) => {
             const target = e.target
+            console.log(e)
             if (target !== this.cy) {
-                target.select()
+                if (e.originalEvent.ctrlKey) {
+                    target.select()
+                } else {
+                    this.getCy().$(':selected').unselect()
+                    target.select()
+                }
             }
         })
         this.initUnredo()
@@ -177,8 +184,8 @@ export class CyStore extends Emitter {
                     // If the selector is not truthy no elements will have this menu item on cxttap
                     selector: 'node, edge',
                     onClickFunction: (event) => { // The function to be executed on click
-                        const element = event.target
-                        this.commandStore.runCommand('deleteElements', element)
+                        const elements = this.getCy().$(':selected')
+                        this.commandStore.runCommand('deleteElements', elements)
                     },
                     disabled: false, // Whether the item will be created as disabled
                     show: true, // Whether the item will be shown or not
@@ -207,6 +214,9 @@ export class CyStore extends Emitter {
             ]
         };
         this.cy.contextMenus(options);
+    }
+    public updateData(jsonData: any): any {
+        this.cy.json(jsonData)
     }
     public initPanZoom() {
         // the default values of each option are outlined below:
@@ -243,17 +253,17 @@ export class CyStore extends Emitter {
         var defaults = {
             preview: true, // whether to show added edges preview before releasing selection
             stackOrder: 4, // Controls stack order of edgehandles canvas element by setting it's z-index
-            handleSize: 10, // the size of the edge handle put on nodes
+            handleSize: 0, // the size of the edge handle put on nodes
             handleHitThreshold: 6, // a threshold for hit detection that makes it easier to grab the handle
             handleIcon: false, // an image to put on the handle
-            handleColor: '#ff0000', // the colour of the handle and the line drawn from it
+            // handleColor: '#ff0000', // the colour of the handle and the line drawn from it
             handleLineType: 'ghost', // can be 'ghost' for real edge, 'straight' for a straight line, or 'draw' for a draw-as-you-go line
-            handleLineWidth: 1, // width of handle line in pixels
+            handleLineWidth: 3, // width of handle line in pixels
             handleOutlineColor: '#000000', // the colour of the handle outline
             handleOutlineWidth: 0, // the width of the handle outline in pixels
             handleNodes: 'node', // selector/filter function for whether edges can be made from a given node
-            handlePosition: 'middle top', // sets the position of the handle in the format of "X-AXIS Y-AXIS" such as "left top", "middle top"
-            hoverDelay: 150, // time spend over a target node before it is considered a target selection
+            handlePosition: 'middle middle', // sets the position of the handle in the format of "X-AXIS Y-AXIS" such as "left top", "middle top"
+            hoverDelay: 250, // time spend over a target node before it is considered a target selection
             cxt: false, // whether cxt events trigger edgehandles (useful on touch)
             enabled: true, // whether to start the plugin in the enabled state
             toggleOffOnLeave: false, // whether an edge is cancelled by leaving a node (true), or whether you need to go over again to cancel (false; allows multiple edges in one pass)

@@ -11,6 +11,7 @@ import { EdgeShapes } from '../../lib/edgeShapes';
 const FormItem = Form.Item
 interface EdgeEditorProps extends FormComponentProps {
     exportJson: () => void
+    importJson: () => void
 }
 export class DefaultEditorSupport extends Component<EdgeEditorProps, any> {
     render() {
@@ -20,6 +21,11 @@ export class DefaultEditorSupport extends Component<EdgeEditorProps, any> {
                     <Button onClick={(e) => {
                         this.props.exportJson()
                     }}>导出json</Button>
+                </FormItem>
+                <FormItem >
+                    <Button onClick={(e) => {
+                        this.props.importJson()
+                    }}>导入json</Button>
                 </FormItem>
                 <FormItem >
                     <Button onClick={(e) => {

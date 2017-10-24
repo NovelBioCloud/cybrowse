@@ -23,9 +23,12 @@ import { Layout, LocaleProvider } from 'antd'
 import enUS from 'antd/lib/locale-provider/en_US';
 import { CommandStore } from '../store/CommandStore';
 import { DefaultEditor } from './DefaultEditor'
+import { saveAs } from 'file-saver'
+
 const jsonFormat = require('json-format')
 
 import { Menu, Icon } from 'antd';
+import { CytoscapeJsonData } from './CytoscapeJsonData';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
@@ -101,11 +104,21 @@ export class App extends Component<IAppProps, AppState> {
                 viewType === EditorViewType.Default && <DefaultEditor exportJson={
                     () => {
                         const json = cyStore.getCy().json()
-                        console.log(json)
                         const { elements, style } = json
-                        console.log(jsonFormat({ elements, style }))
+                        const jsonData = jsonFormat({ elements, style })
+                        const blob = new Blob([jsonData], { type: "text/plain;charset=utf-8" });
+                        saveAs(blob, "cytoscape-data.json");
                     }
-                } />
+                }
+                    importJson={
+                        () => {
+                            const jsonData = CytoscapeJsonData.data1
+                            cyStore.updateData(jsonData)
+                        }
+                    }
+
+
+                />
             }
 
         </Editors>

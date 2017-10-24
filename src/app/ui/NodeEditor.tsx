@@ -16,6 +16,7 @@ export class NodeEditorSupport extends Component<NodeEditorProps, any> {
         const element = this.props.element
         const data = element.data()
         const {
+            id,
             label = '',
             shape,
             width,
@@ -36,7 +37,7 @@ export class NodeEditorSupport extends Component<NodeEditorProps, any> {
                     {
                         getFieldDecorator('label', {
                             initialValue: label
-                        })(<Input key={data.id || ''} onChange={(e) => {
+                        })(<Input key={id || ''} onChange={(e) => {
                             e.stopPropagation()
                             const value = e.target.value
                             element.data('label', value)
@@ -44,7 +45,7 @@ export class NodeEditorSupport extends Component<NodeEditorProps, any> {
                     }
                 </FormItem>
                 <FormItem label='backgroundColor'>
-                    <Input defaultValue={backgroundColor} type='color' onChange={(e: any) => {
+                    <Input key={id || ''} defaultValue={backgroundColor} type='color' onChange={(e: any) => {
                         const value = e.target.value
                         element.data('backgroundColor', value)
                     }} />
@@ -70,7 +71,7 @@ export class NodeEditorSupport extends Component<NodeEditorProps, any> {
                     }
                 </FormItem>
                 <FormItem label='shape'>
-                    <Radio.Group defaultValue={shape} onChange={(e: any) => {
+                    <Radio.Group key={id || ''}  defaultValue={shape} onChange={(e: any) => {
                         const value = e.target.value
                         element.data('shape', value)
                     }}>
