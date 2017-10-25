@@ -3,7 +3,7 @@ import { Service, Inject } from 'typedi';
 import { Subject } from 'rxjs'
 import { Emitter } from 'event-kit';
 import * as $ from 'jquery'
-import { CommandStore } from './CommandStore';
+import { CommandStore, ICommandContext } from './CommandStore';
 import { NodeShapes } from '../../lib/nodeShapes';
 @Service()
 export class CyStore extends
@@ -14,6 +14,8 @@ export class CyStore extends
     private resolve: () => void
     private cy: any & JQuery
     private unredo: any
+    private edgehandles: any
+    private enableHandlesState: boolean
     constructor() {
         super()
         this._isReady = new Promise<boolean>((resolve, reject) => {
@@ -309,7 +311,34 @@ export class CyStore extends
             }
         };
 
-        this.cy.edgehandles(defaults);
+        this.edgehandles = this.cy.edgehandles(defaults);
+        const enableEdgehandles: ICommandContext = {
+            run: () => {
+                this.enableHandlesState = true
+                this.cy.edgehandles('enable')
+            }
+        }
+        this.commandStore.registerCommand('enableEdgehandles', enableEdgehandles)
+        const disableEdgehandles: ICommandContext = {
+            run: () => {
+                this.enableHandlesState = false
+                this.cy.edgehandles('disable')
+            }
+        }
+        this.commandStore.registerCommand('disabledEdgehandles', disableEdgehandles)
+        this.enableHandlesState = true
+        const toggleEdgehandles: ICommandContext = {
+            run: () => {
+                if (this.enableHandlesState) {
+                    this.enableHandlesState = false
+                    this.cy.edgehandles('disable')
+                } else {
+                    this.enableHandlesState = true
+                    this.cy.edgehandles('enable')
+                }
+            }
+        }
+        this.commandStore.registerCommand('toggleEdgehandles', toggleEdgehandles)
     }
 
     public initUnredo() {

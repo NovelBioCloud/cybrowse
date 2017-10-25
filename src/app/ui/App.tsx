@@ -5,8 +5,6 @@ import { Container } from 'typedi';
 import { AppState } from '../state/AppState'
 import { AppStore } from '../store/AppStore'
 import { AppDispatcher } from '../dispatcher/AppDispatcher'
-import { CyDispatcher } from '../dispatcher/CyDispatcher';
-import { EditorsDispatcher } from '../dispatcher/EditorsDispatcher'
 import { Toolbar } from './Toolbar'
 import { Cytoscape } from './Cytoscape'
 import { Editors } from './Editors'
@@ -15,7 +13,6 @@ import { EdgeEditor } from './EdgeEditor';
 import { ToolbarStore } from '../store/ToolbarStore';
 import { KeyboardStore } from '../store/KeyboardStore'
 import { CyStore } from '../store/CyStore';
-import { CommandDispatcher } from '../dispatcher/ComandDispatcher';
 import * as keyboardJS from 'keyboardjs';
 import { EditorsStore, EditorViewType } from '../store/EditorsStore';
 import { Disposable } from 'event-kit';
@@ -37,11 +34,7 @@ const toolbarStore = Container.get(ToolbarStore)
 const cyStore = Container.get(CyStore)
 const appStore = Container.get(AppStore)
 const keyboardStore = Container.get(KeyboardStore)
-const commandDispatcher = Container.get(CommandDispatcher)
 const appDispatcher = Container.get(AppDispatcher)
-const cyDispatcher = Container.get(CyDispatcher)
-const editorsDispatcher = Container.get(EditorsDispatcher)
-const editorsStore = Container.get(EditorsStore)
 const commandStore = Container.get(CommandStore)
 
 interface IAppProps {

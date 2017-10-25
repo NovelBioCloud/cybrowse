@@ -6,25 +6,21 @@ import { CyStore } from './CyStore';
 import { UnredoStore } from "./UnredoStore";
 import { EditorsStore } from "./EditorsStore";
 
-interface ICommandContext {
+export interface ICommandContext {
     run(...args)
 }
 
 @Service()
 export class CommandStore extends Emitter {
-    private isInited
     private commandMap = new Map<string, any>()
     @Inject()
     private unredoStore: UnredoStore
-    @Inject()
-    private editorsStore: EditorsStore
 
     async init() {
     }
 
     getState() {
         return {
-
         }
     }
     registerCommand(action: string, runner: ICommandContext) {

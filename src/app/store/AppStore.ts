@@ -85,11 +85,18 @@ export class AppStore extends Emitter {
         this.unredoStore.registerAction("deleteElements", deleteEles, restoreEles);
     }
     async initKeyboardStore() {
-        this.keyboardStore.keyboardJs.bind('ctrl+z', () => {
+        this.keyboardStore.keyboardJs.bind('ctrl + z', (e) => {
+            e.preventDefault()
             this.commandStore.undoCommand()
         })
-        this.keyboardStore.keyboardJs.bind('ctrl+y', () => {
+        this.keyboardStore.keyboardJs.bind('ctrl + y', (e) => {
+            e.preventDefault()
             this.commandStore.redoCommand()
+        })
+        this.keyboardStore.keyboardJs.bind('ctrl + e', (e) => {
+            e.preventDefault()
+            console.log(e)
+            this.commandStore.runCommand('toggleEdgehandles')
         })
     }
     async initCommand() {
@@ -136,8 +143,16 @@ export class AppStore extends Emitter {
                 command: 'deleteElements'
             }, {
                 id: '4',
-                label: 'setSelectMode',
+                label: '切换框选模式',
                 command: 'setSelectMode'
+            }, {
+                id: '5',
+                label: '开启连线模式',
+                command: 'enabledEdgehandles'
+            }, {
+                id: '6',
+                label: '关闭连线模式',
+                command: 'disabledEdgehandles'
             }]
         })
     }

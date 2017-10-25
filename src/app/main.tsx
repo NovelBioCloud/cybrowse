@@ -6,7 +6,6 @@ import { Component } from 'react'
 import { render } from 'react-dom'
 import { App } from './ui/App'
 import { Container } from 'typedi';
-import { CommandDispatcher } from './dispatcher/ComandDispatcher'
 import { AppStore } from './store/AppStore'
 import { AppDispatcher } from './dispatcher/AppDispatcher'
 
